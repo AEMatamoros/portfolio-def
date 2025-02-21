@@ -1,3 +1,5 @@
+import ThemeToggle from "@Components/ui/ThemeToogle";
+
 export default function Header() {
   return (
     <header className="absolute inset-x-0 top-0 z-50  shadow-md">
@@ -7,12 +9,10 @@ export default function Header() {
       >
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
-            <span className="h-10 font-extrabold text-2xl">
-              Alexis Matamoros
-            </span>
+            <span className="h-10 font-extrabold text-2xl">AM</span>
           </a>
         </div>
-        <div className="flex lg:hidden">
+        <div className="flex md:hidden">
           <button
             type="button"
             className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
@@ -35,27 +35,22 @@ export default function Header() {
             </svg>
           </button>
         </div>
-        <div className="hidden lg:flex lg:items-center lg:gap-x-12 lg">
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            Product
+        <div className="hidden md:flex md:items-center md:gap-x-12 lg">
+          <a href="#" className="text-sm/6 font-semibold text-gray-700">
+            About me
           </a>
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            Features
+          <a href="#" className="text-sm/6 font-semibold text-gray-700">
+            Proyects
           </a>
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            Marketplace
-          </a>
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            Company
+          <a href="#" className="text-sm/6 font-semibold text-gray-700">
+            CV
           </a>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            Log in <span aria-hidden="true">&rarr;</span>
-          </a>
+          <ThemeToggle />
         </div>
       </nav>
-      <div className="lg:hidden" role="dialog" aria-modal="true">
+      <div className="md:hidden" role="dialog" aria-modal="true">
         <div className="fixed inset-0 z-50"></div>
         <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
@@ -94,36 +89,25 @@ export default function Header() {
               <div className="space-y-2 py-6">
                 <a
                   href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 hover:bg-gray-50"
                 >
-                  Product
+                  About me
                 </a>
                 <a
                   href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 hover:bg-gray-50"
                 >
-                  Features
+                  Proyects
                 </a>
                 <a
                   href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 hover:bg-gray-50"
                 >
-                  Marketplace
-                </a>
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Company
+                  CV
                 </a>
               </div>
               <div className="py-6">
-                <a
-                  href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                >
-                  Log in
-                </a>
+                <ThemeToggle />
               </div>
             </div>
           </div>
