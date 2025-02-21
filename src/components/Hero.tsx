@@ -8,7 +8,7 @@ const handleAnimationComplete = () => {
 
 export default function Hero() {
   return (
-    <section className="min-h-screen">
+    <section className="min-h-screen bg-white">
       <Header />
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <div

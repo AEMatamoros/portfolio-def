@@ -2,14 +2,14 @@ import ThemeToggle from "@Components/ui/ThemeToogle";
 
 export default function Header() {
   return (
-    <header className="absolute inset-x-0 top-0 z-50  shadow-md">
+    <header className="absolute inset-x-0 top-0 z-50  shadow-md bg-gray-100">
       <nav
         className="flex items-center justify-between p-4 lg:px-8"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
-            <span className="h-10 font-extrabold text-2xl">AM</span>
+            <span className="h-10 font-extrabold text-2xl">A</span>
           </a>
         </div>
         <div className="flex md:hidden">
@@ -41,6 +41,9 @@ export default function Header() {
           </a>
           <a href="#" className="text-sm/6 font-semibold text-gray-700">
             Proyects
+          </a>
+          <a href="#" className="text-sm/6 font-semibold text-gray-700">
+            Contact
           </a>
           <a href="#" className="text-sm/6 font-semibold text-gray-700">
             CV
@@ -98,6 +101,12 @@ export default function Header() {
                   className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 hover:bg-gray-50"
                 >
                   Proyects
+                </a>
+                <a
+                  href="#"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 hover:bg-gray-50"
+                >
+                  Contact
                 </a>
                 <a
                   href="#"
