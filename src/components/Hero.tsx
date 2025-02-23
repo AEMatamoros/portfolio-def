@@ -1,6 +1,6 @@
 import Header from "@Components/common/Header";
-
 import SplitText from "@Components/animations/SplitText";
+import ShinyText from "@Components/animations/ShinyText";
 
 const handleAnimationComplete = () => {
   console.log("All letters have animated!");
@@ -8,7 +8,7 @@ const handleAnimationComplete = () => {
 
 export default function Hero() {
   return (
-    <section className="min-h-screen bg-white">
+    <section className="min-h-screen bg-white" id="section-hero">
       <Header />
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <div
@@ -48,12 +48,17 @@ export default function Hero() {
                 onLetterAnimationComplete={handleAnimationComplete}
               />
             </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
+            <div className=" hero-button mt-10 flex items-center justify-center gap-x-6">
               <a
                 href="#"
-                className="rounded-md bg-black px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-gray-100 hover:border hover:border-black hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                className="rounded-md group bg-black px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-black hover:border hover:border-black hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                About me
+                <ShinyText
+                  text="About me!"
+                  disabled={false}
+                  speed={3}
+                  className=""
+                />
               </a>
             </div>
           </div>

@@ -1,8 +1,11 @@
 import ThemeToggle from "@Components/ui/ThemeToogle";
+import { useState } from "react";
 
 export default function Header() {
+  const [showSidebar, setShowSidebar] = useState(false);
+
   return (
-    <header className="absolute inset-x-0 top-0 z-50  shadow-md bg-gray-100">
+    <header className="fixed inset-x-0 top-0 z-50  shadow-md bg-gray-100">
       <nav
         className="flex items-center justify-between p-4 lg:px-8"
         aria-label="Global"
@@ -15,7 +18,10 @@ export default function Header() {
         <div className="flex md:hidden">
           <button
             type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 cursor-pointer"
+            onClick={() => {
+              setShowSidebar(!showSidebar);
+            }}
           >
             <span className="sr-only">Open main menu</span>
             <svg
@@ -36,13 +42,22 @@ export default function Header() {
           </button>
         </div>
         <div className="hidden md:flex md:items-center md:gap-x-12 lg">
-          <a href="#" className="text-sm/6 font-semibold text-gray-700">
+          <a
+            href="#section-timeline"
+            className="text-sm/6 font-semibold text-gray-700"
+          >
             About me
           </a>
-          <a href="#" className="text-sm/6 font-semibold text-gray-700">
+          <a
+            href="#section-projects"
+            className="text-sm/6 font-semibold text-gray-700"
+          >
             Proyects
           </a>
-          <a href="#" className="text-sm/6 font-semibold text-gray-700">
+          <a
+            href="#section-contact"
+            className="text-sm/6 font-semibold text-gray-700"
+          >
             Contact
           </a>
           <a href="#" className="text-sm/6 font-semibold text-gray-700">
@@ -53,21 +68,26 @@ export default function Header() {
           <ThemeToggle />
         </div>
       </nav>
-      <div className="md:hidden" role="dialog" aria-modal="true">
+      <div
+        className={`md:hidden fixed h-screen w-full transition-all transform top-0 ${
+          showSidebar ? "" : "translate-x-full"
+        }`}
+        role="dialog"
+        aria-modal="true"
+      >
         <div className="fixed inset-0 z-50"></div>
         <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-100 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                alt=""
-              />
+              <span className="font-bold">Alexis Matamoros</span>
             </a>
             <button
               type="button"
-              className="-m-2.5 rounded-md p-2.5 text-gray-700"
+              className="-m-2.5 rounded-md p-2.5 text-gray-700 cursor-pointer"
+              onClick={() => {
+                setShowSidebar(!showSidebar);
+              }}
             >
               <span className="sr-only">Close menu</span>
               <svg

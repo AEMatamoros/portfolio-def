@@ -86,33 +86,29 @@ export const EXPERIENCE = [
   },
 ];
 
-export default function TImeline() {
+export default function Timeline() {
   return (
-    <section className="bg-white py-8 px-12">
+    <section className="bg-white py-8 px-12" id="section-timeline">
       <div className="container mx-auto flex items-center flex-wrap pt-4 pb-12">
-        <h2 className="my-4 text-center text-5xl font-semibold text-darksecondary dark:text-secondary md:text-left">
+        <h2 className="my-4 text-center text-5xl font-semibold text-darksecondary  md:text-left">
           Experience
         </h2>
-        <ol className="relative border-s border-gray-200 dark:border-gray-700">
+        <ol className="relative border-s border-gray-200 ">
           {EXPERIENCE.map((place, id) => (
             <li className="mb-10 ms-4" key={id}>
-              <div className="absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full border border-white bg-gray-200 dark:border-gray-900 dark:bg-gray-700"></div>
-              <time className="mb-1 text-center text-sm font-normal leading-none text-gray-400 dark:text-gray-500 md:text-left">
+              <div className="absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full border border-white bg-gray-200  "></div>
+              <time className="mb-1 text-center text-sm font-normal leading-none text-gray-400  md:text-left">
                 {place.timeEnd}
                 {place.timeEnd}
                 {place.current && (
-                  <span className="px-4 text-detail dark:text-darkdetail">
-                    Current
-                  </span>
+                  <span className="px-4 text-detail ">Current</span>
                 )}
               </time>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-lg font-semibold text-gray-900 ">
                 {place.name}
-                <span className="text-primary dark:text-darkprimary">
-                  {place.descriptionEN}
-                </span>
+                <span className="text-primary ">{place.descriptionEN}</span>
               </h3>
-              <p className="text-center text-base font-normal text-gray-500 dark:text-gray-400 md:text-left">
+              <p className="text-center text-base font-normal text-gray-500  md:text-left">
                 {place.positionDescripcionEN}
               </p>
             </li>

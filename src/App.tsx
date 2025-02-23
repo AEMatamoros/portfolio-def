@@ -3,6 +3,7 @@ import Proyects from "@Components/Proyects";
 import Timeline from "@Components/Timeline";
 import Techs from "@Components/Techs";
 import Footer from "@Components/common/Footer";
+import Contact from "@Components/Contact";
 
 export default function App() {
   return (
@@ -11,6 +12,7 @@ export default function App() {
       <Timeline></Timeline>
       <Techs></Techs>
       <Proyects></Proyects>
+      <Contact></Contact>
       <Footer></Footer>
     </div>
   );
