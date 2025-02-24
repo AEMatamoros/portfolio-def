@@ -115,7 +115,7 @@ export default function Timeline() {
               </time>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                 {place.name}
-                <span className="text-primary ">{place.descriptionEN}</span>
+                <span className="text-primary px-4">{place.descriptionEN}</span>
               </h3>
               <p className="text-center text-base font-normal text-gray-500  md:text-left">
                 {i18n.language === "es"

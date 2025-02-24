@@ -14,13 +14,7 @@ export default function Hero() {
       id="section-hero"
     >
       <div className="relative isolate px-6 pt-14 lg:px-8">
-        <div
-          className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-          aria-hidden="true"
-        >
-          Icon
-        </div>
-        <div className="mx-auto max-w-4xl py-32 sm:py-48 lg:py-32">
+        <div className="mx-auto max-w-4xl py-32 sm:py-48 lg:py-32 flex justify-center items-center">
           <div className="text-center">
             <SplitText
               text="Alexis Eduardo Matamoros"
