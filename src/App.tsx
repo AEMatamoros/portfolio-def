@@ -5,6 +5,7 @@ import Techs from "@Components/Techs";
 import Footer from "@Components/common/Footer";
 import Contact from "@Components/Contact";
 import Header from "@Components/common/Header";
+import GoTop from "@Components/ui/GoToTop";
 
 export default function App() {
   return (
@@ -16,6 +17,7 @@ export default function App() {
       <Proyects></Proyects>
       <Contact></Contact>
       <Footer></Footer>
+      <GoTop></GoTop>
     </>
   );
 }
