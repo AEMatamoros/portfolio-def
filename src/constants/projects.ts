@@ -54,7 +54,7 @@ export const PROJECTS = [
     img: PortfolioV2,
     icon: "fa-light fa-e",
     url: "https://portfolio-v2-alpha-lemon.vercel.app/",
-    techs: ["HTML", "CSS", "SASS"],
+    techs: ["React", "TailwnidCSS"],
   },
   {
     hoverColor: "text-gray-500",

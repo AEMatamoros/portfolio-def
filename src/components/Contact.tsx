@@ -1,8 +1,12 @@
 import ShinyText from "@Components/animations/ShinyText";
+import useContactForm from "@Hooks/useContactForm";
+
 import { useTranslation } from "react-i18next";
 
 export default function Contact() {
   const { t } = useTranslation();
+  const { register, handleSubmit, onSubmit, disable } = useContactForm();
+
   return (
     <section
       className="bg-gray-100 dark:bg-gray-900 py-8 px-12"
@@ -28,7 +32,10 @@ export default function Contact() {
           {t("CONTACT.DESCRIPTION")}
         </p>
       </div>
-      <form action="#" method="POST" className="mx-auto mt-2 max-w-xl sm:mt-20">
+      <form
+        className="mx-auto mt-2 max-w-xl sm:mt-20"
+        onSubmit={handleSubmit(onSubmit)}
+      >
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <label
@@ -39,10 +46,10 @@ export default function Contact() {
             </label>
             <div className="mt-2.5">
               <input
-                id="first-name"
-                name="first-name"
+                id="name"
+                {...register("name")}
+                required
                 type="text"
-                autoComplete="given-name"
                 className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
               />
             </div>
@@ -57,9 +64,9 @@ export default function Contact() {
             <div className="mt-2.5">
               <input
                 id="company"
-                name="company"
+                {...register("company")}
+                required
                 type="text"
-                autoComplete="organization"
                 className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
               />
             </div>
@@ -74,9 +81,9 @@ export default function Contact() {
             <div className="mt-2.5">
               <input
                 id="email"
-                name="email"
+                {...register("email")}
+                required
                 type="email"
-                autoComplete="email"
                 className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
               />
             </div>
@@ -92,9 +99,9 @@ export default function Contact() {
               <div className="flex rounded-md bg-white outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
                 <input
                   id="phone"
-                  name="phone"
+                  {...register("phone")}
+                  required
                   type="phone"
-                  autoComplete="phone"
                   className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
                 />
               </div>
@@ -110,18 +117,18 @@ export default function Contact() {
             <div className="mt-2.5">
               <textarea
                 id="message"
-                name="message"
+                {...register("message")}
                 rows={4}
                 className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
-                defaultValue={""}
               />
             </div>
           </div>
         </div>
         <div className=" hero-button mt-10 flex items-center justify-center gap-x-6">
-          <a
-            href="#"
-            className="rounded-md group bg-black dark:bg-gray-100 px-3.5 py-2.5 text-sm font-semibold shadow-xs hover:bg-black hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 dark:hover:bg-gray-200"
+          <button
+            type="submit"
+            disabled={disable}
+            className="cursor-pointer rounded-md group bg-black dark:bg-gray-100 px-3.5 py-2.5 text-sm font-semibold shadow-xs hover:bg-black hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 dark:hover:bg-gray-200"
           >
             <ShinyText
               text={t("CONTACT.LABEL.SEND")}
@@ -129,7 +136,7 @@ export default function Contact() {
               speed={3}
               className=""
             />
-          </a>
+          </button>
         </div>
       </form>
     </section>
