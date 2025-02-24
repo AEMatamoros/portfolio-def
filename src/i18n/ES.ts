@@ -14,5 +14,7 @@ export default {
     "CONTACT.LABEL.COMPANY": "Compañia",
     "CONTACT.LABEL.MESSAGE": "Mensaje",
     "CONTACT.LABEL.SEND": "¡Ponte en contacto!",
+    "CONTACT.SUCESS": "Gracias, por escribirme me pondre en contacto contigo.",
+    "CONTACT.ERROR": "Lastimosamente ocurrio un error :c",
   },
 };

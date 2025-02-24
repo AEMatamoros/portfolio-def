@@ -2,7 +2,9 @@ import axios from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
+import { useTranslation } from "react-i18next";
 export default function useContactForm() {
+  const { t } = useTranslation();
   //handle Send
   const {
     register,
@@ -29,9 +31,7 @@ export default function useContactForm() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then(function (response: any) {
         if (response.status == 200) {
-          Notify.success(
-            "Gracias, por escribirme me pondre en contacto contigo."
-          );
+          Notify.success(t("CONTACT.SUCESS"));
           reset({ name: "", email: "", subject: "" });
           return;
         }
@@ -39,7 +39,7 @@ export default function useContactForm() {
       })
       .catch(function () {
         // handle error
-        Notify.failure("Lastimosamente ocurrio un error :c");
+        Notify.failure(t("CONTACT.ERROR"));
       })
       .finally(() => {
         setDisable(false);
