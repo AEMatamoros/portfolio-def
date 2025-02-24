@@ -15,7 +15,10 @@ export default function Proyects() {
       </div>
       <div className="container mx-auto flex items-center flex-wrap">
         {PROJECTS.map((project) => (
-          <div className="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col ">
+          <div
+            className="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col "
+            key={project.name}
+          >
             <a href={project.url} target="_blank">
               <img
                 className="hover:grow hover:shadow-lg w-full object-cover"
@@ -29,7 +32,9 @@ export default function Proyects() {
               </div>
               <div className="w-full flex gap-2">
                 {project.techs.map((tec) => (
-                  <span className="pt-1 text-gray-900 text-[12px]">{tec}</span>
+                  <span className="pt-1 text-gray-900 text-[12px]" key={tec}>
+                    {tec}
+                  </span>
                 ))}
               </div>
             </a>

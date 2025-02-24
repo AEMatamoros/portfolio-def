@@ -6,6 +6,7 @@ import Footer from "@Components/common/Footer";
 import Contact from "@Components/Contact";
 import Header from "@Components/common/Header";
 import GoTop from "@Components/ui/GoToTop";
+import ContactOptions from "@Components/common/ContactOptions";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
       <Contact></Contact>
       <Footer></Footer>
       <GoTop></GoTop>
+      <ContactOptions></ContactOptions>
     </>
   );
 }
