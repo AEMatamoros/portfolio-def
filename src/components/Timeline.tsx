@@ -1,27 +1,6 @@
+import formatDate from "@Utils/DateFormatter";
+
 export const EXPERIENCE = [
-  {
-    name: "GoIt GLobal",
-    descriptionEN: "Programing Teacher - FullStack",
-    descriptionES: "Maestro de programacion - FullStack",
-    time: "December 31, 2022 23:59:59",
-    tecs: ["HTML", "CSS", "REACT", "NodeJS", "Figma"],
-    positionDescripcionES: `
-        Como maestro de desarrollo frontend, comparto con mis estudiantes mi 
-        profundo conocimiento del stack MERN. Me especializo en MongoDB para estructurar 
-        bases de datos, Express para crear servidores, React para interfaces de usuario dinámicas y 
-        Node.js para ejecutar el servidor. Mi misión es capacitar a los aspirantes a desarrolladores 
-        para que creen aplicaciones web y móviles con estas tecnologías líderes de la industria. 
-        Creo que enseñar no solo consiste en impartir conocimientos, sino en inspirar a los estudiantes 
-        a abrazar la creatividad y la resolución de problemas, habilidades esenciales para triunfar en el desarrollo frontend.`,
-    positionDescripcionEN: `As a frontend development teacher, I share with my students my
-        deep knowledge of the MERN stack. I specialize in MongoDB to structure
-        databases, Express for creating servers, React for dynamic user interfaces and
-        Node.js to run the server. My mission is to train aspiring developers
-        to create web and mobile applications with these industry-leading technologies.
-        I believe that teaching is not only about imparting knowledge, but about inspiring students.
-        to embrace creativity and problem solving, essential skills to succeed in frontend development.`,
-    current: true,
-  },
   {
     name: "Informatica Atlantida",
     descriptionEN: "Sr.Front-End Developer",
@@ -42,6 +21,30 @@ export const EXPERIENCE = [
         Optimize performance and accessibility, and stay aware of
         trends and best practices in frontend development.`,
     current: true,
+  },
+  {
+    name: "GoIt GLobal",
+    descriptionEN: "Programing Teacher - FullStack",
+    descriptionES: "Maestro de programacion - FullStack",
+    time: "December 31, 2022 23:59:59",
+    timeEnd: "June 22, 2024 23:59:59",
+    tecs: ["HTML", "CSS", "REACT", "NodeJS", "Figma"],
+    positionDescripcionES: `
+        Como maestro de desarrollo frontend, comparto con mis estudiantes mi 
+        profundo conocimiento del stack MERN. Me especializo en MongoDB para estructurar 
+        bases de datos, Express para crear servidores, React para interfaces de usuario dinámicas y 
+        Node.js para ejecutar el servidor. Mi misión es capacitar a los aspirantes a desarrolladores 
+        para que creen aplicaciones web y móviles con estas tecnologías líderes de la industria. 
+        Creo que enseñar no solo consiste en impartir conocimientos, sino en inspirar a los estudiantes 
+        a abrazar la creatividad y la resolución de problemas, habilidades esenciales para triunfar en el desarrollo frontend.`,
+    positionDescripcionEN: `As a frontend development teacher, I share with my students my
+        deep knowledge of the MERN stack. I specialize in MongoDB to structure
+        databases, Express for creating servers, React for dynamic user interfaces and
+        Node.js to run the server. My mission is to train aspiring developers
+        to create web and mobile applications with these industry-leading technologies.
+        I believe that teaching is not only about imparting knowledge, but about inspiring students.
+        to embrace creativity and problem solving, essential skills to succeed in frontend development.`,
+    current: false,
   },
   {
     name: "Impact Mobile",
@@ -101,8 +104,7 @@ export default function Timeline() {
             <li className="mb-10 ms-4" key={id}>
               <div className="absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full border border-white bg-gray-200  "></div>
               <time className="mb-1 text-center text-sm font-normal leading-none text-gray-400  md:text-left">
-                {place.timeEnd}
-                {place.timeEnd}
+                {formatDate(place.time, place.timeEnd || "", "EN")}
                 {place.current && (
                   <span className="px-4 text-detail ">Current</span>
                 )}
