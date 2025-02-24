@@ -1,24 +1,28 @@
 import { useState, useEffect } from "react";
+import { THEME_OPTIONS } from "@Constants/theme";
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ||
-      (window.matchMedia("(prefers-color-scheme: dark)").matches
-        ? "dark"
-        : "light")
+      (window.matchMedia(`(prefers-color-scheme: ${THEME_OPTIONS.DARK})`)
+        .matches
+        ? THEME_OPTIONS.DARK
+        : THEME_OPTIONS.LIGHT)
   );
 
   useEffect(() => {
     if (theme === "dark") {
-      document.documentElement.classList.add("dark");
+      document.documentElement.classList.add(THEME_OPTIONS.DARK);
     } else {
-      document.documentElement.classList.remove("dark");
+      document.documentElement.classList.remove(THEME_OPTIONS.DARK);
     }
     localStorage.setItem("theme", theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    setTheme(
+      theme === THEME_OPTIONS.DARK ? THEME_OPTIONS.LIGHT : THEME_OPTIONS.DARK
+    );
   };
 
   return (
@@ -26,7 +30,7 @@ export default function ThemeToggle() {
       onClick={toggleTheme}
       className="p-2 rounded-lg bg-gray-200  text-gray-800  transition cursor-pointer hover:bg-black group"
     >
-      {theme === "dark" ? <Sun /> : <Moon />}
+      {theme === THEME_OPTIONS.DARK ? <Sun /> : <Moon />}
     </button>
   );
 }
