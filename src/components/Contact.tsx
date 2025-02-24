@@ -1,6 +1,8 @@
 import ShinyText from "@Components/animations/ShinyText";
+import { useTranslation } from "react-i18next";
 
 export default function Contact() {
+  const { t } = useTranslation();
   return (
     <section
       className="bg-gray-100 dark:bg-gray-900 py-8 px-12"
@@ -20,21 +22,20 @@ export default function Contact() {
       </div>
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-4xl pt-14 font-semibold tracking-tight text-balance text-gray-900 dark:text-gray-100 sm:text-5xl">
-          Contact
+          {t("SECTION.CONTACT")}
         </h2>
         <p className="mt-2 text-lg/8 text-gray-600 dark:text-gray-100 font-semibold">
-          Get in contact, u can ask for information or work with me in a future
-          projects.
+          {t("CONTACT.DESCRIPTION")}
         </p>
       </div>
       <form action="#" method="POST" className="mx-auto mt-2 max-w-xl sm:mt-20">
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-          <div>
+          <div className="sm:col-span-2">
             <label
               htmlFor="first-name"
               className="block text-sm/6 font-semibold text-gray-900 dark:text-gray-100"
             >
-              First name
+              {t("CONTACT.LABEL.NAME")}
             </label>
             <div className="mt-2.5">
               <input
@@ -46,29 +47,12 @@ export default function Contact() {
               />
             </div>
           </div>
-          <div>
-            <label
-              htmlFor="last-name"
-              className="block text-sm/6 font-semibold text-gray-900 dark:text-gray-100"
-            >
-              Last name
-            </label>
-            <div className="mt-2.5">
-              <input
-                id="last-name"
-                name="last-name"
-                type="text"
-                autoComplete="family-name"
-                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
-              />
-            </div>
-          </div>
           <div className="sm:col-span-2">
             <label
               htmlFor="company"
               className="block text-sm/6 font-semibold text-gray-900 dark:text-gray-100"
             >
-              Company
+              {t("CONTACT.LABEL.COMPANY")}
             </label>
             <div className="mt-2.5">
               <input
@@ -85,7 +69,7 @@ export default function Contact() {
               htmlFor="email"
               className="block text-sm/6 font-semibold text-gray-900 dark:text-gray-100"
             >
-              Email
+              {t("CONTACT.LABEL.EMAIL")}
             </label>
             <div className="mt-2.5">
               <input
@@ -102,7 +86,7 @@ export default function Contact() {
               htmlFor="phone"
               className="block text-sm/6 font-semibold text-gray-900 dark:text-gray-100"
             >
-              Phone number
+              {t("CONTACT.LABEL.PHONE")}
             </label>
             <div className="mt-2.5">
               <div className="flex rounded-md bg-white outline-1 -outline-offset-1 outline-gray-300 has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-indigo-600">
@@ -121,7 +105,7 @@ export default function Contact() {
               htmlFor="message"
               className="block text-sm/6 font-semibold text-gray-900 dark:text-gray-100"
             >
-              Message
+              {t("CONTACT.LABEL.MESSAGE")}
             </label>
             <div className="mt-2.5">
               <textarea
@@ -140,7 +124,7 @@ export default function Contact() {
             className="rounded-md group bg-black dark:bg-gray-100 px-3.5 py-2.5 text-sm font-semibold shadow-xs hover:bg-black hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 dark:hover:bg-gray-200"
           >
             <ShinyText
-              text="Get in touch!"
+              text={t("CONTACT.LABEL.SEND")}
               disabled={false}
               speed={3}
               className=""

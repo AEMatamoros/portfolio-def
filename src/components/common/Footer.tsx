@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 export default function Footer() {
+  const { t } = useTranslation();
   return (
     <footer className="bg-black dark:bg-gray-100">
       <div className="w-full max-w-screen-xl mx-auto p-12">
@@ -14,17 +17,17 @@ export default function Footer() {
           <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 ">
             <li>
               <a href="#" className="hover:underline me-4 md:me-6">
-                About me
+                {t("SECTION.ABOUT")}
               </a>
             </li>
             <li>
               <a href="#" className="hover:underline me-4 md:me-6">
-                Proyects
+                {t("SECTION.PROJECTS")}
               </a>
             </li>
             <li>
               <a href="#" className="hover:underline">
-                Contact
+                {t("SECTION.CONTACT")}
               </a>
             </li>
           </ul>

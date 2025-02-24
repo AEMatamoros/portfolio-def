@@ -1,4 +1,5 @@
 import formatDate from "@Utils/DateFormatter";
+import { useTranslation } from "react-i18next";
 
 export const EXPERIENCE = [
   {
@@ -90,6 +91,7 @@ export const EXPERIENCE = [
 ];
 
 export default function Timeline() {
+  const { t, i18n } = useTranslation();
   return (
     <section
       className="bg-white dark:bg-gray-900 py-8 px-12"
@@ -97,7 +99,7 @@ export default function Timeline() {
     >
       <div className="container mx-auto flex items-center flex-wrap pt-4 pb-12">
         <h2 className="my-4 text-center text-5xl dark:text-gray-100 font-semibold text-darksecondary  md:text-left">
-          Experience
+          {t("SECTION.EXPERIENCE")}
         </h2>
         <ol className="relative border-s border-gray-200 ">
           {EXPERIENCE.map((place, id) => (
@@ -106,7 +108,9 @@ export default function Timeline() {
               <time className="mb-1 text-center text-sm font-normal leading-none text-gray-400  md:text-left">
                 {formatDate(place.time, place.timeEnd || "", "EN")}
                 {place.current && (
-                  <span className="px-4 text-detail ">Current</span>
+                  <span className="px-4 text-detail ">
+                    {i18n.language === "es" ? "Actualidad" : "Current"}
+                  </span>
                 )}
               </time>
               <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
@@ -114,7 +118,9 @@ export default function Timeline() {
                 <span className="text-primary ">{place.descriptionEN}</span>
               </h3>
               <p className="text-center text-base font-normal text-gray-500  md:text-left">
-                {place.positionDescripcionEN}
+                {i18n.language === "es"
+                  ? place.positionDescripcionES
+                  : place.positionDescripcionEN}
               </p>
             </li>
           ))}

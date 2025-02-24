@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 export default function Proyects() {
+  const { t } = useTranslation();
   return (
     <section
       className="bg-white dark:bg-gray-900 py-8 px-12"
@@ -6,7 +9,7 @@ export default function Proyects() {
     >
       <div className="container mx-auto flex items-center flex-wrap pt-4">
         <h2 className="my-4 text-center text-5xl font-semibold  dark:text-gray-100 md:text-left">
-          Projects
+          {t("SECTION.PROJECTS")}
         </h2>
       </div>
       <div className="container mx-auto flex items-center flex-wrap">

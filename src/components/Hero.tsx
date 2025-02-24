@@ -1,11 +1,13 @@
 import SplitText from "@Components/animations/SplitText";
 import ShinyText from "@Components/animations/ShinyText";
+import { useTranslation } from "react-i18next";
 
 const handleAnimationComplete = () => {
   console.log("All letters have animated!");
 };
 
 export default function Hero() {
+  const { t } = useTranslation();
   return (
     <section
       className="min-h-screen bg-white dark:bg-gray-900"
@@ -33,9 +35,7 @@ export default function Hero() {
             />
             <div className="my-8">
               <SplitText
-                text="Experienced software developer with a strong background in both front-end and back-end development. Proven ability to deliver
-                      high-quality solutions and a commitment to continuous professional growth.
-                      "
+                text={t("HERO.DESCRIPTION")}
                 className="mt-8 text-lg font-medium text-pretty text-gray-500 dark:text-gray-300 sm:text-xl/8"
                 delay={10}
                 animationFrom={{
@@ -55,7 +55,7 @@ export default function Hero() {
                 className="rounded-md group bg-black dark:bg-gray-100 px-3.5 py-2.5 text-sm font-semibold shadow-xs hover:bg-black hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 dark:hover:bg-gray-200"
               >
                 <ShinyText
-                  text="About me!"
+                  text={t("SECTION.ABOUT")}
                   disabled={false}
                   speed={3}
                   className=""
