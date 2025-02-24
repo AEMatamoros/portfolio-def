@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
 * {
   transition: all 0.2s;
 }
@@ -8,6 +9,22 @@
 html {
   scroll-behavior: smooth;
 }
+
+.sticky-header {
+  animation: border-animation;
+  animation-timeline: scroll();
+}
+@keyframes border-animation {
+  from {
+    right: 100%;
+  }
+  to {
+    right: 0;
+  }
+}
+
+/* animation: spin linear both;
+animation-timeline: scroll(); */
 
 .shiny-text {
   color: #b5b5b5a4;

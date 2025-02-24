@@ -153,6 +153,7 @@ export default function Header() {
           </div>
         </div>
       </div>
+      <span className=" absolute bottom-0 nline-block w-full right-full sticky-header bg-gray-900 dark:bg-white h-[2px]"></span>
     </header>
   );
 }
