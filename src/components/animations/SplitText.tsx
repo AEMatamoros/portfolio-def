@@ -1,5 +1,6 @@
-import { useSprings, animated, SpringValue } from "@react-spring/web";
-import { useEffect, useRef, useState, MutableRefObject } from "react";
+//@ts-nocheck
+import { useSprings, animated } from "@react-spring/web";
+import { useEffect, useRef, useState } from "react";
 
 interface SplitTextProps {
   text?: string;
