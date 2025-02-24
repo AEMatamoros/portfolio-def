@@ -5,20 +5,22 @@ export default function Header() {
   const [showSidebar, setShowSidebar] = useState(false);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50  shadow-md bg-gray-100 dark:bg-dark">
+    <header className="fixed inset-x-0 top-0 z-50  shadow-md bg-gray-100 dark:bg-gray-900 dark:shadow-white/50">
       <nav
-        className="flex items-center justify-between p-4 lg:px-8"
+        className="flex items-center justify-between p-4 md:px-8"
         aria-label="Global"
       >
-        <div className="flex lg:flex-1">
+        <div className="flex md:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
-            <span className="h-10 font-extrabold text-2xl">A</span>
+            <span className="h-10 font-extrabold text-2xl text-black dark:text-gray-100">
+              A
+            </span>
           </a>
         </div>
         <div className="flex md:hidden">
           <button
             type="button"
-            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 cursor-pointer"
+            className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700 dark:text-gray-100 cursor-pointer"
             onClick={() => {
               setShowSidebar(!showSidebar);
             }}
@@ -44,27 +46,30 @@ export default function Header() {
         <div className="hidden md:flex md:items-center md:gap-x-12 lg">
           <a
             href="#section-timeline"
-            className="text-sm/6 font-semibold text-gray-700"
+            className="text-sm/6 font-semibold text-gray-700 dark:text-gray-100"
           >
             About me
           </a>
           <a
             href="#section-projects"
-            className="text-sm/6 font-semibold text-gray-700"
+            className="text-sm/6 font-semibold text-gray-700 dark:text-gray-100"
           >
             Proyects
           </a>
           <a
             href="#section-contact"
-            className="text-sm/6 font-semibold text-gray-700"
+            className="text-sm/6 font-semibold text-gray-700 dark:text-gray-100"
           >
             Contact
           </a>
-          <a href="#" className="text-sm/6 font-semibold text-gray-700">
+          <a
+            href="#"
+            className="text-sm/6 font-semibold text-gray-700 dark:text-gray-100"
+          >
             CV
           </a>
         </div>
-        <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+        <div className="hidden md:flex md:flex-1 md:justify-end">
           <ThemeToggle />
         </div>
       </nav>
@@ -76,15 +81,16 @@ export default function Header() {
         aria-modal="true"
       >
         <div className="fixed inset-0 z-50"></div>
-        <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-100 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-100 dark:bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
-              <span className="sr-only">Your Company</span>
-              <span className="font-bold">Alexis Matamoros</span>
+              <span className="font-bold dark:text-gray-100">
+                Alexis Matamoros
+              </span>
             </a>
             <button
               type="button"
-              className="-m-2.5 rounded-md p-2.5 text-gray-700 cursor-pointer"
+              className="-m-2.5 rounded-md p-2.5 text-gray-700 dark:text-gray-200 cursor-pointer"
               onClick={() => {
                 setShowSidebar(!showSidebar);
               }}
@@ -112,25 +118,25 @@ export default function Header() {
               <div className="space-y-2 py-6">
                 <a
                   href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-gray-50"
                 >
                   About me
                 </a>
                 <a
                   href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-gray-50"
                 >
                   Proyects
                 </a>
                 <a
                   href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-gray-50"
                 >
                   Contact
                 </a>
                 <a
                   href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-gray-50"
                 >
                   CV
                 </a>

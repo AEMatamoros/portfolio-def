@@ -88,9 +88,12 @@ export const EXPERIENCE = [
 
 export default function Timeline() {
   return (
-    <section className="bg-white py-8 px-12" id="section-timeline">
+    <section
+      className="bg-white dark:bg-gray-900 py-8 px-12"
+      id="section-timeline"
+    >
       <div className="container mx-auto flex items-center flex-wrap pt-4 pb-12">
-        <h2 className="my-4 text-center text-5xl font-semibold text-darksecondary  md:text-left">
+        <h2 className="my-4 text-center text-5xl dark:text-gray-100 font-semibold text-darksecondary  md:text-left">
           Experience
         </h2>
         <ol className="relative border-s border-gray-200 ">
@@ -104,7 +107,7 @@ export default function Timeline() {
                   <span className="px-4 text-detail ">Current</span>
                 )}
               </time>
-              <h3 className="text-lg font-semibold text-gray-900 ">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                 {place.name}
                 <span className="text-primary ">{place.descriptionEN}</span>
               </h3>
