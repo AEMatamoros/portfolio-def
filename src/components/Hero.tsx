@@ -1,4 +1,3 @@
-import Header from "@Components/common/Header";
 import SplitText from "@Components/animations/SplitText";
 import ShinyText from "@Components/animations/ShinyText";
 
@@ -9,7 +8,6 @@ const handleAnimationComplete = () => {
 export default function Hero() {
   return (
     <section className="min-h-screen bg-white" id="section-hero">
-      <Header />
       <div className="relative isolate px-6 pt-14 lg:px-8">
         <div
           className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -30,7 +28,7 @@ export default function Hero() {
               rootMargin="-50px"
               onLetterAnimationComplete={handleAnimationComplete}
             />
-            <p className="my-8">
+            <div className="my-8">
               <SplitText
                 text="Experienced software developer with a strong background in both front-end and back-end development. Proven ability to deliver
                       high-quality solutions and a commitment to continuous professional growth.
@@ -47,7 +45,7 @@ export default function Hero() {
                 rootMargin="-50px"
                 onLetterAnimationComplete={handleAnimationComplete}
               />
-            </p>
+            </div>
             <div className=" hero-button mt-10 flex items-center justify-center gap-x-6">
               <a
                 href="#"

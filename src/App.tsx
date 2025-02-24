@@ -4,16 +4,18 @@ import Timeline from "@Components/Timeline";
 import Techs from "@Components/Techs";
 import Footer from "@Components/common/Footer";
 import Contact from "@Components/Contact";
+import Header from "@Components/common/Header";
 
 export default function App() {
   return (
-    <div className="bg-gray-100">
+    <>
+      <Header />
       <Hero />
       <Timeline></Timeline>
       <Techs></Techs>
       <Proyects></Proyects>
       <Contact></Contact>
       <Footer></Footer>
-    </div>
+    </>
   );
 }

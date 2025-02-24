@@ -96,7 +96,7 @@ export default function Contact() {
           </div>
           <div className="sm:col-span-2">
             <label
-              htmlFor="phone-number"
+              htmlFor="phone"
               className="block text-sm/6 font-semibold text-gray-900"
             >
               Phone number
