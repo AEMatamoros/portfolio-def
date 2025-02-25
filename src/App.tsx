@@ -10,7 +10,7 @@ import ContactOptions from "@Components/common/ContactOptions";
 
 export default function App() {
   return (
-    <>
+    <div className="w-full min-h-screen animate-clip-expand animate-clip-shrink">
       <Header />
       <Hero />
       <Timeline />
@@ -20,6 +20,6 @@ export default function App() {
       <Footer />
       <GoTop />
       <ContactOptions />
-    </>
+    </div>
   );
 }

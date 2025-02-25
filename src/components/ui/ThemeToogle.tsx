@@ -13,7 +13,9 @@ export default function ThemeToggle() {
   useEffect(() => {
     if (theme === "dark") {
       document.documentElement.classList.add(THEME_OPTIONS.DARK);
+      document.documentElement.classList.remove(THEME_OPTIONS.LIGHT);
     } else {
+      document.documentElement.classList.add(THEME_OPTIONS.LIGHT);
       document.documentElement.classList.remove(THEME_OPTIONS.DARK);
     }
     localStorage.setItem("theme", theme);
