@@ -3,9 +3,12 @@ import ThemeToggle from "@Components/ui/ThemeToogle";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import EnCv from "@Assets/files/Alexis_Matamoros_CV_English.pdf";
+import EsCv from "@Assets/files/Alexis_Matamoros_CV_Español.pdf";
+
 export default function Header() {
   const [showSidebar, setShowSidebar] = useState(false);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   return (
     <header className="fixed inset-x-0 top-0 z-50  shadow-md bg-gray-100 dark:bg-gray-900 dark:shadow-white/50">
@@ -66,7 +69,8 @@ export default function Header() {
             {t("SECTION.CONTACT")}
           </a>
           <a
-            href="#"
+            href={i18n.language === "es" ? EsCv : EnCv}
+            target="__blank"
             className="text-sm/6 font-semibold text-gray-700 dark:text-gray-100"
           >
             CV
