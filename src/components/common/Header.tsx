@@ -1,24 +1,51 @@
 import LangToogle from "@Components/ui/LangToogle";
 import ThemeToggle from "@Components/ui/ThemeToogle";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
 import EnCv from "@Assets/files/Alexis_Matamoros_CV_English.pdf";
 import EsCv from "@Assets/files/Alexis_Matamoros_CV_Español.pdf";
 
+const useScroll = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return isScrolled;
+};
+
 export default function Header() {
   const [showSidebar, setShowSidebar] = useState(false);
   const { t, i18n } = useTranslation();
 
+  const isScrolled = useScroll();
+
   return (
-    <header className="sticky-nav fixed inset-x-0 top-0 z-50  shadow-md bg-gray-100 dark:bg-gray-900 dark:shadow-white/50">
+    <header
+      className={`${
+        isScrolled
+          ? "shadow-md md:shadow-none md:rounded-full w-full p-4 md:w-6/12 md:mx-auto md:mt-2 md:p-2 md:bg-black dark:md:bg-gray-100 "
+          : "w-full p-4 shadow-md "
+      } sticky-nav fixed inset-x-0 top-0 z-50 mx-auto  bg-gray-100 dark:bg-gray-900 dark:shadow-white/50`}
+    >
       <nav
-        className="flex items-center justify-between p-4 md:px-8 w-11/12 mx-auto"
+        className="flex items-center justify-between  md:px-8 w-11/12 mx-auto"
         aria-label="Global"
       >
         <div className="flex md:flex-1">
           <a href="#section-hero" className="-m-1.5 p-1.5">
-            <p className="h-10 font-extrabold text-2xl text-black dark:text-gray-100 transform hover:scale-110">
+            <p
+              className={`${
+                isScrolled && "md:text-white dark:md:text-gray-900"
+              } h-10 font-extrabold text-2xl text-black dark:text-gray-100 transform hover:scale-110`}
+            >
               A
             </p>
           </a>
@@ -52,26 +79,42 @@ export default function Header() {
         <div className="hidden md:flex md:items-center md:gap-x-12 lg">
           <a
             href="#section-timeline"
-            className="text-sm/6 font-semibold text-gray-700 dark:text-gray-100 transform hover:scale-110"
+            className={`${
+              isScrolled
+                ? "text-white dark:text-gray-900"
+                : "text-gray-700 dark:text-gray-100"
+            } text-sm/6 font-semibold  transform hover:scale-110`}
           >
             {t("SECTION.ABOUT")}
           </a>
           <a
             href="#section-projects"
-            className="text-sm/6 font-semibold text-gray-700 dark:text-gray-100 transform hover:scale-110"
+            className={`${
+              isScrolled
+                ? "text-white dark:text-gray-900"
+                : "text-gray-700 dark:text-gray-100"
+            } text-sm/6 font-semibold  transform hover:scale-110`}
           >
             {t("SECTION.PROJECTS")}
           </a>
           <a
             href="#section-contact"
-            className="text-sm/6 font-semibold text-gray-700 dark:text-gray-100 transform hover:scale-110"
+            className={`${
+              isScrolled
+                ? "text-white dark:text-gray-900"
+                : "text-gray-700 dark:text-gray-100"
+            } text-sm/6 font-semibold  transform hover:scale-110`}
           >
             {t("SECTION.CONTACT")}
           </a>
           <a
             href={i18n.language === "es" ? EsCv : EnCv}
             target="__blank"
-            className="text-sm/6 font-semibold text-gray-700 dark:text-gray-100 transform hover:scale-110"
+            className={`${
+              isScrolled
+                ? "text-white dark:text-gray-900"
+                : "text-gray-700 dark:text-gray-100"
+            } text-sm/6 font-semibold  transform hover:scale-110`}
           >
             CV
           </a>
@@ -89,7 +132,7 @@ export default function Header() {
         aria-modal="true"
       >
         <div className="fixed inset-0 z-50"></div>
-        <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-gray-100 dark:bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <div className="fixed inset-y-0 right-0 z-50 w-10/12 overflow-y-auto bg-gray-100 dark:bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="font-bold dark:text-gray-100">
@@ -157,7 +200,7 @@ export default function Header() {
           </div>
         </div>
       </div>
-      <span className=" absolute bottom-0 nline-block w-full right-full sticky-header bg-gray-900 dark:bg-white h-[2px]"></span>
+      <span className=" md:absolute md:bottom-0 md:inline-block md:w-full md:right-full md:sticky-header md:bg-gray-900 dark:md:bg-white h-[2px] md:h-0 w-full"></span>
     </header>
   );
 }

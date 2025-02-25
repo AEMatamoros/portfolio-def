@@ -5,7 +5,7 @@ export default {
     "SECTION.CONTACT": "Contacto",
     "SECTION.EXPERIENCE": "Experiencia",
     "HERO.DESCRIPTION":
-      "Desarrollador de software experimentado con sólida experiencia en desarrollo tanto front-end como back-end. Capacidad demostrada para cumplir Soluciones de alta calidad y un compromiso con el crecimiento profesional continuo.",
+      "Desarrollador de software experimentado con sólida experiencia en desarrollo fullstack. Capacidad demostrada para cumplir Soluciones de alta calidad y un compromiso con el crecimiento profesional continuo.",
     "CONTACT.DESCRIPTION":
       "Ponte en contacto conmigo, puedes solicitar información o trabajar conmigo en futuros proyectos.",
     "CONTACT.LABEL.NAME": "Nombre",

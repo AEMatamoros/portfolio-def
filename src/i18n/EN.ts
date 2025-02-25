@@ -5,7 +5,7 @@ export default {
     "SECTION.CONTACT": "Contact",
     "SECTION.EXPERIENCE": "Experience",
     "HERO.DESCRIPTION":
-      "Experienced software developer with a strong background in both front-end and back-end development. Proven ability to deliver high-quality solutions and a commitment to continuous professional growth.",
+      "Experienced software developer with a strong background in both fullstack development. Proven ability to deliver high-quality solutions and a commitment to continuous professional growth.",
     "CONTACT.DESCRIPTION":
       "Get in contact, u can ask for information or work with me in a future projects.",
     "CONTACT.LABEL.NAME": "Name",
