@@ -2,13 +2,11 @@ import { useState, useEffect } from "react";
 import { THEME_OPTIONS } from "@Constants/theme";
 
 export default function ThemeToggle() {
-  const [theme, setTheme] = useState(
-    localStorage.getItem("theme") ||
-      (window.matchMedia(`(prefers-color-scheme: ${THEME_OPTIONS.DARK})`)
-        .matches
-        ? THEME_OPTIONS.DARK
-        : THEME_OPTIONS.LIGHT)
-  );
+  const [theme, setTheme] = useState(() => {
+    return document.documentElement.classList.contains(THEME_OPTIONS.DARK)
+      ? THEME_OPTIONS.DARK
+      : THEME_OPTIONS.LIGHT;
+  });
 
   useEffect(() => {
     if (theme === "dark") {

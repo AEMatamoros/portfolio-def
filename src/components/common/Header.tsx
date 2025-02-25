@@ -11,16 +11,16 @@ export default function Header() {
   const { t, i18n } = useTranslation();
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50  shadow-md bg-gray-100 dark:bg-gray-900 dark:shadow-white/50">
+    <header className="sticky-nav fixed inset-x-0 top-0 z-50  shadow-md bg-gray-100 dark:bg-gray-900 dark:shadow-white/50">
       <nav
-        className="flex items-center justify-between p-4 md:px-8"
+        className="flex items-center justify-between p-4 md:px-8 w-11/12 mx-auto"
         aria-label="Global"
       >
         <div className="flex md:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
-            <span className="h-10 font-extrabold text-2xl text-black dark:text-gray-100">
+          <a href="#section-hero" className="-m-1.5 p-1.5">
+            <p className="h-10 font-extrabold text-2xl text-black dark:text-gray-100 transform hover:scale-110">
               A
-            </span>
+            </p>
           </a>
         </div>
         <div className="flex md:hidden">
@@ -52,26 +52,26 @@ export default function Header() {
         <div className="hidden md:flex md:items-center md:gap-x-12 lg">
           <a
             href="#section-timeline"
-            className="text-sm/6 font-semibold text-gray-700 dark:text-gray-100"
+            className="text-sm/6 font-semibold text-gray-700 dark:text-gray-100 transform hover:scale-110"
           >
             {t("SECTION.ABOUT")}
           </a>
           <a
             href="#section-projects"
-            className="text-sm/6 font-semibold text-gray-700 dark:text-gray-100"
+            className="text-sm/6 font-semibold text-gray-700 dark:text-gray-100 transform hover:scale-110"
           >
             {t("SECTION.PROJECTS")}
           </a>
           <a
             href="#section-contact"
-            className="text-sm/6 font-semibold text-gray-700 dark:text-gray-100"
+            className="text-sm/6 font-semibold text-gray-700 dark:text-gray-100 transform hover:scale-110"
           >
             {t("SECTION.CONTACT")}
           </a>
           <a
             href={i18n.language === "es" ? EsCv : EnCv}
             target="__blank"
-            className="text-sm/6 font-semibold text-gray-700 dark:text-gray-100"
+            className="text-sm/6 font-semibold text-gray-700 dark:text-gray-100 transform hover:scale-110"
           >
             CV
           </a>
@@ -126,25 +126,25 @@ export default function Header() {
               <div className="space-y-2 py-6">
                 <a
                   href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   {t("SECTION.ABOUT")}
                 </a>
                 <a
                   href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   {t("SECTION.PROJECTS")}
                 </a>
                 <a
                   href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   {t("SECTION.CONTACT")}
                 </a>
                 <a
                   href="#"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-gray-50"
+                  className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   CV
                 </a>

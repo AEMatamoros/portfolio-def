@@ -99,5 +99,32 @@ animation-timeline: scroll(); */
 
 /* Utilities */
 .dark .animate-clip-expand {
-  animation: clipPathExpand 1s ease-in-out;
+  animation: clipPathExpand 0.5s ease-in-out;
+}
+
+.infinite-carousel {
+  display: flex;
+  white-space: nowrap;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-track {
+  display: flex;
+  animation: infinite-scroll 60s linear infinite;
+}
+
+.carousel-track > * {
+  flex: 0 0 auto;
+  width: 150px;
+  margin-right: 10px;
+}
+
+@keyframes infinite-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
