@@ -1,9 +1,11 @@
 export default function ContactOptions() {
   return (
-    <div className="fixed w-10 bg-gray-900 dark:bg-gray-100 left-0 bottom-0 h-auto py-4  flex flex-col items-center gap-y-6">
+    <div className="fixed w-10 bg-black dark:bg-gray-100 left-0 bottom-0 h-auto py-4 px-0 md:px-4  flex flex-col items-center gap-y-6">
+      <span className="h-4 md:h-10 w-[1px] bg-white dark:bg-gray-900"></span>
       <GithubIcon />
       <LinkedInIcon />
       <EmailIcon />
+      <span className="hidden md:block h-4 md:h-10 w-[1px] bg-white dark:bg-gray-900"></span>
     </div>
   );
 }
