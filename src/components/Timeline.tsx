@@ -1,4 +1,5 @@
 import formatDate from "@Utils/DateFormatter";
+import HeaderSeparator from "@Components/ui/HeaderSeparator";
 import { useTranslation } from "react-i18next";
 
 export const EXPERIENCE = [
@@ -98,9 +99,10 @@ export default function Timeline() {
       id="section-timeline"
     >
       <div className="container mx-auto flex items-center flex-wrap pt-4 pb-12">
-        <h2 className="my-4 text-center text-5xl dark:text-gray-100 font-semibold text-darksecondary  md:text-left">
+        <h2 className="my-4 text-center text-5xl dark:text-gray-100 font-semibold text-darksecondary w-full">
           {t("SECTION.EXPERIENCE")}
         </h2>
+        <HeaderSeparator />
         <ol className="relative border-s border-gray-200 ">
           {EXPERIENCE.map((place, id) => (
             <li className="mb-10 ms-4" key={id}>

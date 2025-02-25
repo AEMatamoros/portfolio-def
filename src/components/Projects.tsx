@@ -1,8 +1,9 @@
 import { useTranslation } from "react-i18next";
 import { PROJECTS } from "@Constants/projects";
 import { useState } from "react";
+import HeaderSeparator from "@Components/ui/HeaderSeparator";
 
-export default function Proyects() {
+export default function Projects() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -20,10 +21,11 @@ export default function Proyects() {
       id="section-projects"
     >
       <div className="container mx-auto flex items-center flex-wrap pt-4">
-        <h2 className="my-4 text-center text-5xl font-semibold  dark:text-gray-100 md:text-left">
+        <h2 className="my-4 text-center text-5xl font-semibold  dark:text-gray-100 w-full">
           {t("SECTION.PROJECTS")}
         </h2>
       </div>
+      <HeaderSeparator />
       <div className="container mx-auto flex items-center flex-wrap">
         {currentItems.map((project) => (
           <div

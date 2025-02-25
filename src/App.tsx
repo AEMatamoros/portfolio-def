@@ -1,5 +1,5 @@
 import Hero from "@Components/Hero";
-import Proyects from "@Components/Proyects";
+import Projects from "@Components/Projects";
 import Timeline from "@Components/Timeline";
 import Techs from "@Components/Techs";
 import Footer from "@Components/common/Footer";
@@ -13,13 +13,13 @@ export default function App() {
     <>
       <Header />
       <Hero />
-      <Timeline></Timeline>
-      <Techs></Techs>
-      <Proyects></Proyects>
-      <Contact></Contact>
-      <Footer></Footer>
-      <GoTop></GoTop>
-      <ContactOptions></ContactOptions>
+      <Timeline />
+      <Techs />
+      <Projects />
+      <Contact />
+      <Footer />
+      <GoTop />
+      <ContactOptions />
     </>
   );
 }

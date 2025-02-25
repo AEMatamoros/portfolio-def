@@ -2,6 +2,7 @@ import ShinyText from "@Components/animations/ShinyText";
 import useContactForm from "@Hooks/useContactForm";
 
 import { useTranslation } from "react-i18next";
+import HeaderSeparator from "@Components/ui/HeaderSeparator";
 
 export default function Contact() {
   const { t } = useTranslation();
@@ -28,6 +29,7 @@ export default function Contact() {
         <h2 className="text-4xl pt-14 font-semibold tracking-tight text-balance text-gray-900 dark:text-gray-100 sm:text-5xl">
           {t("SECTION.CONTACT")}
         </h2>
+        <HeaderSeparator />
         <p className="mt-2 text-lg/8 text-gray-600 dark:text-gray-100 font-semibold">
           {t("CONTACT.DESCRIPTION")}
         </p>
