@@ -16,7 +16,7 @@ export default function Hero() {
       <div className="relative isolate px-6 pt-14 lg:px-8 max-w-[1280px]">
         <div className="mx-auto max-w-4xl p-8 sm:py-48 lg:py-32">
           <p className="font-semibold py-2 text-xl text-gray-700 dark:text-gray-200 w-full">
-            Hi! My name is ...
+            {t("CONTACT.HERO.INIT")}
           </p>
           <div className="text-center">
             <SplitText
@@ -49,7 +49,7 @@ export default function Hero() {
             <div className=" hero-button mt-10 flex items-center justify-center gap-x-6">
               <a
                 href="#section-timeline"
-                className="rounded-sm group bg-black dark:bg-gray-100 px-6 py-4 text-md font-semibold shadow-xs hover:bg-black hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 dark:hover:bg-gray-200"
+                className="rounded-sm group bg-black dark:bg-gray-100 px-4 py-3 text-md font-semibold shadow-xs hover:bg-black hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 dark:hover:bg-gray-200"
               >
                 <ShinyText
                   text={t("SECTION.ABOUT")}

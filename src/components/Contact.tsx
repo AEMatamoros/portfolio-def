@@ -118,7 +118,7 @@ export default function Contact() {
           <button
             type="submit"
             disabled={disable}
-            className="cursor-pointer rounded-md group bg-black dark:bg-gray-100 px-3.5 py-2.5 text-sm font-semibold shadow-xs hover:bg-black hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 dark:hover:bg-gray-200"
+            className="cursor-pointer rounded-md group bg-black dark:bg-gray-100 px-4 py-3 text-sm font-semibold shadow-xs hover:bg-black hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 dark:hover:bg-gray-200"
           >
             <ShinyText
               text={t("CONTACT.LABEL.SEND")}

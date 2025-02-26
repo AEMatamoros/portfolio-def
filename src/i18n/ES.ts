@@ -16,5 +16,6 @@ export default {
     "CONTACT.LABEL.SEND": "¡Ponte en contacto!",
     "CONTACT.SUCESS": "Gracias, por escribirme me pondre en contacto contigo.",
     "CONTACT.ERROR": "Lastimosamente ocurrio un error :c",
+    "CONTACT.HERO.INIT": "Mi nombre es ...",
   },
 };
