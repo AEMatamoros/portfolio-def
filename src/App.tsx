@@ -7,7 +7,7 @@ import Contact from "@Components/Contact";
 import Header from "@Components/common/Header";
 import GoTop from "@Components/ui/GoToTop";
 import ContactOptions from "@Components/common/ContactOptions";
-
+import EmailOptions from "@Components/common/EmailOptions";
 export default function App() {
   return (
     <div className="w-full min-h-screen animate-clip-expand animate-clip-shrink">
@@ -20,6 +20,7 @@ export default function App() {
       <Footer />
       <GoTop />
       <ContactOptions />
+      <EmailOptions />
     </div>
   );
 }

@@ -10,6 +10,10 @@ html {
   scroll-behavior: smooth;
 }
 
+.vertical-text {
+  writing-mode: vertical-lr;
+}
+
 .sticky-header {
   animation: border-animation;
   animation-timeline: scroll();
