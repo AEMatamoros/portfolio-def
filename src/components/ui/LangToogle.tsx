@@ -10,7 +10,7 @@ export default function LangToogle() {
   return (
     <button
       onClick={toogleLang}
-      className="cursor-pointer font-semibold px-8 dark:text-white text-gray-900 transform hover:scale-110"
+      className="cursor-pointer font-semibold px-8 text-gray-400 transform hover:scale-110"
     >
       {i18n.language === "es" ? "ES" : "EN"}
     </button>

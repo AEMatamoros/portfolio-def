@@ -11,7 +11,7 @@ const useScroll = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
+      setIsScrolled(window.scrollY > 100);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -36,7 +36,7 @@ export default function Header() {
       } sticky-nav fixed inset-x-0 top-0 z-50 mx-auto  bg-gray-100 dark:bg-gray-900 dark:shadow-white/50`}
     >
       <nav
-        className="flex items-center justify-between  md:px-8 w-11/12 mx-auto"
+        className="flex items-center justify-between  md:px-8 w-11/12 mx-auto max-w-[1280px]"
         aria-label="Global"
       >
         <div className="flex md:flex-1">

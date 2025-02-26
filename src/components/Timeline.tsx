@@ -98,7 +98,7 @@ export default function Timeline() {
       className="bg-white dark:bg-gray-900 py-8 px-12"
       id="section-timeline"
     >
-      <div className="container mx-auto flex items-center flex-wrap pt-4 pb-12">
+      <div className="container mx-auto flex items-center flex-wrap pt-4 pb-12 max-w-[1280px]">
         <h2 className="my-4 text-center text-5xl dark:text-gray-100 font-semibold text-darksecondary w-full">
           {t("SECTION.EXPERIENCE")}
         </h2>

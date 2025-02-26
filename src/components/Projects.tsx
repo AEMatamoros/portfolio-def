@@ -20,13 +20,13 @@ export default function Projects() {
       className="bg-white dark:bg-gray-900 py-8 px-12"
       id="section-projects"
     >
-      <div className="container mx-auto flex items-center flex-wrap pt-4">
-        <h2 className="my-4 text-center text-5xl font-semibold  dark:text-gray-100 w-full">
-          {t("SECTION.PROJECTS")}
-        </h2>
-      </div>
-      <HeaderSeparator />
-      <div className="container mx-auto flex items-center flex-wrap">
+      <div className="container mx-auto flex items-center flex-wrap max-w-[1280px]">
+        <div className="container mx-auto flex  flex-col items-center flex-wrap pt-4">
+          <h2 className="my-4 text-center text-5xl font-semibold  dark:text-gray-100 w-full">
+            {t("SECTION.PROJECTS")}
+          </h2>
+          <HeaderSeparator />
+        </div>
         {currentItems.map((project) => (
           <div
             className="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col "
