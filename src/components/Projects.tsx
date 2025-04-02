@@ -5,7 +5,7 @@ import HeaderSeparator from "@Components/ui/HeaderSeparator";
 
 export default function Projects() {
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4;
+  const itemsPerPage = 5;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = PROJECTS.slice(indexOfFirstItem, indexOfLastItem);
@@ -20,7 +20,7 @@ export default function Projects() {
       className="bg-white dark:bg-gray-900 py-8 px-12"
       id="section-projects"
     >
-      <div className="container mx-auto flex items-center flex-wrap max-w-[1280px]">
+      <div className="container mx-auto flex items-center justify-center flex-wrap max-w-[1280px] ">
         <div className="container mx-auto flex  flex-col items-center flex-wrap pt-4">
           <h2 className="my-4 text-center text-5xl font-semibold  dark:text-gray-100 w-full">
             {t("SECTION.PROJECTS")}
@@ -29,14 +29,15 @@ export default function Projects() {
         </div>
         {currentItems.map((project) => (
           <div
-            className="w-full md:w-1/3 xl:w-1/4 p-6 flex flex-col "
+            className="w-full md:w-1/3 xl:w-1/4 p-2 my-2  flex flex-col group"
             key={project.name}
           >
-            <a href={project.url} target="_blank">
-              <img
-                className="hover:grow hover:shadow-lg w-full object-cover"
-                src={project.img}
-              />
+            <a
+              href={project.url}
+              target="_blank"
+              className="group-hover:border dark:hover:border-white p-4"
+            >
+              <img className=" w-full object-cover" src={project.img} />
               <div className="pt-3 flex items-center justify-between dark:text-gray-100 font-semibold dark:text-gray-100 font-semibold">
                 <p className="">{project.name}</p>
                 <button className="bg-gray-900 dark:bg-gray-100 p-1 text-gray-100 dark:text-gray-900 rounded-sm cursor-pointer text-sm ">
