@@ -168,19 +168,19 @@ export default function Header() {
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
                 <a
-                  href="#"
+                  href="#section-timeline"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   {t("SECTION.ABOUT")}
                 </a>
                 <a
-                  href="#"
+                  href="#section-projects"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   {t("SECTION.PROJECTS")}
                 </a>
                 <a
-                  href="#"
+                  href="#section-contact"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   {t("SECTION.CONTACT")}
