@@ -9,7 +9,6 @@ export default function useScrollAnimation({
   timelineRef,
   techsRef,
   projectsRef,
-  contactRef,
 }: // eslint-disable-next-line @typescript-eslint/no-explicit-any
 any) {
   useEffect(() => {
@@ -22,7 +21,6 @@ any) {
       { ref: timelineRef, delay: 0.1 },
       { ref: techsRef, delay: 0.2 },
       { ref: projectsRef, delay: 0.3 },
-      { ref: contactRef, delay: 0.4 },
     ];
 
     sections.forEach(({ ref, delay }) => {
@@ -30,7 +28,7 @@ any) {
         gsap.from(ref.current, {
           scrollTrigger: {
             trigger: ref.current,
-            start: "top 80%",
+            start: "top 85%",
             toggleActions: "play none none reset",
             markers: false,
           },

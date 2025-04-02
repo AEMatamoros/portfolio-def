@@ -19,14 +19,12 @@ export default function App() {
   const timelineRef = useRef(null);
   const techsRef = useRef(null);
   const projectsRef = useRef(null);
-  const contactRef = useRef(null);
 
   useScrollAnimation({
     heroRef,
     timelineRef,
     techsRef,
     projectsRef,
-    contactRef,
   });
 
   return (
@@ -44,7 +42,7 @@ export default function App() {
       <section ref={projectsRef}>
         <Projects />
       </section>
-      <section ref={contactRef}>
+      <section>
         <Contact />
       </section>
       <Footer />
