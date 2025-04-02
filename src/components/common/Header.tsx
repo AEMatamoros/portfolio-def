@@ -186,7 +186,8 @@ export default function Header() {
                   {t("SECTION.CONTACT")}
                 </a>
                 <a
-                  href="#"
+                  href={i18n.language === "es" ? EsCv : EnCv}
+                  target="__blank"
                   className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700"
                 >
                   CV
