@@ -1,6 +1,4 @@
 import { useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Hero from "@Components/Hero";
 import Projects from "@Components/Projects";
 import Timeline from "@Components/Timeline";
