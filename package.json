@@ -17,6 +17,7 @@
     "axios": "^1.7.9",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-import": "^2.31.0",
+    "gsap": "^3.12.7",
     "husky": "^9.1.7",
     "i18next": "^24.2.2",
     "i18next-browser-languagedetector": "^8.0.4",
