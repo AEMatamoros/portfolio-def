@@ -10,23 +10,13 @@ const SplashScreen = () => {
   }, []);
 
   useEffect(() => {
+    document.body.style.overflow = "hidden";
     if (fadeOut) {
       const fadeTimer = setTimeout(() => setVisible(false), 1000);
+      document.body.style.overflow = "";
       return () => clearTimeout(fadeTimer);
     }
   }, [fadeOut]);
-
-  // Hide scroll when visible
-  useEffect(() => {
-    if (visible) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [visible]);
 
   if (!visible) return null;
 

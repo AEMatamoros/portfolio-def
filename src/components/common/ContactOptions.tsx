@@ -5,7 +5,7 @@ export default function ContactOptions() {
       <GithubIcon />
       <LinkedInIcon />
       <EmailIcon />
-      <span className="hidden md:block h-4 md:h-10 w-[1px] bg-white dark:bg-black"></span>
+      <span className="h-4 md:h-10 w-[1px] bg-white dark:bg-black"></span>
     </div>
   );
 }

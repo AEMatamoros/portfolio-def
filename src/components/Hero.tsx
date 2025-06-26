@@ -51,7 +51,7 @@ export default function Hero() {
             <SplitText
               text="Alexis Eduardo Matamoros"
               className="text-5xl font-semibold tracking-tight text-balance text-black dark:text-gray-100 sm:text-6xl"
-              delay={100}
+              delay={150}
               animationFrom={{ opacity: 0, transform: "translate3d(0,50px,0)" }}
               animationTo={{ opacity: 1, transform: "translate3d(0,0,0)" }}
               easing="easeOutCubic"
