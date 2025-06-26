@@ -10,11 +10,13 @@ export default function Contact() {
 
   return (
     <section
-      className="bg-gray-100 dark:bg-gray-900 py-8 px-12"
+      className={`bg-gray-100 dark:bg-black py-6 px-12 ${
+        disable && "opacity-50 animate-pulse"
+      }`}
       id="section-contact"
     >
       <div className="mx-auto max-w-2xl text-center">
-        <h2 className="text-4xl pt-14 font-semibold tracking-tight text-balance text-gray-900 dark:text-gray-100 sm:text-5xl">
+        <h2 className="text-4xl pt-14 font-semibold tracking-tight text-balance text-black dark:text-gray-100 sm:text-5xl">
           {t("SECTION.CONTACT")}
         </h2>
         <HeaderSeparator />
@@ -23,14 +25,17 @@ export default function Contact() {
         </p>
       </div>
       <form
-        className="mx-auto mt-2 max-w-xl sm:mt-20"
+        className="mx-auto mt-2 max-w-xl  bg-white p-8"
         onSubmit={handleSubmit(onSubmit)}
       >
+        <p className="text-center font-semibold border-b-2 border-b-black dark:border-b-white mb-2">
+          {t("CONTACT.SUBTITLE")}
+        </p>
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <label
               htmlFor="first-name"
-              className="block text-sm/6 font-semibold text-gray-900 dark:text-gray-100"
+              className="block text-sm/6 font-semibold text-black dark:text-gray-100"
             >
               {t("CONTACT.LABEL.NAME")}
             </label>
@@ -40,14 +45,14 @@ export default function Contact() {
                 {...register("name")}
                 required
                 type="text"
-                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-black outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
               />
             </div>
           </div>
           <div className="sm:col-span-2">
             <label
               htmlFor="company"
-              className="block text-sm/6 font-semibold text-gray-900 dark:text-gray-100"
+              className="block text-sm/6 font-semibold text-black dark:text-gray-100"
             >
               {t("CONTACT.LABEL.COMPANY")}
             </label>
@@ -57,14 +62,14 @@ export default function Contact() {
                 {...register("company")}
                 required
                 type="text"
-                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-black outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
               />
             </div>
           </div>
           <div className="sm:col-span-2">
             <label
               htmlFor="email"
-              className="block text-sm/6 font-semibold text-gray-900 dark:text-gray-100"
+              className="block text-sm/6 font-semibold text-black dark:text-gray-100"
             >
               {t("CONTACT.LABEL.EMAIL")}
             </label>
@@ -74,14 +79,14 @@ export default function Contact() {
                 {...register("email")}
                 required
                 type="email"
-                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-black outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
               />
             </div>
           </div>
           <div className="sm:col-span-2">
             <label
               htmlFor="phone"
-              className="block text-sm/6 font-semibold text-gray-900 dark:text-gray-100"
+              className="block text-sm/6 font-semibold text-black dark:text-gray-100"
             >
               {t("CONTACT.LABEL.PHONE")}
             </label>
@@ -92,7 +97,7 @@ export default function Contact() {
                   {...register("phone")}
                   required
                   type="phone"
-                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                  className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-black outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
                 />
               </div>
             </div>
@@ -100,7 +105,7 @@ export default function Contact() {
           <div className="sm:col-span-2">
             <label
               htmlFor="message"
-              className="block text-sm/6 font-semibold text-gray-900 dark:text-gray-100"
+              className="block text-sm/6 font-semibold text-black dark:text-gray-100"
             >
               {t("CONTACT.LABEL.MESSAGE")}
             </label>
@@ -109,7 +114,7 @@ export default function Contact() {
                 id="message"
                 {...register("message")}
                 rows={4}
-                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
+                className="block w-full rounded-md bg-white px-3.5 py-2 text-base text-black outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600"
               />
             </div>
           </div>

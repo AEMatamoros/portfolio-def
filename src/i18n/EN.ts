@@ -18,5 +18,7 @@ export default {
       "Thank you for writing to me, I will get in touch with you.",
     "CONTACT.ERROR": "Unfortunately an error occurred :c",
     "CONTACT.HERO.INIT": "My name is ...",
+    "BUTTON.SEE_MORE": "See More",
+    "CONTACT.SUBTITLE": "Get in touch with me",
   },
 };

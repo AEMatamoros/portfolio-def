@@ -8,12 +8,14 @@ import { createRoot } from "react-dom/client";
 import { initReactI18next, I18nextProvider } from "react-i18next";
 
 import "@/index.css";
+import SplashScreen from "@Components/ui/SplashScreen";
 
 const i18nInstance = i18n.createInstance();
 i18nInstance.use(HttpApi).use(detector).use(initReactI18next).init(init);
 
 createRoot(document.getElementById("root")!).render(
   <I18nextProvider i18n={i18nInstance}>
+    <SplashScreen />
     <App />
   </I18nextProvider>
 );

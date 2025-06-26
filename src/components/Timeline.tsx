@@ -4,6 +4,17 @@ import { useTranslation } from "react-i18next";
 
 export const EXPERIENCE = [
   {
+    name: "Clinpays",
+    descriptionEN: "Fullstack Developer",
+    descriptionES: "Desarrollador Fullstack",
+    time: "April 1, 2025 00:00:00",
+    tecs: ["React", "NodeJS", "TypeScript", "PostgreSQL"],
+    positionDescripcionES: `
+        Responsable de mantener y mejorar plataformas de pago digital. Trabajé en mejoras tanto de backend como de frontend para garantizar la estabilidad, escalabilidad y cumplimiento de los estándares de seguridad financiera.`,
+    positionDescripcionEN: `Responsible for maintaining and enhancing digital payment platforms. Worked on both backend and frontend improvements to ensure system stability, scalability, and compliance with financial security standards.`,
+    current: true,
+  },
+  {
     name: "Informatica Atlantida",
     descriptionEN: "Sr.Front-End Developer",
     descriptionES: "Desarrollador Sr.Front-End",
@@ -95,7 +106,7 @@ export default function Timeline() {
   const { t, i18n } = useTranslation();
   return (
     <section
-      className="bg-white dark:bg-gray-900 py-8 px-12"
+      className="bg-white dark:bg-black py-8 px-12"
       id="section-timeline"
     >
       <div className="container mx-auto flex items-center flex-wrap pt-4 pb-12 max-w-[1280px]">
@@ -115,7 +126,7 @@ export default function Timeline() {
                   </span>
                 )}
               </time>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+              <h3 className="text-lg font-semibold text-black dark:text-gray-100">
                 {place.name}
                 <span className="text-primary px-4">{place.descriptionEN}</span>
               </h3>

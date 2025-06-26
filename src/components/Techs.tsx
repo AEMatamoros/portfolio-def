@@ -7,7 +7,7 @@ const TECHS = [
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 452 520"
-        className="h-10 w-10   fill-slate-600 "
+        className="h-10 w-10 fill-slate-600 "
       >
         <path d="M41 460L0 0h451l-41 460-185 52" />
         <path d="M226 472l149-41 35-394H226" />
@@ -383,7 +383,7 @@ const TECHS = [
 ];
 const Techs: React.FC = () => {
   return (
-    <section className="bg-gray-100 py-2 px-0">
+    <section className="bg-white dark:bg-black py-2 px-0">
       <div className="items-left m-auto flex flex-col justify-center infinite-carousel">
         <div className=" flex  items-center justify-center gap-0 p-0 max-md:mt-10 max-md:max-w-[1280px] carousel-track ">
           {[...TECHS, ...TECHS].map((tech) => (

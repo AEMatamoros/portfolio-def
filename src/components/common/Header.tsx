@@ -33,7 +33,7 @@ export default function Header() {
         isScrolled
           ? "shadow-md md:shadow-none md:rounded-full w-full p-4 md:w-6/12 md:mx-auto md:mt-2 md:p-2 md:bg-black dark:md:bg-gray-100 "
           : "w-full p-4 shadow-md "
-      } sticky-nav fixed inset-x-0 top-0 z-50 mx-auto  bg-gray-100 dark:bg-gray-900 dark:shadow-white/50`}
+      } sticky-nav fixed inset-x-0 top-0 z-50 mx-auto  bg-gray-100 dark:bg-black dark:shadow-white/50`}
     >
       <nav
         className="flex items-center justify-between  md:px-8 w-11/12 mx-auto max-w-[1280px]"
@@ -43,7 +43,7 @@ export default function Header() {
           <a href="#section-hero" className="-m-1.5 p-1.5">
             <p
               className={`${
-                isScrolled && "md:text-white dark:md:text-gray-900"
+                isScrolled && "md:text-white dark:md:text-black"
               } h-10 font-extrabold text-2xl text-black dark:text-gray-100 transform hover:scale-110`}
             >
               A
@@ -81,7 +81,7 @@ export default function Header() {
             href="#section-timeline"
             className={`${
               isScrolled
-                ? "text-white dark:text-gray-900"
+                ? "text-white dark:text-black"
                 : "text-gray-700 dark:text-gray-100"
             } text-sm/6 font-semibold  transform hover:scale-110`}
           >
@@ -91,7 +91,7 @@ export default function Header() {
             href="#section-projects"
             className={`${
               isScrolled
-                ? "text-white dark:text-gray-900"
+                ? "text-white dark:text-black"
                 : "text-gray-700 dark:text-gray-100"
             } text-sm/6 font-semibold  transform hover:scale-110`}
           >
@@ -101,7 +101,7 @@ export default function Header() {
             href="#section-contact"
             className={`${
               isScrolled
-                ? "text-white dark:text-gray-900"
+                ? "text-white dark:text-black"
                 : "text-gray-700 dark:text-gray-100"
             } text-sm/6 font-semibold  transform hover:scale-110`}
           >
@@ -112,7 +112,7 @@ export default function Header() {
             target="__blank"
             className={`${
               isScrolled
-                ? "text-white dark:text-gray-900"
+                ? "text-white dark:text-black"
                 : "text-gray-700 dark:text-gray-100"
             } text-sm/6 font-semibold  transform hover:scale-110`}
           >
@@ -132,7 +132,7 @@ export default function Header() {
         aria-modal="true"
       >
         <div className="fixed inset-0 z-50"></div>
-        <div className="fixed inset-y-0 right-0 z-50 w-10/12 overflow-y-auto bg-gray-100 dark:bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+        <div className="fixed inset-y-0 right-0 z-50 w-10/12 overflow-y-auto bg-gray-100 dark:bg-black px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-black/10">
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="font-bold dark:text-gray-100">
@@ -201,7 +201,7 @@ export default function Header() {
           </div>
         </div>
       </div>
-      <span className=" md:absolute md:bottom-0 md:inline-block md:w-full md:right-full md:sticky-header md:bg-gray-900 dark:md:bg-white h-[2px] md:h-0 w-full"></span>
+      <span className=" md:absolute md:bottom-0 md:inline-block md:w-full md:right-full md:sticky-header md:bg-black dark:md:bg-white h-[2px] md:h-0 w-full"></span>
     </header>
   );
 }

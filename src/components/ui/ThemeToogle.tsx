@@ -3,13 +3,19 @@ import { THEME_OPTIONS } from "@Constants/theme";
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState(() => {
-    return document.documentElement.classList.contains(THEME_OPTIONS.DARK)
-      ? THEME_OPTIONS.DARK
-      : THEME_OPTIONS.LIGHT;
+    const storedTheme = localStorage.getItem("theme");
+    if (
+      storedTheme === THEME_OPTIONS.DARK ||
+      storedTheme === THEME_OPTIONS.LIGHT
+    ) {
+      return storedTheme;
+    }
+
+    return THEME_OPTIONS.DARK;
   });
 
   useEffect(() => {
-    if (theme === "dark") {
+    if (theme === THEME_OPTIONS.DARK) {
       document.documentElement.classList.add(THEME_OPTIONS.DARK);
       document.documentElement.classList.remove(THEME_OPTIONS.LIGHT);
     } else {

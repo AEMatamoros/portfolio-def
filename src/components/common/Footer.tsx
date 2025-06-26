@@ -10,7 +10,7 @@ export default function Footer() {
             href="https://flowbite.com/"
             className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
           >
-            <span className="self-center text-2xl font-semibold whitespace-nowrap text-gray-100 dark:text-gray-900">
+            <span className="self-center text-2xl font-semibold whitespace-nowrap text-gray-100 dark:text-black">
               Alexis Matamoros
             </span>
           </a>

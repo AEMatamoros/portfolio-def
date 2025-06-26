@@ -11,8 +11,34 @@ import PortalImg from "@Assets/img/portfolio/portal.jpg";
 import FUTVIMG from "@Assets/img/portfolio/futv.jpg";
 import Barber from "@Assets/img/portfolio/barber.jpg";
 import PortfolioV2 from "@Assets/img/portfolio/portfoliov2.jpg";
+import Atlantida from "@Assets/img/portfolio/atlantida.png";
+import Clinpays from "@Assets/img/portfolio/clinpays.png";
 import NoImg from "@Assets/img/portfolio/noimg.jpg";
 export const PROJECTS = [
+  {
+    hoverColor: "text-gray-500",
+    name: "Clinpays",
+    descriptionES:
+      "Tu Orquestador completo de pagos y cobros en línea para el crecimiento de tu negocio o emprendimiento.",
+    descriptionEN:
+      "Your complete online payment and collection orchestrator for the growth of your business or venture.",
+    img: Clinpays,
+    icon: "fa-light fa-e",
+    url: "https://www.clinpays.com",
+    techs: ["React", "NodeJS", "Express", "MongoDB"],
+  },
+  {
+    hoverColor: "text-gray-500",
+    name: "Atlantida Online",
+    descriptionES:
+      "Aplicación bancaria para la gestión de cuentas, transferencias y servicios financieros para personas.",
+    descriptionEN:
+      "Banking application for managing accounts, transfers, and financial services for individuals.",
+    img: Atlantida,
+    icon: "fa-light fa-e",
+    url: "https://aolweb.bancatlan.hn/ocbretail/",
+    techs: ["SAP UI5", "JavaScript", "HTML", "CSS"],
+  },
   {
     hoverColor: "text-gray-500",
     name: "FUTV - CMS",

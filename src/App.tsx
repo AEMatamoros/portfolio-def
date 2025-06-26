@@ -12,7 +12,6 @@ import EmailOptions from "@Components/common/EmailOptions";
 import useScrollAnimation from "@Hooks/useScrollAnimation";
 
 export default function App() {
-  // Refs para cada sección
   const heroRef = useRef(null);
   const timelineRef = useRef(null);
   const techsRef = useRef(null);
