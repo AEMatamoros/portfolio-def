@@ -13,6 +13,11 @@ import Barber from "@Assets/img/portfolio/barber.jpg";
 import PortfolioV2 from "@Assets/img/portfolio/portfoliov2.jpg";
 import Atlantida from "@Assets/img/portfolio/atlantida.png";
 import Clinpays from "@Assets/img/portfolio/clinpays.png";
+import Imprema from "@Assets/img/portfolio/imprema.png";
+import Leer from "@Assets/img/portfolio/leer.png";
+import Vino from "@Assets/img/portfolio/vinoteca.png";
+import Impact from "@Assets/img/portfolio/impact.png";
+
 import NoImg from "@Assets/img/portfolio/noimg.jpg";
 export const PROJECTS = [
   {
@@ -61,6 +66,52 @@ export const PROJECTS = [
     icon: "fa-light fa-e",
     url: "https://portalunico.iaip.gob.hn/",
     techs: ["React", "Django", "ElasticSearch"],
+  },
+  {
+    hoverColor: "text-gray-500",
+    name: "Impact Mobile ",
+    descriptionES: "Sitio web móvil desarrollado en WordPress para Impact.",
+    descriptionEN: "Mobile website developed in WordPress for Impact.",
+    img: Impact,
+    icon: "fa-brands fa-wordpress",
+    url: "https://impactmobilehn.com",
+    techs: ["WordPress", "PHP", "CSS"],
+  },
+  {
+    hoverColor: "text-gray-500",
+    name: "INPREMA",
+    descriptionES:
+      "Portal institucional para la gestión de servicios y trámites en línea del Instituto Nacional de Previsión del Magisterio.",
+    descriptionEN:
+      "Institutional portal for managing online services and procedures of the National Institute of Teachers' Welfare.",
+    img: Imprema,
+    icon: "fa-light fa-e",
+    url: "https://inprema.gob.hn",
+    techs: ["WordPress", "PHP", "CSS"],
+  },
+  {
+    hoverColor: "text-gray-500",
+    name: "La Vinoteca",
+    descriptionES:
+      "E-commerce especializado en vinos y licores, desarrollado para el mercado chileno.",
+    descriptionEN:
+      "E-commerce specialized in wines and liquors, developed for the Chilean market.",
+    img: Vino,
+    icon: "fa-solid fa-wine-bottle",
+    url: "https://www.lavinoteca.cl",
+    techs: ["React", "NodeJS", "Express", "MongoDB"],
+  },
+  {
+    hoverColor: "text-gray-500",
+    name: "Leer para Empoderarse",
+    descriptionES:
+      "Blog dedicado a fomentar la lectura y el empoderamiento personal a través de recomendaciones, reseñas y recursos literarios.",
+    descriptionEN:
+      "Blog dedicated to promoting reading and personal empowerment through recommendations, reviews, and literary resources.",
+    img: Leer,
+    icon: "fa-solid fa-book-open",
+    url: "",
+    techs: ["WordPress", "PHP", "CSS"],
   },
   {
     hoverColor: "text-gray-500",

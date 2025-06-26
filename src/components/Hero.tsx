@@ -49,7 +49,7 @@ export default function Hero() {
           </p>
           <div className="text-center">
             <SplitText
-              text="Alexis Eduardo Matamoros"
+              text="Alexis Matamoros"
               className="text-5xl font-semibold tracking-tight text-balance text-black dark:text-gray-100 sm:text-6xl"
               delay={150}
               animationFrom={{ opacity: 0, transform: "translate3d(0,50px,0)" }}

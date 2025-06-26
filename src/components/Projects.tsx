@@ -6,7 +6,7 @@ import HeaderSeparator from "@Components/ui/HeaderSeparator";
 export default function Projects() {
   const [currentPage, setCurrentPage] = useState(1);
   const [animate, setAnimate] = useState(false);
-  const itemsPerPage = 5;
+  const itemsPerPage = 6;
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = PROJECTS.slice(indexOfFirstItem, indexOfLastItem);
@@ -50,9 +50,12 @@ export default function Projects() {
                 className="flex flex-col h-full"
               >
                 <img
-                  className="w-full h-48 object-cover "
+                  className="w-full object-cover"
+                  style={{ width: 380, height: 192 }}
                   src={project.img}
                   alt={project.name}
+                  width={380}
+                  height={192}
                 />
                 <div className="flex-1 flex flex-col justify-between p-4">
                   <div>
