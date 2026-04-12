@@ -1,4 +1,5 @@
-//@ts-nocheck
+/* eslint-disable @typescript-eslint/ban-ts-comment -- react-spring animated typings vs React 19 */
+// @ts-nocheck
 import { useSprings, animated } from "@react-spring/web";
 import { useEffect, useRef, useState } from "react";
 
@@ -44,7 +45,7 @@ const SplitText: React.FC<SplitTextProps> = ({
           }
         }
       },
-      { threshold, rootMargin }
+      { threshold, rootMargin },
     );
 
     if (ref.current) {
@@ -73,7 +74,7 @@ const SplitText: React.FC<SplitTextProps> = ({
         : animationFrom,
       delay: i * delay,
       config: { easing },
-    }))
+    })),
   );
 
   return (

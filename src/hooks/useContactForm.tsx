@@ -32,7 +32,13 @@ export default function useContactForm() {
       .then(function (response: any) {
         if (response.status == 200) {
           Notify.success(t("CONTACT.SUCESS"));
-          reset({ name: "", email: "", subject: "" });
+          reset({
+            name: "",
+            company: "",
+            email: "",
+            phone: "",
+            message: "",
+          });
           return;
         }
         throw new Error("Error");

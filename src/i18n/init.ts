@@ -7,7 +7,4 @@ export default {
   interpolation: {
     escapeValue: false,
   },
-  backend: {
-    loadPath: "/i18n/{{lng}}.json",
-  },
 };

@@ -1,9 +1,5 @@
+import { scrollToTop } from "@Utils/scroll";
 import { useState, useEffect } from "react";
-
-//Scroll to top
-export const scrollToTop = () => {
-  window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-};
 
 export default function GoTop() {
   const [scroll, setScroll] = useState(false);

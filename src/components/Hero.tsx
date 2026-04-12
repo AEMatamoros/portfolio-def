@@ -1,15 +1,15 @@
 import SplitText from "@Components/animations/SplitText";
 import ShinyText from "@Components/animations/ShinyText";
+import { useDocumentDark } from "@Hooks/useDocumentDark";
 import { useTranslation } from "react-i18next";
 import mainBg from "@Assets/img/main-bg.png";
 import mainBgDark from "@Assets/img/main-bg-dark-2.png";
 
-const handleAnimationComplete = () => {
-  console.log("All letters have animated!");
-};
-
 export default function Hero() {
   const { t } = useTranslation();
+  const isDark = useDocumentDark();
+  const heroSrc = isDark ? mainBgDark : mainBg;
+
   return (
     <section
       className="min-h-screen bg-white dark:bg-black flex justify-center items-center relative overflow-hidden"
@@ -20,20 +20,10 @@ export default function Hero() {
         aria-hidden="true"
       >
         <img
-          src={mainBg}
-          alt="Main Background"
-          className="block dark:hidden w-full h-full object-cover animate-bg-move"
-          style={{
-            position: "absolute",
-            inset: 0,
-            minHeight: "100%",
-            minWidth: "100%",
-          }}
-        />
-        <img
-          src={mainBgDark}
-          alt="Main Background Dark"
-          className="hidden dark:block w-full h-full object-cover animate-bg-move"
+          src={heroSrc}
+          alt=""
+          fetchPriority="high"
+          className="w-full h-full object-cover animate-bg-move"
           style={{
             position: "absolute",
             inset: 0,
@@ -57,7 +47,6 @@ export default function Hero() {
               easing="easeOutCubic"
               threshold={0.2}
               rootMargin="-50px"
-              onLetterAnimationComplete={handleAnimationComplete}
             />
             <div className="my-4 md:my-8">
               <SplitText
@@ -72,7 +61,6 @@ export default function Hero() {
                 easing="easeOutCubic"
                 threshold={0.2}
                 rootMargin="-50px"
-                onLetterAnimationComplete={handleAnimationComplete}
               />
             </div>
             <div className=" hero-button mt-10 flex items-center justify-center gap-x-6">
@@ -97,7 +85,7 @@ export default function Hero() {
         style={{
           background: "linear-gradient(to bottom, transparent, white 90%)",
         }}
-      ></div>
+      />
       <div
         className="pointer-events-none absolute bottom-0 left-0 w-full h-32 z-10 dark:block hidden"
         aria-hidden="true"

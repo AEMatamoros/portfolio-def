@@ -1,21 +1,26 @@
-import { useRef } from "react";
+import { useRef, lazy, Suspense } from "react";
 import Hero from "@Components/Hero";
-import Projects from "@Components/Projects";
-import Timeline from "@Components/Timeline";
-import Techs from "@Components/Techs";
 import Footer from "@Components/common/Footer";
-import Contact from "@Components/Contact";
 import Header from "@Components/common/Header";
 import GoTop from "@Components/ui/GoToTop";
 import ContactOptions from "@Components/common/ContactOptions";
 import EmailOptions from "@Components/common/EmailOptions";
 import useScrollAnimation from "@Hooks/useScrollAnimation";
 
+const Timeline = lazy(() => import("@Components/Timeline"));
+const Techs = lazy(() => import("@Components/Techs"));
+const Projects = lazy(() => import("@Components/Projects"));
+const Contact = lazy(() => import("@Components/Contact"));
+
+function SectionFallback() {
+  return <div className="min-h-[24vh] w-full" aria-hidden />;
+}
+
 export default function App() {
-  const heroRef = useRef(null);
-  const timelineRef = useRef(null);
-  const techsRef = useRef(null);
-  const projectsRef = useRef(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const timelineRef = useRef<HTMLElement>(null);
+  const techsRef = useRef<HTMLElement>(null);
+  const projectsRef = useRef<HTMLElement>(null);
 
   useScrollAnimation({
     heroRef,
@@ -31,16 +36,24 @@ export default function App() {
         <Hero />
       </section>
       <section ref={timelineRef}>
-        <Timeline />
+        <Suspense fallback={<SectionFallback />}>
+          <Timeline />
+        </Suspense>
       </section>
       <section ref={techsRef}>
-        <Techs />
+        <Suspense fallback={<SectionFallback />}>
+          <Techs />
+        </Suspense>
       </section>
       <section ref={projectsRef}>
-        <Projects />
+        <Suspense fallback={<SectionFallback />}>
+          <Projects />
+        </Suspense>
       </section>
       <section>
-        <Contact />
+        <Suspense fallback={<SectionFallback />}>
+          <Contact />
+        </Suspense>
       </section>
       <Footer />
       <GoTop />

@@ -11,7 +11,7 @@ export default function ThemeToggle() {
       return storedTheme;
     }
 
-    return THEME_OPTIONS.DARK;
+    return THEME_OPTIONS.LIGHT;
   });
 
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function ThemeToggle() {
 
   const toggleTheme = () => {
     setTheme(
-      theme === THEME_OPTIONS.DARK ? THEME_OPTIONS.LIGHT : THEME_OPTIONS.DARK
+      theme === THEME_OPTIONS.DARK ? THEME_OPTIONS.LIGHT : THEME_OPTIONS.DARK,
     );
   };
 

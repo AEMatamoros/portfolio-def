@@ -1,7 +1,17 @@
-import { useTranslation } from "react-i18next";
+import HeaderSeparator from "@Components/ui/HeaderSeparator";
+import { Badge } from "@/components/ui/badge";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { PROJECTS } from "@Constants/projects";
 import { useState } from "react";
-import HeaderSeparator from "@Components/ui/HeaderSeparator";
+import { useTranslation } from "react-i18next";
 
 export default function Projects() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,7 +28,7 @@ export default function Projects() {
     setTimeout(() => {
       setCurrentPage(page);
       setAnimate(false);
-    }, 300); // duration matches animation
+    }, 300);
   };
   const { t } = useTranslation();
   return (
@@ -39,9 +49,9 @@ export default function Projects() {
           }`}
         >
           {currentItems.map((project) => (
-            <div
-              className="bg-gray-50 dark:bg-gray-900  shadow-md hover:shadow-xl transition-shadow duration-300 flex flex-col group"
+            <Card
               key={project.name}
+              className="w-full max-w-[380px] flex flex-col overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
             >
               <a
                 href={project.url}
@@ -50,78 +60,77 @@ export default function Projects() {
                 className="flex flex-col h-full"
               >
                 <img
-                  className="w-full object-cover"
-                  style={{ width: 380, height: 192 }}
+                  className="w-full object-cover aspect-[380/192]"
                   src={project.img}
                   alt={project.name}
                   width={380}
                   height={192}
+                  loading="lazy"
+                  decoding="async"
                 />
-                <div className="flex-1 flex flex-col justify-between p-4">
-                  <div>
-                    <h3 className="text-lg font-semibold mb-2 dark:text-gray-100">
-                      {project.name}
-                    </h3>
-                    <div className="flex flex-wrap gap-2 mb-3">
-                      {project.techs.map((tec) => (
-                        <span
-                          className="bg-gray-200 dark:bg-gray-700 text-xs px-2 py-1  text-gray-800 dark:text-gray-200"
-                          key={tec}
-                        >
-                          {tec}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  <button
-                    className="mt-auto bg-black dark:bg-gray-100 text-gray-100 dark:text-black px-3 py-1 rounded hover:bg-gray-800 dark:hover:bg-gray-300 transition-colors text-sm font-medium"
-                    type="button"
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg">{project.name}</CardTitle>
+                </CardHeader>
+                <CardContent className="flex flex-wrap gap-2 pb-4">
+                  {project.techs.map((tec) => (
+                    <Badge key={tec} variant="secondary">
+                      {tec}
+                    </Badge>
+                  ))}
+                </CardContent>
+                <CardFooter className="mt-auto border-t bg-muted/30 pt-4">
+                  <span
+                    className={cn(
+                      buttonVariants({ variant: "default" }),
+                      "w-full pointer-events-none",
+                    )}
                   >
                     {t("BUTTON.SEE_MORE") || "Ver Más"}
-                  </button>
-                </div>
+                  </span>
+                </CardFooter>
               </a>
-            </div>
+            </Card>
           ))}
         </div>
-        <div className="flex items-center justify-center gap-2 mt-10">
+        <div className="flex items-center justify-center gap-2 mt-10 flex-wrap">
           {currentPage !== 1 && (
-            <button
-              className="h-10 w-10 cursor-pointer flex items-center justify-center bg-gray-300 dark:bg-gray-700 text-black dark:text-gray-100 hover:bg-gray-400 dark:hover:bg-gray-600 transition"
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-10 w-10"
               onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
               aria-label="Previous page"
             >
               &lt;
-            </button>
+            </Button>
           )}
           {Array.from({ length: totalPages }, (_, index) => index + 1).map(
             (page) => (
-              <button
-                className={`h-10 w-10 cursor-pointer flex items-center justify-center font-semibold transition
-                  ${
-                    currentPage === page
-                      ? "bg-black text-white dark:bg-gray-100 dark:text-black"
-                      : "bg-gray-200 text-black dark:bg-gray-800 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-700"
-                  }`}
+              <Button
                 key={page}
+                variant={currentPage === page ? "default" : "outline"}
+                size="icon"
+                className="h-10 w-10"
                 onClick={() => handlePageChange(page)}
                 aria-current={currentPage === page ? "page" : undefined}
                 aria-label={`Page ${page}`}
               >
                 {page}
-              </button>
-            )
+              </Button>
+            ),
           )}
           {currentPage !== totalPages && (
-            <button
-              className="h-10 w-10 cursor-pointer flex items-center justify-center bg-gray-300 dark:bg-gray-700 text-black dark:text-gray-100 hover:bg-gray-400 dark:hover:bg-gray-600 transition"
+            <Button
+              variant="outline"
+              size="icon"
+              className="h-10 w-10"
               onClick={() =>
                 handlePageChange(Math.min(totalPages, currentPage + 1))
               }
               aria-label="Next page"
             >
               &gt;
-            </button>
+            </Button>
           )}
         </div>
       </div>

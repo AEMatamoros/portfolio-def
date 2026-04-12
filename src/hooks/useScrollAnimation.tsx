@@ -1,48 +1,63 @@
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import type { RefObject } from "react";
 import { useEffect } from "react";
 
-gsap.registerPlugin(ScrollTrigger);
+type SectionRef = RefObject<HTMLElement | null>;
 
 export default function useScrollAnimation({
   heroRef,
   timelineRef,
   techsRef,
   projectsRef,
-}: // eslint-disable-next-line @typescript-eslint/no-explicit-any
-any) {
+}: {
+  heroRef: SectionRef;
+  timelineRef: SectionRef;
+  techsRef: SectionRef;
+  projectsRef: SectionRef;
+}) {
   useEffect(() => {
-    ScrollTrigger.config({
-      autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
-    });
+    let cancelled = false;
 
-    const sections = [
-      { ref: heroRef, delay: 0 },
-      { ref: timelineRef, delay: 0.1 },
-      { ref: techsRef, delay: 0.2 },
-      { ref: projectsRef, delay: 0.3 },
-    ];
+    void (async () => {
+      const gsap = (await import("gsap")).default;
+      const { ScrollTrigger } = await import("gsap/ScrollTrigger");
+      if (cancelled) return;
 
-    sections.forEach(({ ref, delay }) => {
-      if (ref.current) {
-        gsap.from(ref.current, {
-          scrollTrigger: {
-            trigger: ref.current,
-            start: "top 85%",
-            toggleActions: "play none none reset",
-            markers: false,
-          },
-          opacity: 0,
-          y: 50,
-          duration: 0.3,
-          delay,
-          ease: "power2.out",
-        });
-      }
-    });
+      gsap.registerPlugin(ScrollTrigger);
+      ScrollTrigger.config({
+        autoRefreshEvents: "visibilitychange,DOMContentLoaded,load",
+      });
+
+      const sections = [
+        { ref: heroRef, delay: 0 },
+        { ref: timelineRef, delay: 0.1 },
+        { ref: techsRef, delay: 0.2 },
+        { ref: projectsRef, delay: 0.3 },
+      ];
+
+      sections.forEach(({ ref, delay }) => {
+        if (ref.current) {
+          gsap.from(ref.current, {
+            scrollTrigger: {
+              trigger: ref.current,
+              start: "top 85%",
+              toggleActions: "play none none reset",
+              markers: false,
+            },
+            opacity: 0,
+            y: 50,
+            duration: 0.3,
+            delay,
+            ease: "power2.out",
+          });
+        }
+      });
+    })();
 
     return () => {
-      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      cancelled = true;
+      void import("gsap/ScrollTrigger").then(({ ScrollTrigger }) => {
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      });
     };
   }, []);
 }

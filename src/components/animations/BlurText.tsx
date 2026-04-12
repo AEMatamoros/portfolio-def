@@ -1,4 +1,5 @@
-//@ts-nocheck
+/* eslint-disable @typescript-eslint/ban-ts-comment -- react-spring animated typings vs React 19 */
+// @ts-nocheck
 import { useRef, useEffect, useState } from "react";
 import { useSprings, animated, SpringValue } from "@react-spring/web";
 
@@ -71,7 +72,7 @@ const BlurText: React.FC<BlurTextProps> = ({
           }
         }
       },
-      { threshold, rootMargin }
+      { threshold, rootMargin },
     );
 
     if (ref.current) {
@@ -88,7 +89,7 @@ const BlurText: React.FC<BlurTextProps> = ({
       to: inView
         ? async (
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            next: (arg: Record<string, SpringValue<any>>) => Promise<void>
+            next: (arg: Record<string, SpringValue<any>>) => Promise<void>,
           ) => {
             for (const step of animationTo || defaultTo) {
               await next(step);
@@ -105,7 +106,7 @@ const BlurText: React.FC<BlurTextProps> = ({
       delay: i * delay,
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       config: { easing: easing as any },
-    }))
+    })),
   );
 
   return (

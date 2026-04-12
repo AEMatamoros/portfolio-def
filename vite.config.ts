@@ -1,10 +1,23 @@
-import { defineConfig } from "vite";
+import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+import { visualizer } from "rollup-plugin-visualizer";
+import { defineConfig } from "vite";
+
+const analyze = process.env.ANALYZE === "true";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    tailwindcss(),
+    analyze &&
+      visualizer({
+        filename: "dist/stats.html",
+        gzipSize: true,
+        open: true,
+      }),
+  ].filter(Boolean),
   resolve: {
     alias: {
       "@Components": path.resolve(__dirname, "./src/components"),
@@ -20,9 +33,6 @@ export default defineConfig({
     },
   },
   build: {
-    modulePreload: false,
     target: "esnext",
-    minify: false,
-    cssCodeSplit: false,
   },
 });
