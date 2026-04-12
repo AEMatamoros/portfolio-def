@@ -1,4 +1,30 @@
-# React + TypeScript + Vite
+# Alexis Matamoros — Portfolio
+
+Personal portfolio built with **React**, **TypeScript**, **Vite**, **Tailwind CSS v4**, and **shadcn/ui**.
+
+## Setup
+
+Use [pnpm](https://pnpm.io/) only (this repo ships `pnpm-lock.yaml`).
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Build and preview:
+
+```bash
+pnpm build
+pnpm preview
+```
+
+Quality checks:
+
+```bash
+pnpm check    # typecheck + lint + format check
+```
+
+## Tooling notes
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
