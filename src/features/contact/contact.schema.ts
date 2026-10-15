@@ -49,7 +49,7 @@ export const EMPTY_CONTACT: ContactFormValues = {
   company: "",
   phone: "",
   message: "",
-  website: "",
+  honeypot: "",
 };
 
 const VALIDATION_CODES: ReadonlySet<string> = new Set<ValidationCode>([

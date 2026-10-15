@@ -134,13 +134,13 @@ export function ContactForm({
         aria-hidden="true"
         className="absolute -start-[9999px] size-px overflow-hidden"
       >
-        <label htmlFor={idOf("website")}>{copy.honeypot}</label>
+        <label htmlFor={idOf("honeypot")}>{copy.honeypot}</label>
         <input
-          id={idOf("website")}
+          id={idOf("honeypot")}
           type="text"
           tabIndex={-1}
           autoComplete="off"
-          {...register("website")}
+          {...register("honeypot")}
         />
       </div>
       <div className="animate-fade-in-slow mt-8 flex items-center justify-center">

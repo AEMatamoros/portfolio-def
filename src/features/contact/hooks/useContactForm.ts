@@ -22,7 +22,7 @@ export function useContactForm(endpoint: string) {
     labels: MessageLabels,
   ): Promise<SendContactResult> => {
     // A bot filled the decoy: pretend it worked and send nothing.
-    if (values.website.trim() !== "") {
+    if (values.honeypot.trim() !== "") {
       form.reset(EMPTY_CONTACT);
       return { ok: true };
     }

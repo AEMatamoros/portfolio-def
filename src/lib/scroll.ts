@@ -17,7 +17,9 @@ export function scrollToSection(id: string) {
   const el = document.getElementById(id);
   if (el) {
     el.scrollIntoView({ behavior: behavior() });
-    window.history.pushState(null, "", `#${id}`);
+    if (window.location.hash !== `#${id}`) {
+      window.history.pushState(null, "", `#${id}`);
+    }
   } else {
     window.location.hash = id;
   }

@@ -83,10 +83,10 @@ A theme change MAY animate (for example a circular reveal) where the browser sup
 
 ### Requirement: Declared motion changes
 
-The only removed motion MUST be the splash fade, the unused BlurText component and the project fade-pagination (replaced by "show more"). No other existing animation behavior MAY be removed.
+The only removed motion MUST be the splash fade, the unused BlurText component, the project fade-pagination (replaced by "show more") and the dark-only load-time clip reveal (replaced by the user-triggered theme-change View Transition, which is skipped under reduced motion). No other existing animation behavior MAY be removed.
 
 #### Scenario: Behavior diff
 
 - GIVEN the final branch and the base
 - WHEN animations are compared section by section
-- THEN only the three declared changes differ. Verify: manual
+- THEN only the four declared changes differ. Verify: manual

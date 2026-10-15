@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 export function LanguageToggle({ className }: { className?: string }) {
   const { t, i18n } = useTranslation();
   const locale = useLocale();
+  const code = locale === "es" ? "ES" : "EN";
 
   const toggleLanguage = () => {
     void i18n.changeLanguage(locale === "es" ? "en" : "es");
@@ -19,10 +20,10 @@ export function LanguageToggle({ className }: { className?: string }) {
         "px-3 font-semibold text-current hover:bg-current/10 hover:text-current dark:hover:bg-current/10",
         className,
       )}
-      aria-label={t("language.toggle")}
+      aria-label={`${t("language.toggle")} (${code})`}
       onClick={toggleLanguage}
     >
-      {locale === "es" ? "ES" : "EN"}
+      {code}
     </Button>
   );
 }
