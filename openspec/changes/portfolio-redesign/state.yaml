@@ -1,0 +1,60 @@
+# DAG state for the portfolio-redesign change (orchestrator-owned; survives compaction)
+change: portfolio-redesign
+created: "2026-10-14"
+project: portfolio-def
+artifact_store: openspec
+execution_mode: auto
+delivery_strategy: single-pr
+chain_strategy: null
+size_exception: null
+phases:
+  explore:
+    status: done
+    artifact: exploration.md
+    engram_observation: 298
+  research:
+    status: unselected
+    decided_by: user
+  proposal:
+    status: done
+    artifact: proposal.md
+    engram_observation: 300
+  spec:
+    status: done
+    artifact: specs/
+    capabilities: [page-shell, theming, localization, motion, portfolio-sections, contact-form, performance-budget, codebase-conventions]
+  design:
+    status: done
+    artifact: design.md
+    engram_observation: 302
+    validation: pass-with-notes
+  tasks:
+    status: done
+    artifact: tasks.md
+    engram_observation: 303
+    review_workload_forecast:
+      estimated_changed_lines: "4.5k-5.5k authored"
+      budget_risk: high
+      chained_prs_recommended: true
+      decision_needed_before_apply: true
+  apply:
+    status: blocked
+    blocked_reason: awaiting size:exception decision (single-pr over 400-line budget)
+  verify:
+    status: pending
+  archive:
+    status: pending
+confirmed_decisions:
+  decided_at: "2026-10-14"
+  decided_by: user
+  research_lane: skip
+  splash_screen: remove
+  react_19_upgrade: include
+  contact_backend: external_api_env
+orchestrator_defaults:
+  feedback_ui: sonner
+  tech_marquee: keep_with_pause_and_reduced_motion_grid
+  animation_implementation: css_splittext_keep_gsap_hardened
+  blur_text: delete_explicitly_and_update_rules
+  vitest: defer_to_follow_up
+  owner_content_questions: leave_data_unchanged_and_report

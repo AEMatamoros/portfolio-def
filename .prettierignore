@@ -4,3 +4,7 @@ pnpm-lock.yaml
 coverage
 .husky/_
 .cursor/rules/*.mdc
+
+# generated / SDD artifacts
+.atl
+openspec
