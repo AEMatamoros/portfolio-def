@@ -31,6 +31,8 @@ export const en = {
   },
   hero: {
     greeting: "My name is ...",
+    primaryCta: "Get in touch",
+    downloadCv: "Download CV",
     description:
       "Experienced software developer with a strong background in fullstack development. Proven ability to deliver high-quality solutions and a commitment to continuous professional growth.",
   },

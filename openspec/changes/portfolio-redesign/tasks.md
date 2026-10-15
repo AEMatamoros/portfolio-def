@@ -208,15 +208,15 @@ Dependencies (Needs): 1→3; 4→5→6; 6→{7, 8}; {7, 8}→9; 9→{10→11, 12
 
 ## 12. feat(hero): add h1, ctas and token background
 
-- [ ] 12.1 Create `src/features/hero/components/HeroBackground.tsx` (presentational; props `lightSrc`, `darkSrc`): `style` sets `--hero-light`/`--hero-dark`, classes `bg-[image:var(--hero-light)] dark:bg-[image:var(--hero-dark)] bg-cover bg-center animate-bg-move`, plus one bottom fade `bg-linear-to-b from-transparent to-background`. [theming: Single source of truth for toggles]
-- [ ] 12.2 Rewrite `src/features/hero/HeroSection.tsx` as a named export (eager, not lazy): `SectionShell id="hero"`, `HeroBackground`, greeting `<p>`, name `<SplitText as="h1" id={titleIdOf("hero")} text={SITE.name}>` (keep the existing `delay`, `animationFrom`, `animationTo`, `threshold`, `rootMargin`), lead `SplitText as="p"`, primary CTA `<a href="#contact">` with `ShinyText` `t("hero.primaryCta")`, CV `Button asChild variant="outline"` with `download` and `SITE.cv[locale]` and `t("hero.downloadCv")`. Keep `animate-fade-in-slow` on the CTA group. Use tokens (`bg-background`, `text-muted-foreground`). [portfolio-sections: Hero content and CTAs]
-- [ ] 12.3 Rewrite `src/components/animations/ShinyText.tsx` (named export, `<span>`, `--shine-duration`, one rule from `--shine: var(--primary-foreground)` with `color-mix`, remove the duplicated `.dark .shiny-text` block); keep the `disabled` prop; under reduced motion static at full colour via the policy block. [motion: ShinyText retained]
-- [ ] 12.4 `git rm src/hooks/useDocumentDark.ts`; confirm `rg -n "useDocumentDark" src` is empty.
-- [ ] 12.5 Add keys `hero.primaryCta` (EN "Get in touch", ES "Contáctame") and `hero.downloadCv` (EN "Download CV", ES "Descargar CV") to `en.ts` and `es.ts`.
+- [x] 12.1 Create `src/features/hero/components/HeroBackground.tsx` (presentational; props `lightSrc`, `darkSrc`): `style` sets `--hero-light`/`--hero-dark`, classes `bg-[image:var(--hero-light)] dark:bg-[image:var(--hero-dark)] bg-cover bg-center animate-bg-move`, plus one bottom fade `bg-linear-to-b from-transparent to-background`. [theming: Single source of truth for toggles]
+- [x] 12.2 Rewrite `src/features/hero/HeroSection.tsx` as a named export (eager, not lazy): `SectionShell id="hero"`, `HeroBackground`, greeting `<p>`, name `<SplitText as="h1" id={titleIdOf("hero")} text={SITE.name}>` (keep the existing `delay`, `animationFrom`, `animationTo`, `threshold`, `rootMargin`), lead `SplitText as="p"`, primary CTA `<a href="#contact">` with `ShinyText` `t("hero.primaryCta")`, CV `Button asChild variant="outline"` with `download` and `SITE.cv[locale]` and `t("hero.downloadCv")`. Keep `animate-fade-in-slow` on the CTA group. Use tokens (`bg-background`, `text-muted-foreground`). [portfolio-sections: Hero content and CTAs]
+- [x] 12.3 Rewrite `src/components/animations/ShinyText.tsx` (named export, `<span>`, `--shine-duration`, one rule from `--shine: var(--primary-foreground)` with `color-mix`, remove the duplicated `.dark .shiny-text` block); keep the `disabled` prop; under reduced motion static at full colour via the policy block. [motion: ShinyText retained]
+- [x] 12.4 `git rm src/hooks/useDocumentDark.ts`; confirm `rg -n "useDocumentDark" src` is empty.
+- [x] 12.5 Add keys `hero.primaryCta` (EN "Get in touch", ES "Contáctame") and `hero.downloadCv` (EN "Download CV", ES "Descargar CV") to `en.ts` and `es.ts`.
 - [ ] 12.6 If the dark pattern shows seams against `oklch(0.145)` or looks soft at 1440/1920 px, re-run the unit-3 sharp command at 1600 px or adjust the pattern in this commit. [theming: Hero seams]
-- [ ] 12.7 Verify (commands): `pnpm check`; `pnpm build`.
+- [x] 12.7 Verify (commands): `pnpm check`; `pnpm build`.
 - [ ] 12.8 Verify (manual): console `document.querySelectorAll("main, h1").length` is 2 and `h1` is 1; primary CTA scrolls to Contact; English CV downloads in English and the Spanish CV in Spanish; only the matching pattern is fetched (Network) and switching theme swaps it without flash; no seams at 375, 768, 1440 px in dark; ShinyText sweeps for 5 s and is static under reduced motion; hero CTA fade-in plays. [portfolio-sections: CTAs work; motion: Shine present]
-- [ ] 12.9 Commit `feat(hero): add h1, ctas and token background`.
+- [x] 12.9 Commit `feat(hero): add h1, ctas and token background`.
 
 ## 13. feat(experience): type data and localize timeline
 
@@ -320,5 +320,8 @@ Dependencies (Needs): 1→3; 4→5→6; 6→{7, 8}; {7, 8}→9; 9→{10→11, 12
 | Baseline (unit 1.1)   | 110.79 KB (330.88 KB raw) | 31.04 KB (89.60 KB raw) | 5096 KB (du -ck; 18 png/jpg files) | Measured at 186670c with `pnpm build` (no analyze: it opens a browser) |
 | After unit 4          | 94.22 KB (289.95 KB raw) | 31.04 KB (89.60 KB raw) | 280 KB (16 webp; 6 thumbnails inlined) | react-spring absent (plain `pnpm build`; no analyze) |
 | After unit 5          | 123.14 KB (383.82 KB raw) | 38.24 KB (111.73 KB raw) | 280 KB | React 19.3.1, i18next 26.4.5. react-dom 19 adds ~23 KB gz over 18 (esbuild minify: 45.6 to 68.9 KB gz); main is above the final < 110 KB budget, see risks |
+| After unit 10         | 111.99 KB (351.75 KB raw) | 38.21 KB (111.82 KB raw) | 280 KB | Lazy `MobileMenu` chunk 15.50 KB gz leaves main (was 124.31 KB after unit 9); plain `pnpm build` |
+| After unit 11         | 112.05 KB (352.20 KB raw) | 38.21 KB (111.82 KB raw) | 280 KB | `MobileMenu` chunk 13.69 KB gz (Button code now shared with `ScrollToTop` in main) |
+| After unit 12         | 111.66 KB (351.64 KB raw) | 38.22 KB (111.82 KB raw) | 280 KB | CSS 11.47 KB gz; hero swap is pure CSS, `useDocumentDark` gone |
 | After unit 16         |           |              |                         | Targets: Contact ~17 KB, < 31 KB   |
 | After unit 17 (final) |           |              | < 600 KB                | Main < 110 KB                      |

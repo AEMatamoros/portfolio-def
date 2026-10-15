@@ -1,4 +1,4 @@
-import ShinyText from "@/components/animations/ShinyText";
+import { ShinyText } from "@/components/animations/ShinyText";
 import useContactForm from "@/features/contact/hooks/useContactForm";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";

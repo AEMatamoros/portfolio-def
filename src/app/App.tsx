@@ -1,5 +1,5 @@
 import { useRef, lazy, Suspense } from "react";
-import Hero from "@/features/hero/HeroSection";
+import { HeroSection } from "@/features/hero/HeroSection";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { SkipLink } from "@/components/layout/SkipLink";
@@ -33,7 +33,7 @@ export function App() {
       <Header />
       <main id="main" tabIndex={-1} className="outline-none">
         <div>
-          <Hero />
+          <HeroSection />
         </div>
         <div ref={timelineRef}>
           <Suspense fallback={<SectionFallback />}>
