@@ -17,13 +17,11 @@ function SectionFallback() {
 }
 
 export default function App() {
-  const heroRef = useRef<HTMLElement>(null);
   const timelineRef = useRef<HTMLElement>(null);
   const techsRef = useRef<HTMLElement>(null);
   const projectsRef = useRef<HTMLElement>(null);
 
   useScrollAnimation({
-    heroRef,
     timelineRef,
     techsRef,
     projectsRef,
@@ -32,7 +30,7 @@ export default function App() {
   return (
     <div className="w-full min-h-screen animate-clip-expand animate-clip-shrink">
       <Header />
-      <section ref={heroRef}>
+      <section>
         <Hero />
       </section>
       <section ref={timelineRef}>

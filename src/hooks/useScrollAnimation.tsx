@@ -4,12 +4,10 @@ import { useEffect } from "react";
 type SectionRef = RefObject<HTMLElement | null>;
 
 export default function useScrollAnimation({
-  heroRef,
   timelineRef,
   techsRef,
   projectsRef,
 }: {
-  heroRef: SectionRef;
   timelineRef: SectionRef;
   techsRef: SectionRef;
   projectsRef: SectionRef;
@@ -28,7 +26,6 @@ export default function useScrollAnimation({
       });
 
       const sections = [
-        { ref: heroRef, delay: 0 },
         { ref: timelineRef, delay: 0.1 },
         { ref: techsRef, delay: 0.2 },
         { ref: projectsRef, delay: 0.3 },

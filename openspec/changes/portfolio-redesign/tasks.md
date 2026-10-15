@@ -68,13 +68,13 @@ Dependencies (Needs): 1→3; 4→5→6; 6→{7, 8}; {7, 8}→9; 9→{10→11, 12
 
 ## 2. perf: remove splash screen
 
-- [ ] 2.1 `git rm src/components/ui/SplashScreen.tsx`; edit `src/main.tsx` to drop its import and `<SplashScreen />`. [page-shell: No splash screen]
-- [ ] 2.2 Edit `index.html`: add an interim classic inline script in `<head>` before the module script: `try{if(localStorage.getItem("theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}`. Keep the body classes (removed in unit 7). [theming: Pre-paint application]
-- [ ] 2.3 Exclude the hero from reveal: drop `heroRef` and the `{ ref: heroRef, delay: 0 }` entry from `src/hooks/useScrollAnimation.tsx`; remove `heroRef` and `ref={heroRef}` from `src/App.tsx`. Leave the other tween settings untouched. [motion: Once-only scroll reveal]
-- [ ] 2.4 Put "Declared motion change 1: splash fade removed" in the commit body. [motion: Declared motion changes]
-- [ ] 2.5 Verify (commands): `pnpm check`; `pnpm build`; `rg -n "SplashScreen" src` is empty.
+- [x] 2.1 `git rm src/components/ui/SplashScreen.tsx`; edit `src/main.tsx` to drop its import and `<SplashScreen />`. [page-shell: No splash screen]
+- [x] 2.2 Edit `index.html`: add an interim classic inline script in `<head>` before the module script: `try{if(localStorage.getItem("theme")==="dark")document.documentElement.classList.add("dark")}catch(e){}`. Keep the body classes (removed in unit 7). [theming: Pre-paint application]
+- [x] 2.3 Exclude the hero from reveal: drop `heroRef` and the `{ ref: heroRef, delay: 0 }` entry from `src/hooks/useScrollAnimation.tsx`; remove `heroRef` and `ref={heroRef}` from `src/App.tsx`. Leave the other tween settings untouched. [motion: Once-only scroll reveal]
+- [x] 2.4 Put "Declared motion change 1: splash fade removed" in the commit body. [motion: Declared motion changes]
+- [x] 2.5 Verify (commands): `pnpm check`; `pnpm build`; `rg -n "SplashScreen" src` is empty.
 - [ ] 2.6 Verify (manual): DevTools Performance at CPU 6x, cache disabled, hard reload: no overlay or fixed delay before the hero, and the hero never goes visible, hidden, visible. With `localStorage.theme="dark"` no light frame appears. [page-shell: No splash screen; motion: No hero flash]
-- [ ] 2.7 Commit `perf: remove splash screen`.
+- [x] 2.7 Commit `perf: remove splash screen`.
 
 ## 3. perf: convert images to webp
 
