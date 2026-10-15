@@ -73,6 +73,27 @@ export const en = {
     submit: "Get in touch!",
     success: "Thank you for writing to me, I will get in touch with you.",
     error: "Unfortunately an error occurred :c",
+    optional: "optional",
+    sending: "Sending...",
+    emailInstead: "Email me instead",
+    honeypot: "Leave this field empty",
+    validation: {
+      required: "This field is required.",
+      email: "Enter a valid email address.",
+      phone: "Enter a valid phone number.",
+      tooLong: "Use at most {{max}} characters.",
+    },
+    fallback: {
+      title: "Write to me by email",
+      description:
+        "The contact form is not available right now. Send me a message from your email app and I will reply as soon as I can.",
+      cta: "Send an email",
+    },
+    mail: {
+      subject: "Contact from portfolio",
+      heading: "New message from the portfolio contact form",
+      body: "Hi Alexis,",
+    },
   },
 } as const;
 

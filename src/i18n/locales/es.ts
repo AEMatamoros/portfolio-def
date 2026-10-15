@@ -75,5 +75,26 @@ export const es = {
     submit: "¡Ponte en contacto!",
     success: "Gracias por escribirme, me pondré en contacto contigo.",
     error: "Lamentablemente ocurrió un error :c",
+    optional: "opcional",
+    sending: "Enviando...",
+    emailInstead: "Escríbeme por correo",
+    honeypot: "Deja este campo vacío",
+    validation: {
+      required: "Este campo es obligatorio.",
+      email: "Ingresa un correo electrónico válido.",
+      phone: "Ingresa un número telefónico válido.",
+      tooLong: "Usa como máximo {{max}} caracteres.",
+    },
+    fallback: {
+      title: "Escríbeme por correo",
+      description:
+        "El formulario de contacto no está disponible en este momento. Envíame un mensaje desde tu aplicación de correo y te responderé lo antes posible.",
+      cta: "Enviar un correo",
+    },
+    mail: {
+      subject: "Contacto desde el portafolio",
+      heading: "Nuevo mensaje desde el formulario de contacto del portafolio",
+      body: "Hola Alexis,",
+    },
   },
 } satisfies Messages;

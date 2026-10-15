@@ -1,61 +1,46 @@
-import axios from "axios";
-import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Notify } from "notiflix/build/notiflix-notify-aio";
-import { useTranslation } from "react-i18next";
-export default function useContactForm() {
-  const { t } = useTranslation();
-  //handle Send
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
-  const [disable, setDisable] = useState(false);
+import { EMPTY_CONTACT } from "@/features/contact/contact.schema";
+import type { ContactFormValues } from "@/features/contact/contact.types";
+import {
+  buildMessageHtml,
+  type MessageLabels,
+} from "@/features/contact/services/build-message-html";
+import {
+  sendContactMessage,
+  type SendContactResult,
+} from "@/features/contact/services/contact.service";
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const onSubmit = (data: any) => {
-    setDisable(true);
-    axios
-      .post("https://portfolio-api-ten-sage.vercel.app/sendmail", {
-        html: `
-                <body>
-                  <p>Querido Alexis,</p>
-                
-                  <p>Espero que estés bien. Soy ${data.name} de la compañia ${data.company} con numero de telefono ${data.phone} y correo ${data.email}. 
-                
-                  <p>${data.message}</p>
-                </body>`,
-      })
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      .then(function (response: any) {
-        if (response.status == 200) {
-          Notify.success(t("contact.success"));
-          reset({
-            name: "",
-            company: "",
-            email: "",
-            phone: "",
-            message: "",
-          });
-          return;
-        }
-        throw new Error("Error");
-      })
-      .catch(function () {
-        // handle error
-        Notify.failure(t("contact.error"));
-      })
-      .finally(() => {
-        setDisable(false);
-      });
+/** Form state plus the submit pipeline: honeypot check, trim, escape, send, reset on success. */
+export function useContactForm(endpoint: string) {
+  const form = useForm<ContactFormValues>({
+    defaultValues: EMPTY_CONTACT,
+    mode: "onTouched",
+  });
+
+  const submit = async (
+    values: ContactFormValues,
+    labels: MessageLabels,
+  ): Promise<SendContactResult> => {
+    // A bot filled the decoy: pretend it worked and send nothing.
+    if (values.website.trim() !== "") {
+      form.reset(EMPTY_CONTACT);
+      return { ok: true };
+    }
+
+    const message = buildMessageHtml(
+      {
+        name: values.name.trim(),
+        email: values.email.trim(),
+        company: values.company.trim(),
+        phone: values.phone.trim(),
+        message: values.message.trim(),
+      },
+      labels,
+    );
+    const result = await sendContactMessage(endpoint, message);
+    if (result.ok) form.reset(EMPTY_CONTACT);
+    return result;
   };
-  return {
-    register,
-    handleSubmit,
-    errors,
-    onSubmit,
-    disable,
-  };
+
+  return { form, submit };
 }

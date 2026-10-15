@@ -12,6 +12,8 @@ interface SocialLinksProps {
   linkClassName?: string;
   /** Lets a host (the mobile menu) close itself before the jump to the contact section. */
   onEmailClick?: MouseEventHandler<HTMLAnchorElement>;
+  /** Hide the shortcut to the contact section, for example inside that section. Defaults to true. */
+  showEmail?: boolean;
 }
 
 /** GitHub, LinkedIn and an email shortcut to the contact section. */
@@ -19,6 +21,7 @@ export function SocialLinks({
   className,
   linkClassName,
   onEmailClick,
+  showEmail = true,
 }: SocialLinksProps) {
   const { t } = useTranslation();
   const link = cn(
@@ -40,12 +43,14 @@ export function SocialLinks({
           <span className="sr-only">{t("a11y.linkedin")}</span>
         </ExternalLink>
       </li>
-      <li>
-        <a href="#contact" className={link} onClick={onEmailClick}>
-          <Mail className="size-5" aria-hidden />
-          <span className="sr-only">{t("a11y.email")}</span>
-        </a>
-      </li>
+      {showEmail && (
+        <li>
+          <a href="#contact" className={link} onClick={onEmailClick}>
+            <Mail className="size-5" aria-hidden />
+            <span className="sr-only">{t("a11y.email")}</span>
+          </a>
+        </li>
+      )}
     </ul>
   );
 }
