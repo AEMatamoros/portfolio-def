@@ -2,11 +2,53 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./public/favicon.ico" />
+    <script>
+      (function () {
+        try {
+          var m = localStorage.getItem("theme");
+          var dark =
+            m === "dark" ||
+            (m !== "light" &&
+              matchMedia("(prefers-color-scheme: dark)").matches);
+          var r = document.documentElement;
+          r.classList.toggle("dark", dark);
+          r.style.colorScheme = dark ? "dark" : "light";
+        } catch (e) {}
+      })();
+    </script>
+    <link rel="icon" href="/favicon.ico" sizes="any" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Alexis Matamoros | Portfolio</title>
+    <meta
+      name="description"
+      content="Alexis Matamoros — fullstack developer portfolio."
+    />
+    <meta name="color-scheme" content="light dark" />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#ffffff"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#0a0a0a"
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Alexis Matamoros | Portfolio" />
+    <meta
+      property="og:description"
+      content="Alexis Matamoros — fullstack developer portfolio."
+    />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Alexis Matamoros | Portfolio" />
+    <meta
+      name="twitter:description"
+      content="Alexis Matamoros — fullstack developer portfolio."
+    />
   </head>
-  <body class="bg-white dark:bg-black">
+  <body>
+    <noscript>This site requires JavaScript.</noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

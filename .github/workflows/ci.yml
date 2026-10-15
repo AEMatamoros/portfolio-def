@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# The workflow only reads the repository.
+permissions:
+  contents: read
+
+# A newer run for the same ref replaces the one still in progress.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: Typecheck, lint, format and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      # `prepare` runs husky; there are no git hooks to install in CI.
+      HUSKY: "0"
+    steps:
+      # Each action is pinned to its current major version (checked on the
+      # GitHub releases pages when this workflow was added).
+      - uses: actions/checkout@v7
+
+      # Reads the pnpm version from the `packageManager` field of package.json.
+      - uses: pnpm/action-setup@v6
+
+      # Reads the Node version from .nvmrc and caches the pnpm store.
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      # Typecheck, ESLint and Prettier (see the `check` script).
+      - run: pnpm check
+
+      - run: pnpm build

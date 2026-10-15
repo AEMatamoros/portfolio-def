@@ -5,58 +5,30 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-html {
-  scroll-behavior: smooth;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 .vertical-text {
   writing-mode: vertical-lr;
 }
 
-.sticky-header {
-  animation: border-animation;
-  animation-timeline: scroll();
-}
-@keyframes border-animation {
-  from {
-    right: 100%;
-  }
-  to {
-    right: 0;
-  }
-}
-
-/* animation: spin linear both;
-animation-timeline: scroll(); */
-
 .shiny-text {
-  color: #b5b5b5a4;
-  background: linear-gradient(
+  --shine: var(--primary-foreground);
+  display: inline-block;
+  color: color-mix(in oklab, var(--shine) 65%, transparent);
+  background-image: linear-gradient(
     120deg,
-    rgba(255, 255, 255, 0) 40%,
-    rgba(255, 255, 255, 0.8) 50%,
-    rgba(255, 255, 255, 0) 60%
+    transparent 40%,
+    var(--shine) 50%,
+    transparent 60%
   );
   background-size: 200% 100%;
   -webkit-background-clip: text;
   background-clip: text;
-  display: inline-block;
-  animation: shine 5s linear infinite;
-}
-
-.dark .shiny-text {
-  color: #060606a4;
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0) 40%,
-    rgba(255, 255, 255, 0.8) 50%,
-    rgba(255, 255, 255, 0) 60%
-  );
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  display: inline-block;
-  animation: shine 5s linear infinite;
+  animation: shine var(--shine-duration, 5s) linear infinite;
 }
 
 @keyframes shine {
@@ -72,11 +44,37 @@ animation-timeline: scroll(); */
   animation: none;
 }
 
-.hero-button {
-  animation: show-hero-button 3s ease-in;
+/* SplitText: letter-by-letter reveal driven by custom properties */
+.split-text {
+  display: inline;
+  overflow-wrap: break-word;
 }
 
-@keyframes show-hero-button {
+.split-char {
+  display: inline-block;
+  opacity: var(--split-from-opacity, 0);
+  transform: var(--split-from-transform, translate3d(0, 40px, 0));
+}
+
+.split-text[data-inview] .split-char {
+  animation: split-in var(--split-duration, 700ms)
+    var(--split-easing, cubic-bezier(0.215, 0.61, 0.355, 1)) both;
+  animation-delay: calc(var(--i) * var(--split-delay, 100ms));
+}
+
+@keyframes split-in {
+  from {
+    opacity: var(--split-from-opacity, 0);
+    transform: var(--split-from-transform, translate3d(0, 40px, 0));
+  }
+  to {
+    opacity: var(--split-to-opacity, 1);
+    transform: var(--split-to-transform, none);
+  }
+}
+
+/* Slow fade-in for the hero and contact call to action (was .hero-button) */
+@keyframes fade-in-slow {
   from {
     opacity: 0;
   }
@@ -85,50 +83,77 @@ animation-timeline: scroll(); */
   }
 }
 
-.sidebarEffect {
-  position: relative;
-  right: 100%;
+@utility animate-fade-in-slow {
+  animation: fade-in-slow 3s ease-in;
 }
 
-/* Theme change */
-@keyframes clipPathExpand {
-  0% {
-    clip-path: circle(0% at 100% 0%);
+/* Theme change: circular reveal from the toggle (View Transitions API) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  animation: theme-reveal 500ms ease-in-out;
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0 at var(--theme-x, 100%) var(--theme-y, 0));
   }
-  100% {
-    clip-path: circle(150% at 100% 0%);
+  to {
+    clip-path: circle(
+      var(--theme-r, 150%) at var(--theme-x, 100%) var(--theme-y, 0)
+    );
   }
 }
 
-/* Utilities */
-.dark .animate-clip-expand {
-  animation: clipPathExpand 0.5s ease-in-out;
-}
-
-.infinite-carousel {
-  display: flex;
-  white-space: nowrap;
-  overflow: hidden;
-  position: relative;
-}
-
-.carousel-track {
-  display: flex;
-  animation: infinite-scroll 60s linear infinite;
-}
-
-.carousel-track > * {
-  flex: 0 0 auto;
-  width: 150px;
-  margin-right: 10px;
-}
-
-@keyframes infinite-scroll {
-  0% {
-    transform: translateX(0);
+/*
+ * Tech marquee: two identical lists, each with a trailing gap equal to the inner
+ * gap, so sliding the track by -50% lands exactly on the second list's start.
+ * It pauses while hovered, while a control inside it has keyboard focus, and
+ * while the pause button is pressed. Keyboard focus uses :has(:focus-visible)
+ * rather than :focus-within so a pointer click on the button cannot latch the
+ * pause after the visitor presses it again to resume.
+ */
+@layer components {
+  .marquee-viewport {
+    overflow: hidden;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
   }
-  100% {
-    transform: translateX(-100%);
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee var(--marquee-duration, 60s) linear infinite;
+  }
+
+  .marquee-track > ul {
+    display: flex;
+    gap: var(--marquee-gap, 2.5rem);
+    padding-inline-end: var(--marquee-gap, 2.5rem);
+  }
+
+  .marquee:hover .marquee-track,
+  .marquee[data-paused] .marquee-track {
+    animation-play-state: paused;
+  }
+
+  .marquee:has(:focus-visible) .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
@@ -152,6 +177,97 @@ animation-timeline: scroll(); */
 
 .animate-bg-move {
   animation: bg-move-circular 10s linear infinite;
+}
+
+/*
+ * Single reduced-motion policy. Unlayered, so it beats the utility layer.
+ * JavaScript paths (theme transition, scroll reveal, scrollTo) check the same
+ * media query.
+ * The split-char selectors must stay at least as specific as
+ * `.split-text[data-inview] .split-char`, or the letter animation still runs.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .animate-bg-move,
+  .animate-fade-in-slow {
+    animation: none;
+  }
+
+  .shiny-text {
+    animation: none;
+    background: none;
+    color: var(--shine);
+  }
+
+  .split-text .split-char,
+  .split-text[data-inview] .split-char {
+    animation: none;
+    opacity: var(--split-to-opacity, 1);
+    transform: var(--split-to-transform, none);
+  }
+
+  /* Marquee: one wrapped static set, no duplicate and no pause button. */
+  .marquee-viewport {
+    mask-image: none;
+    padding-inline: 1.25rem;
+  }
+
+  .marquee-track {
+    animation: none;
+    width: auto;
+  }
+
+  .marquee-track > ul:first-child {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem 1rem;
+    padding-inline-end: 0;
+  }
+
+  .marquee-track > ul[aria-hidden="true"],
+  .marquee-pause {
+    display: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* Type scale. Color comes from tokens in markup, so cn() keeps size and color apart. */
+@utility text-display {
+  font-size: clamp(2.5rem, 1.5rem + 4vw, 4rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+@utility text-title {
+  font-size: clamp(1.875rem, 1.25rem + 2.5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+@utility text-lead {
+  font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+@utility text-eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Inverted surfaces (scrolled header pill, footer) focus with the page background color. */
+@utility surface-inverse {
+  --focus-ring: var(--background);
 }
 
 @theme inline {
@@ -215,7 +331,7 @@ animation-timeline: scroll(); */
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --ring: oklch(0.556 0 0);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -250,7 +366,7 @@ animation-timeline: scroll(); */
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -275,5 +391,19 @@ animation-timeline: scroll(); */
   }
   html {
     @apply font-sans;
+    scroll-padding-top: 5rem;
+  }
+  /* Zero specificity and in the base layer, so shadcn primitives keep their own ring. */
+  :where(
+    a,
+    button,
+    input,
+    textarea,
+    select,
+    summary,
+    [tabindex]
+  ):focus-visible {
+    outline: 2px solid var(--focus-ring, var(--ring));
+    outline-offset: 3px;
   }
 }

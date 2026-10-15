@@ -1,13 +1,17 @@
 ---
-description: Portfolio stack and conventions (Vite, React, shadcn, pnpm)
+description: Portfolio stack and conventions (Vite, React 19, shadcn, pnpm, feature-first)
 globs: src/**/*
 alwaysApply: false
 ---
 
 # Portfolio project rules
 
-- Use **pnpm** only for installs and scripts (`pnpm install`, `pnpm check`).
+- Use **pnpm** only for installs and scripts (`pnpm install`, `pnpm check`). Never add `package-lock.json` or `yarn.lock`.
 - Prefer **shadcn/ui** primitives from `@/components/ui/*` with Tailwind and `cn()` from `@/lib/utils` instead of ad-hoc styled divs for buttons, cards, forms, and overlays.
-- Keep existing **animation** modules (`SplitText`, `BlurText`, GSAP hooks) unless replacing with an equivalent; do not delete animation behavior silently.
+- Keep existing **animation** modules (`SplitText`, `ShinyText`, the GSAP `useReveal` hook) unless replacing with an equivalent; do not delete animation behavior silently, and honor `prefers-reduced-motion`.
 - Follow **Conventional Commits** enforced by commitlint (e.g. `feat:`, `fix:`, `chore:`).
-- Use path aliases: `@/` → `src/`, `@Components`, `@Hooks`, `@Constants`, etc., as in `vite.config.ts` / `tsconfig`.
+- Use the single path alias `@/` → `src/` (declared in `vite.config.ts` and the tsconfig files). Relative imports (`./`, `../`) are banned by ESLint.
+- Structure is **feature-first**: `src/features/{hero,experience,techs,projects,contact}` plus a shared kit in `components`, `hooks`, `lib`, `types`, `config`, `i18n` and `theme`. Lint enforces the tiers: `lib`/`types`, then `config`/`i18n`/`theme`/`hooks`, then `components`, then `features`, then `app`. Shared code never imports features, a feature never imports a sibling feature, and only `main.tsx` imports `app`.
+- Components under `features/*/components` are presentational (props only); containers at the feature root read data and translations.
+- Add user-facing strings to both `src/i18n/locales/en.ts` and `es.ts` (same nested shape; `pnpm check` fails otherwise) and read the language with `useLocale()`.
+- Convert images to WebP with `pnpm dlx sharp-cli@5 resize <w> <h> --fit cover --position top --withoutEnlargement -i <in> -o <out>.webp -f webp --quality 80`.
