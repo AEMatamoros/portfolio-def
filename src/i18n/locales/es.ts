@@ -57,6 +57,8 @@ export const es = {
   projects: {
     title: "Proyectos",
     showMore: "Ver más",
+    imageAlt: "Captura de {{name}}",
+    noLink: "Enlace no disponible",
   },
   contact: {
     title: "Contacto",

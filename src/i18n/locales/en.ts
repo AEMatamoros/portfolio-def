@@ -55,6 +55,8 @@ export const en = {
   projects: {
     title: "Projects",
     showMore: "See More",
+    imageAlt: "Screenshot of {{name}}",
+    noLink: "Link not available",
   },
   contact: {
     title: "Contact",
