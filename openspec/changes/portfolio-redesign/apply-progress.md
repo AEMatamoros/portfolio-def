@@ -10,8 +10,8 @@ Batch 1 covers units 1 to 6. Units 7 to 19 are pending. Manual browser scenarios
 | ---- | -------------- | ------ |
 | 1 | chore: remove dead code and assets | committed |
 | 2 | perf: remove splash screen | committed |
-| 3 | perf: convert images to webp | committed (see git log) |
-| 4 | refactor(animations): css-driven split text | pending |
+| 3 | perf: convert images to webp | committed |
+| 4 | refactor(animations): css-driven split text | committed (see git log) |
 | 5 | build(deps): upgrade react 19, i18next 26 and tooling | pending |
 | 6 | refactor: adopt feature-first structure and single alias | pending |
 
@@ -58,6 +58,25 @@ Image pipeline: sharp-cli 5 via `pnpm dlx`. Hero patterns converted with `resize
 
 New and edited imports in this unit use the `@/` alias (`@/constants/site`, `@/assets/img/...`); the legacy aliases disappear in unit 6.
 
+## Unit 4: refactor(animations): css-driven split text
+
+Work Unit Evidence
+
+| Evidence | Value |
+| -------- | ----- |
+| Focused test command and result | `rg -n "react-spring" src package.json pnpm-lock.yaml`: no matches (exit 1); `grep -l "react-spring" dist/assets/*.js`: no matches; `pnpm remove @react-spring/web`: removed (6 packages dropped from the lockfile). `pnpm build:analyze` was not run because it opens a browser (`open: true`); the grep above is the substitute |
+| Gate | `pnpm check`: green; `pnpm build`: green, main 289.95 kB raw / 94.22 kB gzip (was 330.88 kB / 110.79 kB at baseline), Contact 89.60 kB / 31.04 kB |
+| Runtime harness | `pnpm preview --port 4173` + headless Chrome `--dump-dom` on the React 18 runtime: both hero `SplitText` roots render with `data-inview="true"` (IntersectionObserver trigger works), 179 `.split-char` letters, `sr-only` text holds the full string once, 2 `aria-hidden` letter trees; no runtime error. With `--force-prefers-reduced-motion` a screenshot shows the final hero text at once. Timing and stagger parity against the base build, and the Accessibility tree check, are deferred manual checks (4.7) |
+| Rollback boundary | Revert the unit-4 commit: restores react-spring `SplitText.tsx`, the `package.json` and lockfile entries, the `index.css` split-text block and the `easing` props in `Hero.tsx`; `src/hooks/useInView.ts` is removed |
+
+Implementation notes
+
+- `useInView` (`src/hooks/useInView.ts`): the ref callback stores the element in state; a `useEffect` creates the `IntersectionObserver` and disconnects in cleanup; `setInView` runs only inside the observer callback. No React 19 ref cleanup is used.
+- `SplitText` is a named export with the design 5.2 props. Markup: `sr-only` text plus an `aria-hidden` letter tree (`Array.from(word)`, `key={text}`, `--i` per letter, `data-last` on the last letter). The previous `@ts-nocheck` and both eslint-disable headers are gone.
+- Parity details: `.split-text` stays `display: inline` like the old `<p>` (the old `overflow: hidden` had no effect on an inline box and was dropped); `delay` is still milliseconds between letters (hero name 150, lead 10); the defaults are 700 ms duration and an ease-out-cubic bezier. Hero call sites only lose the ignored `easing="easeOutCubic"` prop.
+- Reduced-motion rule: the unit-4 media block uses `.split-text .split-char, .split-text[data-inview] .split-char`. A bare `.split-char { animation: none }` would lose to `.split-text[data-inview] .split-char` on specificity, so unit 9 must keep a selector of at least that specificity when it merges this rule into the single policy block.
+- Observed visual difference: word gaps are real spaces (about 0.25em) instead of the old 0.3em spacer span, so the name is about 4 px narrower at 60 px and no longer shifted left by the trailing spacer. This follows design 5.2 ("separated by real spaces so lines wrap normally") and is listed for the manual side-by-side.
+
 ## Deferred manual checks
 
 These sub-tasks stay unchecked in `tasks.md`; the orchestrator must run them in a browser.
@@ -65,3 +84,4 @@ These sub-tasks stay unchecked in `tasks.md`; the orchestrator must run them in 
 - 1.8: `pnpm preview` page visually unchanged in EN/ES, light/dark (header, hero, timeline, carousel, projects pagination, contact).
 - 2.6: DevTools Performance at CPU 6x, cache disabled, hard reload: no overlay or fixed delay before the hero, hero never visible, hidden, visible; with `localStorage.theme="dark"` no light frame.
 - 3.10: hero pattern is sharp at 1440 px in both themes (if blurry, redo 3.2 at 1600 px); project thumbnails keep the top of each screenshot; header CV links download the right language. The two `curl` 200 checks were done with GET through `pnpm preview` and are recorded above.
+- 4.7: build the base for comparison (`git worktree add <scratch> c34a50f`, `pnpm install --frozen-lockfile`, `pnpm build`, `pnpm preview --port 4174`) and compare hero timing and stagger side by side with the new build; DevTools Accessibility shows one name for the hero text; reduced motion shows final text at once; no layout shift when letters animate. Known and expected: word gaps are about 4 px narrower at 60 px (real spaces instead of the 0.3em spacer).

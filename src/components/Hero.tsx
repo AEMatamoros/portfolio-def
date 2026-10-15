@@ -1,4 +1,4 @@
-import SplitText from "@Components/animations/SplitText";
+import { SplitText } from "@/components/animations/SplitText";
 import ShinyText from "@Components/animations/ShinyText";
 import { useDocumentDark } from "@Hooks/useDocumentDark";
 import { useTranslation } from "react-i18next";
@@ -44,7 +44,6 @@ export default function Hero() {
               delay={150}
               animationFrom={{ opacity: 0, transform: "translate3d(0,50px,0)" }}
               animationTo={{ opacity: 1, transform: "translate3d(0,0,0)" }}
-              easing="easeOutCubic"
               threshold={0.2}
               rootMargin="-50px"
             />
@@ -58,7 +57,6 @@ export default function Hero() {
                   transform: "translate3d(0,50px,0)",
                 }}
                 animationTo={{ opacity: 1, transform: "translate3d(0,0,0)" }}
-                easing="easeOutCubic"
                 threshold={0.2}
                 rootMargin="-50px"
               />

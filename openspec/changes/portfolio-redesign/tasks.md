@@ -92,14 +92,14 @@ Dependencies (Needs): 1→3; 4→5→6; 6→{7, 8}; {7, 8}→9; 9→{10→11, 12
 
 ## 4. refactor(animations): css-driven split text
 
-- [ ] 4.1 Create `src/hooks/useInView.ts`: `useInView({ threshold, rootMargin, once }): [RefCallback<Element>, boolean]`. React 18-safe form: the ref callback stores the element in state, a `useEffect` builds the IntersectionObserver and disconnects on cleanup, and `setInView` runs only inside the observer callback (no React 19 ref cleanup). Import it as `@/hooks/useInView`.
-- [ ] 4.2 Rewrite `src/components/animations/SplitText.tsx` as a named export per design 5.2: props `text`, `as` (`h1|h2|p|span|div`, default `p`), `id`, `className`, `delay`, `duration`, `easing`, `animationFrom/To`, `threshold`, `rootMargin`, `textAlign`, `onLetterAnimationComplete`. Markup: `sr-only` text plus an `aria-hidden` letter tree (`Array.from(word)`, `key={text}`, `--i` per letter, `data-last`). Remove `@ts-nocheck` and both eslint-disable headers. [motion: Hero text animation parity]
-- [ ] 4.3 Add to `src/index.css`: `.split-text`, `.split-char`, `@keyframes split-in` reading `--split-from-*`/`--split-to-*`, run on `[data-inview]` with `animation-delay: calc(var(--i) * var(--split-delay))`, plus a local `@media (prefers-reduced-motion: reduce)` rule showing the final state (consolidated in unit 9). [motion: Single reduced-motion policy]
-- [ ] 4.4 Edit `src/components/Hero.tsx`: switch to the named import, remove `easing="easeOutCubic"` from both SplitText calls, keep every other prop value for parity.
-- [ ] 4.5 `pnpm remove @react-spring/web`; confirm `rg -n "react-spring" src package.json` is empty. [performance-budget: Removed dependencies]
-- [ ] 4.6 Verify (commands): `pnpm check`; `pnpm build`; `pnpm build:analyze` shows no react-spring in the treemap; record main and Contact gzip in the Measurements log. [motion: Hero text animation parity]
+- [x] 4.1 Create `src/hooks/useInView.ts`: `useInView({ threshold, rootMargin, once }): [RefCallback<Element>, boolean]`. React 18-safe form: the ref callback stores the element in state, a `useEffect` builds the IntersectionObserver and disconnects on cleanup, and `setInView` runs only inside the observer callback (no React 19 ref cleanup). Import it as `@/hooks/useInView`.
+- [x] 4.2 Rewrite `src/components/animations/SplitText.tsx` as a named export per design 5.2: props `text`, `as` (`h1|h2|p|span|div`, default `p`), `id`, `className`, `delay`, `duration`, `easing`, `animationFrom/To`, `threshold`, `rootMargin`, `textAlign`, `onLetterAnimationComplete`. Markup: `sr-only` text plus an `aria-hidden` letter tree (`Array.from(word)`, `key={text}`, `--i` per letter, `data-last`). Remove `@ts-nocheck` and both eslint-disable headers. [motion: Hero text animation parity]
+- [x] 4.3 Add to `src/index.css`: `.split-text`, `.split-char`, `@keyframes split-in` reading `--split-from-*`/`--split-to-*`, run on `[data-inview]` with `animation-delay: calc(var(--i) * var(--split-delay))`, plus a local `@media (prefers-reduced-motion: reduce)` rule showing the final state (consolidated in unit 9). [motion: Single reduced-motion policy]
+- [x] 4.4 Edit `src/components/Hero.tsx`: switch to the named import, remove `easing="easeOutCubic"` from both SplitText calls, keep every other prop value for parity.
+- [x] 4.5 `pnpm remove @react-spring/web`; confirm `rg -n "react-spring" src package.json` is empty. [performance-budget: Removed dependencies]
+- [x] 4.6 Verify (commands): `pnpm check`; `pnpm build`; `pnpm build:analyze` shows no react-spring in the treemap; record main and Contact gzip in the Measurements log. [motion: Hero text animation parity]
 - [ ] 4.7 Verify (manual): build the base for comparison (`git worktree add <scratch> c34a50f`, `pnpm install --frozen-lockfile`, `pnpm build`, `pnpm preview --port 4174`) and compare hero timing and stagger side by side; DevTools Accessibility shows one name for the hero text; reduced motion shows final text at once; no layout shift when letters animate.
-- [ ] 4.8 Commit `refactor(animations): css-driven split text`.
+- [x] 4.8 Commit `refactor(animations): css-driven split text`.
 
 ## 5. build(deps): upgrade react 19, i18next 26 and tooling
 
@@ -318,7 +318,7 @@ Dependencies (Needs): 1→3; 4→5→6; 6→{7, 8}; {7, 8}→9; 9→{10→11, 12
 | Point                 | Main gzip | Contact gzip | Image sum (dist/assets) | Notes                              |
 | --------------------- | --------- | ------------ | ----------------------- | ---------------------------------- |
 | Baseline (unit 1.1)   | 110.79 KB (330.88 KB raw) | 31.04 KB (89.60 KB raw) | 5096 KB (du -ck; 18 png/jpg files) | Measured at 186670c with `pnpm build` (no analyze: it opens a browser) |
-| After unit 4          |           |              |                         | react-spring absent                |
+| After unit 4          | 94.22 KB (289.95 KB raw) | 31.04 KB (89.60 KB raw) | 280 KB (16 webp; 6 thumbnails inlined) | react-spring absent (plain `pnpm build`; no analyze) |
 | After unit 5          |           |              |                         | React 19, i18next 26               |
 | After unit 16         |           |              |                         | Targets: Contact ~17 KB, < 31 KB   |
 | After unit 17 (final) |           |              | < 600 KB                | Main < 110 KB                      |

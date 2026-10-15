@@ -1,124 +1,141 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment -- react-spring animated typings vs React 19 */
-// @ts-nocheck
-import { useSprings, animated } from "@react-spring/web";
-import { useEffect, useRef, useState } from "react";
+import {
+  Fragment,
+  useEffect,
+  useRef,
+  type AnimationEvent,
+  type CSSProperties,
+} from "react";
+import { useInView } from "@/hooks/useInView";
+import { cn } from "@/lib/utils";
 
-interface SplitTextProps {
-  text?: string;
+type SplitTag = "h1" | "h2" | "p" | "span" | "div";
+
+interface SplitTextFrame {
+  opacity?: number;
+  transform?: string;
+}
+
+export interface SplitTextProps {
+  text: string;
+  /** Element rendered as the root (default `p`). */
+  as?: SplitTag;
+  id?: string;
   className?: string;
+  /** Milliseconds between consecutive letters. */
   delay?: number;
-  animationFrom?: { opacity: number; transform: string };
-  animationTo?: { opacity: number; transform: string };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  easing?: any;
+  /** Milliseconds each letter takes to animate. */
+  duration?: number;
+  /** CSS easing function. */
+  easing?: string;
+  animationFrom?: SplitTextFrame;
+  animationTo?: SplitTextFrame;
   threshold?: number;
   rootMargin?: string;
-  textAlign?: "left" | "right" | "center" | "justify" | "initial" | "inherit";
+  textAlign?: CSSProperties["textAlign"];
+  /** Runs when the last letter finishes, or right away under reduced motion. */
   onLetterAnimationComplete?: () => void;
 }
 
-const SplitText: React.FC<SplitTextProps> = ({
-  text = "",
-  className = "",
+type SplitStyle = CSSProperties & Record<`--${string}`, string | number>;
+
+const DEFAULT_FROM: SplitTextFrame = {
+  opacity: 0,
+  transform: "translate3d(0,40px,0)",
+};
+const DEFAULT_TO: SplitTextFrame = { opacity: 1, transform: "none" };
+const DEFAULT_EASING = "cubic-bezier(0.215, 0.61, 0.355, 1)";
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+
+export function SplitText({
+  text,
+  as: Tag = "p",
+  id,
+  className,
   delay = 100,
-  animationFrom = { opacity: 0, transform: "translate3d(0,40px,0)" },
-  animationTo = { opacity: 1, transform: "translate3d(0,0,0)" },
-  easing = (t: number) => t,
+  duration = 700,
+  easing = DEFAULT_EASING,
+  animationFrom,
+  animationTo,
   threshold = 0.1,
   rootMargin = "-100px",
   textAlign = "center",
   onLetterAnimationComplete,
-}) => {
-  const words = text.split(" ").map((word) => word.split(""));
-  const letters = words.flat();
-  const [inView, setInView] = useState(false);
-  const ref = useRef<HTMLParagraphElement>(null);
-  const animatedCount = useRef(0);
+}: SplitTextProps) {
+  const [inViewRef, inView] = useInView({ threshold, rootMargin, once: true });
+  const completeRef = useRef(onLetterAnimationComplete);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          if (ref.current) {
-            observer.unobserve(ref.current);
-          }
-        }
-      },
-      { threshold, rootMargin },
-    );
+    completeRef.current = onLetterAnimationComplete;
+  });
 
-    if (ref.current) {
-      observer.observe(ref.current);
+  useEffect(() => {
+    if (inView && window.matchMedia(REDUCED_MOTION_QUERY).matches) {
+      completeRef.current?.();
     }
+  }, [inView]);
 
-    return () => observer.disconnect();
-  }, [threshold, rootMargin]);
+  const from = { ...DEFAULT_FROM, ...animationFrom };
+  const to = { ...DEFAULT_TO, ...animationTo };
+  const words = text
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word) => Array.from(word));
+  const wordStarts = words.reduce<number[]>((starts, _word, index) => {
+    starts.push(index === 0 ? 0 : starts[index - 1] + words[index - 1].length);
+    return starts;
+  }, []);
+  const lastIndex = words.reduce((count, word) => count + word.length, 0) - 1;
 
-  const springs = useSprings(
-    letters.length,
-    letters.map((_, i) => ({
-      from: animationFrom,
-      to: inView
-        ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          async (next: (props: any) => Promise<void>) => {
-            await next(animationTo);
-            animatedCount.current += 1;
-            if (
-              animatedCount.current === letters.length &&
-              onLetterAnimationComplete
-            ) {
-              onLetterAnimationComplete();
-            }
-          }
-        : animationFrom,
-      delay: i * delay,
-      config: { easing },
-    })),
-  );
+  const style: SplitStyle = {
+    textAlign,
+    "--split-delay": `${delay}ms`,
+    "--split-duration": `${duration}ms`,
+    "--split-easing": easing,
+    "--split-from-opacity": from.opacity ?? 0,
+    "--split-from-transform": from.transform ?? "none",
+    "--split-to-opacity": to.opacity ?? 1,
+    "--split-to-transform": to.transform ?? "none",
+  };
+
+  const handleAnimationEnd = (event: AnimationEvent<HTMLElement>) => {
+    const target = event.target;
+    if (target instanceof HTMLElement && "last" in target.dataset) {
+      onLetterAnimationComplete?.();
+    }
+  };
 
   return (
-    <p
-      ref={ref}
-      className={`split-parent ${className}`}
-      style={{
-        textAlign,
-        overflow: "hidden",
-        display: "inline",
-        whiteSpace: "normal",
-        wordWrap: "break-word",
-      }}
+    <Tag
+      id={id}
+      ref={inViewRef}
+      className={cn("split-text", className)}
+      data-inview={inView || undefined}
+      style={style}
     >
-      {words.map((word, wordIndex) => (
-        <span
-          key={wordIndex}
-          style={{ display: "inline-block", whiteSpace: "nowrap" }}
-        >
-          {word.map((letter, letterIndex) => {
-            const index =
-              words.slice(0, wordIndex).reduce((acc, w) => acc + w.length, 0) +
-              letterIndex;
-
-            return (
-              <animated.span
-                key={index}
-                style={{
-                  ...springs[index],
-                  display: "inline-block",
-                  willChange: "transform, opacity",
-                }}
-              >
-                {letter}
-              </animated.span>
-            );
-          })}
-          <span style={{ display: "inline-block", width: "0.3em" }}>
-            &nbsp;
-          </span>
-        </span>
-      ))}
-    </p>
+      <span className="sr-only">{text}</span>
+      <span aria-hidden="true" key={text} onAnimationEnd={handleAnimationEnd}>
+        {words.map((word, wordIndex) => (
+          <Fragment key={wordIndex}>
+            {wordIndex > 0 && " "}
+            <span className="inline-block whitespace-nowrap">
+              {word.map((letter, letterIndex) => {
+                const index = wordStarts[wordIndex] + letterIndex;
+                const letterStyle: SplitStyle = { "--i": index };
+                return (
+                  <span
+                    key={index}
+                    className="split-char"
+                    style={letterStyle}
+                    data-last={index === lastIndex || undefined}
+                  >
+                    {letter}
+                  </span>
+                );
+              })}
+            </span>
+          </Fragment>
+        ))}
+      </span>
+    </Tag>
   );
-};
-
-export default SplitText;
+}
