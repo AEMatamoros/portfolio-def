@@ -220,15 +220,15 @@ Dependencies (Needs): 1→3; 4→5→6; 6→{7, 8}; {7, 8}→9; 9→{10→11, 12
 
 ## 13. feat(experience): type data and localize timeline
 
-- [ ] 13.1 Create `src/features/experience/experience.types.ts` (`Experience` with `id`, `company`, `role`, `summary`, `start`, `end?`, `stack`, `tools`).
-- [ ] 13.2 Rewrite `src/lib/dates.ts` (`MonthNumber`, `YearMonth`, `formatYearMonth` with cached `Intl.DateTimeFormat` UTC, `toYearMonth`, inclusive `monthsSpan`) per design 3.3; remove the old string-concatenation formatter. [localization: Localized content and dates]
-- [ ] 13.3 Rewrite `src/features/experience/data/experience.ts` with `satisfies readonly Experience[]`: `name`→`company`, `descriptionEN/ES`→`role`, `positionDescripcionEN/ES`→`summary`, `tecs`→`stack`, `time`/`timeEnd`→`start`/`end` as `YYYY-MM`, drop `current`, add `id` slugs; values unchanged. [portfolio-sections: Section anchors]
-- [ ] 13.4 Create presentational `src/features/experience/components/Timeline.tsx` and `TimelineItem.tsx` (props only): two columns at md and up with date and duration left, stacked below; `<time dateTime={start}>`; localized current label; stack as shadcn `Badge`s and tools as secondary badges. [portfolio-sections: Experience timeline]
-- [ ] 13.5 Rewrite `src/features/experience/ExperienceSection.tsx` (default export for `lazy`): `const NOW = toYearMonth(new Date())` at module scope, `useLocale`, `pickLocale`, range label `"{start} – {end ?? t('experience.current')}"`, duration from `t("experience.duration.years", { count })` and `months`, `SectionShell id="experience"` with `SectionHeader` title `experience.title`.
-- [ ] 13.6 Add keys `experience.current` (EN "Current", ES "Actualidad"), `experience.stack`, `experience.tools`, `experience.duration.years_one/_other`, `months_one/_other` to `en.ts` and `es.ts`.
-- [ ] 13.7 Verify (commands): `pnpm check`; `pnpm build`; `rg -n "DateFormatter|\"EN\"\)" src` is empty.
+- [x] 13.1 Create `src/features/experience/experience.types.ts` (`Experience` with `id`, `company`, `role`, `summary`, `start`, `end?`, `stack`, `tools`).
+- [x] 13.2 Rewrite `src/lib/dates.ts` (`MonthNumber`, `YearMonth`, `formatYearMonth` with cached `Intl.DateTimeFormat` UTC, `toYearMonth`, inclusive `monthsSpan`) per design 3.3; remove the old string-concatenation formatter. [localization: Localized content and dates]
+- [x] 13.3 Rewrite `src/features/experience/data/experience.ts` with `satisfies readonly Experience[]`: `name`→`company`, `descriptionEN/ES`→`role`, `positionDescripcionEN/ES`→`summary`, `tecs`→`stack`, `time`/`timeEnd`→`start`/`end` as `YYYY-MM`, drop `current`, add `id` slugs; values unchanged. [portfolio-sections: Section anchors]
+- [x] 13.4 Create presentational `src/features/experience/components/Timeline.tsx` and `TimelineItem.tsx` (props only): two columns at md and up with date and duration left, stacked below; `<time dateTime={start}>`; localized current label; stack as shadcn `Badge`s and tools as secondary badges. [portfolio-sections: Experience timeline]
+- [x] 13.5 Rewrite `src/features/experience/ExperienceSection.tsx` (default export for `lazy`): `const NOW = toYearMonth(new Date())` at module scope, `useLocale`, `pickLocale`, range label `"{start} – {end ?? t('experience.current')}"`, duration from `t("experience.duration.years", { count })` and `months`, `SectionShell id="experience"` with `SectionHeader` title `experience.title`.
+- [x] 13.6 Add keys `experience.current` (EN "Current", ES "Actualidad"), `experience.stack`, `experience.tools`, `experience.duration.years_one/_other`, `months_one/_other` to `en.ts` and `es.ts`.
+- [x] 13.7 Verify (commands): `pnpm check`; `pnpm build`; `rg -n "DateFormatter|\"EN\"\)" src` is empty.
 - [ ] 13.8 Verify (manual): Spanish at 1440 px and 375 px shows two columns then stacked, Spanish month names, plural durations (Clinpays reads "1 año 7 meses" on 2026-10-14) and "Actualidad"; English shows English fields and "Current"; DevTools shows `<time datetime="2025-04">`. [portfolio-sections: Layout and dates, English parity; localization: Timeline in Spanish]
-- [ ] 13.9 Commit `feat(experience): type data and localize timeline`.
+- [x] 13.9 Commit `feat(experience): type data and localize timeline`.
 
 ## 14. feat(techs): type icon data and make marquee accessible
 

@@ -2,7 +2,7 @@
 
 Change `portfolio-redesign` | store `openspec` | mode Standard (strict TDD off, no test runner) | delivery `single-pr` with recorded `size:exception` (user-approved).
 
-Batch 1 covers units 1 to 6, batch 2 covers units 7 to 9, batch 3 covers units 10 to 12. Units 13 to 19 are pending. Manual browser scenarios are never marked done by the apply executor; they are listed under "Deferred manual checks".
+Batch 1 covers units 1 to 6, batch 2 covers units 7 to 9, batch 3 covers units 10 to 12, batch 4 covers units 13 to 16. Units 17 to 19 are pending. Manual browser scenarios are never marked done by the apply executor; they are listed under "Deferred manual checks".
 
 ## Unit status
 
@@ -19,7 +19,8 @@ Batch 1 covers units 1 to 6, batch 2 covers units 7 to 9, batch 3 covers units 1
 | 9 | feat(ui): add section shell, typography and motion base | committed (65ccd87) |
 | 10 | feat(layout): rebuild header, mobile menu and skip link | committed (61439af) |
 | 11 | feat(layout): rebuild footer, side rails and scroll-to-top | committed (4872a93) |
-| 12 | feat(hero): add h1, ctas and token background | committed (this commit; see git log) |
+| 12 | feat(hero): add h1, ctas and token background | committed (84b7c27) |
+| 13 | feat(experience): type data and localize timeline | committed (this commit; see git log) |
 
 ## Unit 1: chore: remove dead code and assets
 
@@ -272,6 +273,27 @@ Implementation notes
 - Task 12.6 (seams and softness) is left unchecked because it is a judgement on a real display. Measured: the dark pattern base is `#030303` with `#0a0a0a` letters and the light base is `#fcfbfc`; the hero fades to `--background` over its last 128 px, so it ends exactly on the token. The sources are 1024 px, so re-running the unit-3 command at 1600 px cannot add detail, and the pattern is a very low contrast watermark; no change was made.
 - Known and transitional: the Experience, Techs, Projects and Contact sections still use `dark:bg-black` (units 13 to 16 rebuild them with tokens), so in the dark theme a faint band separates the hero's `oklch(0.145)` bottom from the pure black section below it. It disappears when those units land.
 
+## Unit 13: feat(experience): type data and localize timeline
+
+Work Unit Evidence
+
+| Evidence | Value |
+| -------- | ----- |
+| Focused test command and result | `rg -n 'DateFormatter\|"EN"\)' src`: no matches (exit 1). A scratchpad script (Node 24 type stripping) imported the old data from `HEAD` and the new `EXPERIENCE` and compared every mapped field: 5 entries, 0 mismatches (company, role EN/ES, summary EN/ES byte for byte, stack, tools, `YYYY-MM` start and end, and `current` equals `end === undefined` for all five) |
+| Gate | `pnpm check`: green (tsc, eslint, prettier); `pnpm build`: green, main 352.10 kB raw / 111.85 kB gzip (was 111.66), Contact 111.82 kB / 38.21 kB, CSS 61.03 kB / 11.46 kB, `ExperienceSection` chunk 9.92 kB / 3.94 kB |
+| Runtime harness | `pnpm build` + `pnpm preview --port 4173` driven through headless Chrome over CDP (scratchpad script, not committed). English at 1440 px: `Apr 2025 – Current` with `<time datetime="2025-04">`, `1 year 7 months` for Clinpays (build machine date 2026-10), `Jun 2022 – Current` and `4 years 5 months` for Atlantida, finished entries carry two `<time>` elements (`2022-12`, `2024-06`), `1 year 1 month` shows the singular plural form. Spanish (`i18nextLng=es`, `html lang="es"`): `abr 2025 – Actualidad`, `1 año 7 meses`, `4 años 5 meses`, `1 año 1 mes`, `jun 2022`, `dic 2022` and Spanish roles (`Desarrollador Fullstack`, `Autónomo`); the two badge lists are named "Tecnologías utilizadas" and "Herramientas". Layout: date column and content sit side by side at 1440 and 768 px and stack at 375 px, no horizontal overflow at 768 or 375. Stack badges are `data-variant="secondary"` and tool badges `outline`. The section background is `oklch(0.145 0 0)` in dark, identical to the hero, so the black band is gone; the rail is `border-border` (1 px). Five `h3`, one `h2` named through `aria-labelledby="experience-title"`. Zero console errors or warnings. Screenshots (EN dark 1440, ES light 375) were inspected. The real-eyes checks in 13.8 stay deferred |
+| Rollback boundary | Revert the unit-13 commit: restores the flat `Experience` data (`descriptionEN/ES`, `time`, `timeEnd`, `current`), the old `lib/dates.ts` string formatter and the old `ExperienceSection` (HeaderSeparator, `key={index}`, hardcoded "Actualidad"); removes `experience.types.ts` and `components/{Timeline,TimelineItem}.tsx`; drops `experience.{current,stack,tools,duration.*}` from both locale files |
+
+Implementation notes
+
+- `lib/dates.ts` follows design 3.3: `YearMonth` template-literal type, one cached `Intl.DateTimeFormat` per locale (`month: "short"`, `year: "numeric"`, `timeZone: "UTC"`; the date is built with `Date.UTC`, so the month never shifts with the visitor's time zone), `toYearMonth` reads the local year and month, and `monthsSpan` is inclusive and clamps at 0. It has no default export now; the old `DateFormatter` string concatenation ("Since", "Months") is gone.
+- `data/experience.ts` was generated from the old file with a throwaway script so the template-literal summaries (including their leading newline and indentation) keep exactly the same runtime values. Ids are slugs (`clinpays`, `informatica-atlantida`, `goit-global`, `impact-mobile`, `freelancer`). No value, flag or date was corrected.
+- `ExperienceSection` (default export for `lazy`) holds `NOW = toYearMonth(new Date())` at module scope and builds a `TimelineItemData` view model per entry (`pickLocale` for role and summary, range labels, duration joined from non-zero parts through `experience.duration.years` and `months`). `Timeline` and `TimelineItem` are presentational (props only); the item renders `<time dateTime>` for the start and, for finished entries, the end. The current entry shows the localized label in `text-foreground` and a `bg-foreground` dot with a soft ring.
+- Layout: the `ol` is the token rail (`border-s border-border`); each `li` is a `md:grid md:grid-cols-[12rem_minmax(0,1fr)]`. The section uses `bg-background`, `Container` and `SectionHeader` (left aligned, replacing the centered h2 with `HeaderSeparator`); `HeaderSeparator` has two consumers left (Projects and Contact) and is removed in unit 16.
+- Keys added (ES values are new): `experience.current`, `experience.stack` ("Technologies used" and "Tecnologías utilizadas"), `experience.tools` ("Tools" and "Herramientas"), `experience.duration.{years,months}_{one,other}`. Spanish uses `_one` and `_other` only (CLDR `many` applies to counts of a million or more).
+- The two badge lists have `aria-label`s so a screen reader announces which list is the stack and which are tools; no visible labels were added.
+- The Experience wrapper in `App.tsx` is still translated by `useScrollAnimation` (`y: 50`); unit 17 replaces it.
+
 ## Deferred manual checks
 
 These sub-tasks stay unchecked in `tasks.md`; the orchestrator must run them in a browser.
@@ -289,6 +311,7 @@ These sub-tasks stay unchecked in `tasks.md`; the orchestrator must run them in 
 - 11.7: in a real browser, the console `a[target="_blank"]:not([rel~="noopener"])` and `a[href="#"]` audits are 0; Tab at scroll 0 skips scroll-to-top, after scrolling 400+ px it is reachable and Enter scrolls to the top with focus on `main`; it does not overlap the right rail at 1440 px (the CDP run measured 24 px of clearance); the rails are hidden below 1024 px; the footer focus ring is at least 3:1 in the dark theme; the Spanish footer reads Spanish. A scripted CDP run already covered all of these states with real key events (see Unit 11 evidence); a screen reader and real pointer input are not covered.
 - 12.6: judge the dark hero pattern for seams against `oklch(0.145)` and softness at 1440 and 1920 px on a real display; if it is soft, adjust the pattern (the 1024 px source cannot be re-encoded sharper). Measured values are in the Unit 12 notes.
 - 12.8: in a real browser, `document.querySelectorAll("main, h1").length` is 2 and `h1` is 1; the primary CTA scrolls to Contact; the English CV downloads in English and the Spanish CV in Spanish (the CDP run wrote both files with the right byte counts); only the matching pattern is fetched (Network) and a theme switch swaps it without a flash; no seams at 375, 768 and 1440 px in dark (expect the faint transitional band against the still-black Experience section until unit 13); ShinyText sweeps for 5 s on the hero CTA (the CDP run confirmed the `shine` animation, not the visual) and is static under reduced motion; the hero CTA fade-in plays; the new h1 size (64 px at 1440, 40 px at 375) looks right against the base build.
+- 13.8: in a real browser, Spanish at 1440 px shows two columns and at 375 px stacked, Spanish month names, plural durations (Clinpays reads "1 año 7 meses" on 2026-10-14) and "Actualidad"; English shows English fields and "Current"; DevTools shows `<time datetime="2025-04">`. The CDP run already covered the strings, the `<time>` attributes, the column geometry and the badge variants (see Unit 13 evidence); the visual polish of the rail and dots on a real display is not covered.
 
 ## Deviations, risks and notes
 
@@ -303,7 +326,7 @@ These sub-tasks stay unchecked in `tasks.md`; the orchestrator must run them in 
 - Commit bodies keep every line at or below 100 characters because commitlint `body-max-line-length` rejects longer lines (unit 3 was committed on the second attempt for that reason).
 - `tasks.md` and this file are committed with each unit so the tree stays clean. `openspec/changes/portfolio-redesign/state.yaml` is orchestrator-owned: it was already modified before this batch started and was never staged or edited.
 - No follow-up `fix(...)` commits were needed in batches 1 and 2.
-- Bundle measurements from plain `pnpm build` (gzip): unit 6 main 123.86 kB, Contact 38.25 kB; unit 7 main 124.32 kB, Contact 38.25 kB; unit 8 main 123.54 kB, Contact 38.19 kB; unit 9 main 124.31 kB, Contact 38.20 kB, CSS 11.64 kB; unit 10 main 111.99 kB, Contact 38.21 kB, CSS 11.74 kB, `MobileMenu` chunk 15.50 kB; unit 11 main 112.05 kB, Contact 38.21 kB, CSS 11.54 kB, `MobileMenu` chunk 13.69 kB; unit 12 main 111.66 kB, Contact 38.22 kB, CSS 11.47 kB. The lazy Sheet recovered about 12 kB of the 14 kB needed; main is about 1.66 kB above the final < 110 kB target and Contact about 7 kB above < 31 kB until axios and notiflix leave in unit 16.
+- Bundle measurements from plain `pnpm build` (gzip): unit 6 main 123.86 kB, Contact 38.25 kB; unit 7 main 124.32 kB, Contact 38.25 kB; unit 8 main 123.54 kB, Contact 38.19 kB; unit 9 main 124.31 kB, Contact 38.20 kB, CSS 11.64 kB; unit 10 main 111.99 kB, Contact 38.21 kB, CSS 11.74 kB, `MobileMenu` chunk 15.50 kB; unit 11 main 112.05 kB, Contact 38.21 kB, CSS 11.54 kB, `MobileMenu` chunk 13.69 kB; unit 12 main 111.66 kB, Contact 38.22 kB, CSS 11.47 kB; unit 13 main 111.85 kB, Contact 38.21 kB, CSS 11.46 kB, `ExperienceSection` chunk 3.94 kB. The lazy Sheet recovered about 12 kB of the 14 kB needed; main is about 1.66 kB above the final < 110 kB target and Contact about 7 kB above < 31 kB until axios and notiflix leave in unit 16.
 - Hero background swap: resolved in unit 12. `HeroBackground` swaps the pattern with CSS `dark:` selectors on the `.dark` class, so it is part of the same style recalculation as the View Transition snapshot; the late `useDocumentDark` state update that 7.13 worried about no longer exists.
 - Header until unit 10: `ThemeToggle` defaults to `text-current hover:bg-current/10`, and the desktop toggle wrapper in `Header.tsx` now applies the existing `linkClass(...)` colour so the icon stays legible on the inverted scrolled pill. Unit 10 rewrites the header.
 - Hardcoded `bg-white dark:bg-black` / `text-gray-*` pairs remain in the section files, Header, Footer and rails on purpose: tasks 7.x only name `index.html`, `App.tsx` and `ThemeToggle.tsx`, and units 10 to 16 rebuild each of those files with tokens.

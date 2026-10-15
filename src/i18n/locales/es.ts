@@ -40,6 +40,15 @@ export const es = {
   },
   experience: {
     title: "Experiencia",
+    current: "Actualidad",
+    stack: "Tecnologías utilizadas",
+    tools: "Herramientas",
+    duration: {
+      years_one: "{{count}} año",
+      years_other: "{{count}} años",
+      months_one: "{{count}} mes",
+      months_other: "{{count}} meses",
+    },
   },
   techs: {
     title: "Tecnologías",

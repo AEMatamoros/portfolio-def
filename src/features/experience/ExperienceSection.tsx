@@ -1,76 +1,63 @@
-import formatDate from "@/lib/dates";
-import HeaderSeparator from "@/components/atoms/HeaderSeparator";
-import { SectionShell } from "@/components/layout/SectionShell";
-import { titleIdOf } from "@/config/site";
 import { useTranslation } from "react-i18next";
+import { Container } from "@/components/layout/Container";
+import { SectionShell } from "@/components/layout/SectionShell";
+import { SectionHeader } from "@/components/molecules/SectionHeader";
+import { titleIdOf } from "@/config/site";
+import { Timeline } from "@/features/experience/components/Timeline";
+import type { TimelineItemData } from "@/features/experience/components/TimelineItem";
 import { EXPERIENCE } from "@/features/experience/data/experience";
 import { useLocale } from "@/hooks/useLocale";
+import { formatYearMonth, monthsSpan, toYearMonth } from "@/lib/dates";
+import { pickLocale } from "@/lib/localize";
 
-export default function Timeline() {
+/** Captured once at module scope, so render stays pure. */
+const NOW = toYearMonth(new Date());
+
+export default function ExperienceSection() {
   const { t } = useTranslation();
   const locale = useLocale();
-  return (
-    <SectionShell id="experience" className="bg-white dark:bg-black py-8 px-12">
-      <div className="container mx-auto flex items-center flex-wrap pt-4 pb-12 max-w-[1280px]">
-        <h2
-          id={titleIdOf("experience")}
-          className="my-4 text-center text-5xl dark:text-gray-100 font-semibold w-full"
-        >
-          {t("experience.title")}
-        </h2>
-        <HeaderSeparator />
-        <ol className="relative border-s border-gray-200 ">
-          {EXPERIENCE.map((place, id) => (
-            <li className="mb-10 ms-4" key={id}>
-              <div className="absolute -start-1.5 mt-1.5 h-3 w-3 rounded-full border border-white bg-gray-200  "></div>
-              <time className="mb-1 text-center text-sm font-normal leading-none text-gray-400  md:text-left">
-                {formatDate(place.time, place.timeEnd || "", "EN")}
-                {place.current && (
-                  <span className="px-4">
-                    {locale === "es" ? "Actualidad" : "Current"}
-                  </span>
-                )}
-              </time>
-              <h3 className="text-lg font-semibold text-black dark:text-gray-100">
-                {place.name}
-                <span className="text-primary px-4">{place.descriptionEN}</span>
-              </h3>
-              <p className="text-center text-base font-normal text-gray-500  md:text-left">
-                {locale === "es"
-                  ? place.positionDescripcionES
-                  : place.positionDescripcionEN}
-              </p>
-              {place.tools && place.tools.length > 0 && (
-                <ul className="flex flex-wrap gap-2 mt-2">
-                  {place.tools.map((tool: string, idx: number) => (
-                    <li
-                      key={idx}
-                      className="bg-gray-100 dark:bg-gray-800 text-xs text-gray-700 dark:text-gray-200 px-2 py-1 rounded"
-                    >
-                      {tool}
-                    </li>
-                  ))}
-                </ul>
-              )}
 
-              {place.tecs && place.tecs.length > 0 && (
-                <div className="mt-4">
-                  <ul className="flex flex-wrap gap-2 mt-1">
-                    {place.tecs.map((tec: string, idx: number) => (
-                      <li
-                        key={idx}
-                        className="bg-black dark:bg-white text-xs text-white dark:text-black px-2 py-1 rounded"
-                      >
-                        {tec}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </li>
-          ))}
-        </ol>
-      </div>
+  const items = EXPERIENCE.map((entry): TimelineItemData => {
+    const { years, months } = monthsSpan(entry.start, entry.end ?? NOW);
+    const duration = [
+      years > 0 && t("experience.duration.years", { count: years }),
+      months > 0 && t("experience.duration.months", { count: months }),
+    ]
+      .filter(Boolean)
+      .join(" ");
+
+    return {
+      id: entry.id,
+      company: entry.company,
+      role: pickLocale(entry.role, locale),
+      summary: pickLocale(entry.summary, locale),
+      start: entry.start,
+      startLabel: formatYearMonth(entry.start, locale),
+      end: entry.end,
+      endLabel: entry.end
+        ? formatYearMonth(entry.end, locale)
+        : t("experience.current"),
+      duration,
+      stack: entry.stack,
+      tools: entry.tools,
+    };
+  });
+
+  return (
+    <SectionShell id="experience" className="bg-background py-16 md:py-24">
+      <Container>
+        <SectionHeader
+          titleId={titleIdOf("experience")}
+          title={t("experience.title")}
+        />
+        <div className="mt-12">
+          <Timeline
+            items={items}
+            stackLabel={t("experience.stack")}
+            toolsLabel={t("experience.tools")}
+          />
+        </div>
+      </Container>
     </SectionShell>
   );
 }
