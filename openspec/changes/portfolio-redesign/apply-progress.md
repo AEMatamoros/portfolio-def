@@ -488,3 +488,23 @@ These sub-tasks stay unchecked in `tasks.md`; the orchestrator must run them in 
 | --- | -------- | ------ |
 | Side rails and scroll-to-top offset shown from `xl` (1280 px) instead of `lg` (1024 px) | At exactly 1024 px (measured `innerWidth` in the built-in browser) the left rail (0-48 px) overlapped the Contact section's left column, because the `max-w-6xl` container has no side margin below ~1230 px. Design line "SideRails" updated. Gate: `pnpm check` green, `pnpm build` green. | see git log (`fix(layout): show side rails only from xl`) |
 | Removed the unused `cn@0.4` dependency added by the shadcn CLI | `pnpm remove cn`; `pnpm check` and `pnpm build` green | d20f26a |
+
+## Orchestrator manual matrix (built-in browser on the Vite dev server, commit 707f727)
+
+| Check | Result |
+| ----- | ------ |
+| 1440 px, light, EN: hero (single h1, two CTAs), experience (2 columns), techs marquee with pause button, projects grid (3 columns, WebP thumbnails), contact, footer | pass |
+| 1440 px, dark via OS preference emulation with mode "system": hero pattern, projects, contact and footer share the `--background` token, no band between sections | pass |
+| Theme toggle label cycles ("Theme: Light" -> "Theme: System"), stored mode persists across reload, pre-paint `dark` class applied on reload | pass |
+| Spanish: `<html lang="es">`, headings "Experiencia / Tecnologías / Proyectos / Contacto", "Tema: Sistema", footer and hero copy translated, choice persisted in `i18nextLng` | pass |
+| Deep links: cold `/#projects` and `hashchange` to `#techs` land with the section top at 80 px (below the fixed header), all five sections mounted | pass |
+| 1024 px: left rail overlapped the Contact column (container has no side margin until ~1230 px) | defect, fixed in 707f727 (rails from `xl`) |
+| 768 px, light, ES: pill header on scroll, experience in 2 columns, projects in 2 columns (`340px 340px`), `#experience` lands at 80 px | pass |
+| 375 px: hamburger, stacked CTAs, no rails, 1-column project grid; menu chunk requested only on first open; Sheet lists nav links with `aria-current` on the active section, language/theme toggles and social links; close returns focus to "Abrir menú principal" | pass |
+| Contact form (preview build with `VITE_CONTACT_API_URL` set): name, email, company (optional), phone (optional), message, honeypot `website`; empty submit shows three "This field is required." errors with `aria-invalid` and sends no request | pass (no real submission was made) |
+| Contact without the variable (dev server): localized mailto fallback card instead of the form | pass |
+| Reduced motion, keyboard-only tab order, screen reader | not run in a real browser by the orchestrator; covered only by the writers' scripted headless-Chrome checks |
+
+Screenshots taken under viewport emulation can show CSS animations frozen mid-way (SplitText letters, section reveal, Sheet opacity); computed styles and `document.getAnimations()` confirmed the animations finish, so those frames are tooling artifacts, not defects.
+
+Tasks 3.10, 5.9, 6.12, 9.14, 12.8, 13.8, 15.8 and 16.15 were checked by the orchestrator on the evidence above plus the writers' `curl`/CDP runs. Still unchecked (real-browser or external): 1.8, 2.6, 4.7, 7.13 (CPU 6x filmstrip), 8.11 (browser-language setting), 10.11, 11.7, 12.6 (1920 px display), 14.8, 16.14 (stub with DevTools throttling), 17.9, 18.4 (CI on the PR), 19.10 (keyboard-only pass), 19.11 (reduced motion), 19.12 (contrast audits), 19.13 (behavior diff against the base build).

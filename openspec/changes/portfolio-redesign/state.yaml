@@ -6,7 +6,11 @@ artifact_store: openspec
 execution_mode: auto
 delivery_strategy: single-pr
 chain_strategy: null
-size_exception: null
+size_exception:
+  status: confirmed
+  decided_by: user
+  decided_at: "2026-10-14"
+  scope: single PR on feat/portfolio-redesign with 19 reviewable commits (~4.5k-5.5k lines)
 phases:
   explore:
     status: done
@@ -38,12 +42,30 @@ phases:
       chained_prs_recommended: true
       decision_needed_before_apply: true
   apply:
-    status: blocked
-    blocked_reason: awaiting size:exception decision (single-pr over 400-line budget)
+    status: done
+    artifact: apply-progress.md
+    units_completed: 19
+    last_commit: d20f26a
+    branch: feat/portfolio-redesign
+    batches:
+      - { units: "1-6", status: done, commits: "61262d1..63c571d", gate: "medium; writer self-verified; parent spot check pnpm check green" }
+      - { units: "7-9", status: done, commits: "be6b7e7..65ccd87", gate: "writer self-verified (headless chrome); parent spot check pnpm check green" }
+      - { units: "10-12", status: done, commits: "61439af..84b7c27", gate: "writer self-verified (CDP); parent spot check pnpm check green" }
+      - { units: "13-16", status: done, commits: "cfadc9a..902f406", gate: "writer self-verified (CDP + stub endpoint); parent spot check pnpm check green" }
+      - { units: "17-19", status: done, commits: "b4feeee..5aa0192 + d20f26a cn cleanup", gate: "high (ci workflow); writer self-verified; independent verifier = sdd-verify" }
   verify:
-    status: pending
+    status: done-with-notes
+    artifact: verify-report.md
+    verdict: pass-with-warnings
+    native_admission: unavailable (gentle-ai 3.4.0 lacks sdd-verify-validate; upstream issue 4699; report materialized by the orchestrator)
+    post_verify_fixes: [707f727, 33ca36a]
+    manual_checks_open: 16
   archive:
-    status: pending
+    status: blocked
+    native_dispatcher: "dependencies.archive: ready; nextRecommended: apply (16 manual tasks pending)"
+    blocked_reason: sdd-archive skill Task Completion Gate (16 unchecked real-browser/external tasks) and the CRITICAL procedural row in verify-report.md
+    unblock_path: run the 16 manual checks (18.4 needs the PR), re-verify, then re-run sdd-archive
+    engram_observation: 313
 confirmed_decisions:
   decided_at: "2026-10-14"
   decided_by: user
