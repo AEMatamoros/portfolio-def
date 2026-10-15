@@ -19,5 +19,9 @@ export default {
     "CONTACT.HERO.INIT": "Mi nombre es ...",
     "BUTTON.SEE_MORE": "Ver más",
     "CONTACT.SUBTITLE": "Ponte en contacto conmigo.",
+    "THEME.TOGGLE": "Tema: {{mode}}",
+    "THEME.MODE_LIGHT": "Claro",
+    "THEME.MODE_DARK": "Oscuro",
+    "THEME.MODE_SYSTEM": "Sistema",
   },
 };

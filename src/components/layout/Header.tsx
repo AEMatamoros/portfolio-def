@@ -1,5 +1,5 @@
 import LangToogle from "@/components/molecules/LanguageToggle";
-import ThemeToggle from "@/components/molecules/ThemeToggle";
+import { ThemeToggle } from "@/components/molecules/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -158,7 +158,11 @@ export default function Header() {
             CV
           </a>
         </div>
-        <div className="hidden md:flex md:flex-1 md:justify-end">
+        <div
+          className={linkClass(
+            "hidden md:flex md:flex-1 md:items-center md:justify-end",
+          )}
+        >
           <LangToogle />
           <ThemeToggle />
         </div>

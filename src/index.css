@@ -107,21 +107,29 @@ html {
   }
 }
 
-/* Theme change */
-@keyframes clipPathExpand {
-  0% {
-    clip-path: circle(0% at 100% 0%);
+/* Theme change: circular reveal from the toggle (View Transitions API) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  animation: theme-reveal 500ms ease-in-out;
+}
+
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0 at var(--theme-x, 100%) var(--theme-y, 0));
   }
-  100% {
-    clip-path: circle(150% at 100% 0%);
+  to {
+    clip-path: circle(
+      var(--theme-r, 150%) at var(--theme-x, 100%) var(--theme-y, 0)
+    );
   }
 }
 
 /* Utilities */
-.dark .animate-clip-expand {
-  animation: clipPathExpand 0.5s ease-in-out;
-}
-
 .infinite-carousel {
   display: flex;
   white-space: nowrap;
@@ -232,7 +240,7 @@ html {
   --destructive: oklch(0.577 0.245 27.325);
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
+  --ring: oklch(0.556 0 0);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -267,7 +275,7 @@ html {
   --destructive: oklch(0.704 0.191 22.216);
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+  --ring: oklch(0.708 0 0);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);

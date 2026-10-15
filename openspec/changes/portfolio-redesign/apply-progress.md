@@ -2,7 +2,7 @@
 
 Change `portfolio-redesign` | store `openspec` | mode Standard (strict TDD off, no test runner) | delivery `single-pr` with recorded `size:exception` (user-approved).
 
-Batch 1 covers units 1 to 6. Units 7 to 19 are pending. Manual browser scenarios are never marked done by the apply executor; they are listed under "Deferred manual checks".
+Batch 1 covers units 1 to 6, batch 2 covers units 7 to 9. Units 10 to 19 are pending. Manual browser scenarios are never marked done by the apply executor; they are listed under "Deferred manual checks".
 
 ## Unit status
 
@@ -13,7 +13,8 @@ Batch 1 covers units 1 to 6. Units 7 to 19 are pending. Manual browser scenarios
 | 3 | perf: convert images to webp | committed (028ab9c) |
 | 4 | refactor(animations): css-driven split text | committed (81d4bf6) |
 | 5 | build(deps): upgrade react 19, i18next 26 and tooling | committed (1b0ebd6) |
-| 6 | refactor: adopt feature-first structure and single alias | committed (this commit; see git log) |
+| 6 | refactor: adopt feature-first structure and single alias | committed (63c571d) |
+| 7 | feat(theme): add theme provider and token palette | committed (this commit; see git log) |
 
 ## Unit 1: chore: remove dead code and assets
 
@@ -130,6 +131,27 @@ Implementation notes
 - Removing `build.target: "esnext"` changed the main chunk from 123.14 to 123.86 kB gzip (default browser baseline transpiles more syntax); Contact is unchanged at 38.25 kB gzip.
 - Docs that still mention the old aliases or `src/constants` (`CLAUDE.md`, `openspec/config.yaml`, `.cursor/rules/portfolio.mdc`) are intentionally left for unit 19.
 
+## Unit 7: feat(theme): add theme provider and token palette
+
+Work Unit Evidence
+
+| Evidence | Value |
+| -------- | ----- |
+| Focused test command and result | `grep -n localStorage dist/index.html`: one hit at line 8, inside `<head>` (lines 3 to 24) and before `<body>` (line 25), ahead of the stylesheet link; `rg -n "bg-white dark:bg-black" index.html`: no matches (exit 1); `rg -n "THEME_OPTIONS\|theme-options" src`: no matches; no `.light` selector in `src/index.css` |
+| Gate | `pnpm check`: green (tsc, eslint, prettier); `pnpm build`: green, main 388.55 kB raw / 124.32 kB gzip, Contact 111.76 kB / 38.25 kB |
+| Runtime harness | `pnpm build && pnpm preview --port 4173` driven through headless Chrome over CDP (scratchpad script, not committed): empty storage + emulated OS dark gives `html.dark`, `color-scheme: dark`, body `oklch(0.145 0 0)` and label "Theme: System"; three clicks walk system, light, dark, system with `localStorage.theme` following and the label updating each time; light chosen under OS dark persists after reload; `theme="zzz"` falls back to system with no console error; flipping the emulated OS scheme in system mode toggles `html.dark` live; with `prefers-reduced-motion: reduce` the click applies the theme instantly; at 375 px a click on the toggle inside the sheet updates the header toggle label and `html.dark`; zero console errors. The visual View Transition reveal, the Performance filmstrip at CPU 6x and the Accessibility tree check are deferred manual checks (7.13) |
+| Rollback boundary | Revert the unit-7 commit: removes `src/theme/{theme,theme-context,useTheme,theme-transition}.ts` and `ThemeProvider.tsx`, `src/app/AppProviders.tsx`; restores `theme-options.ts`, the interim `index.html` script and body classes, the old toggle, the `main.tsx` render, the `App.tsx` wrapper classes, the `clipPathExpand` CSS and the previous `--ring` values; drops the four `THEME.*` keys from `en.ts` and `es.ts` |
+
+Implementation notes
+
+- Theme modules follow design 2.1 as written: `theme.ts` (plain TS, mirrors the inline script), `theme-context.ts` (context, value type and `ThemeOrigin`, no components), `useTheme.ts` (`use(ThemeContext)`, throws outside the provider), `theme-transition.ts` (View Transition with `--theme-x/y/r`, skipped under reduced motion or when `document.startViewTransition` is missing) and `ThemeProvider.tsx` (`useState(readStoredMode)`, `useSyncExternalStore` for the OS scheme, `useLayoutEffect` apply, `setMode` with `flushSync` inside the transition). `writeStoredMode` swallows storage errors so a blocked store never throws.
+- `ThemeToggle` is a named export: ghost icon `Button` with Sun (light), Moon (dark) or Monitor (system) chosen by an explicit conditional, `aria-label` from `t("THEME.TOGGLE", { mode })`, click passes the button rect centre. It takes an optional `className` and defaults to `text-current hover:bg-current/10 hover:text-current` so it stays legible on the inverted scrolled-header pill (black in light, near-white in dark) until unit 10 rebuilds the header.
+- `Header.tsx` (rebuilt in unit 10) changed minimally: the named `ThemeToggle` import and the desktop toggle wrapper now applies the existing `linkClass(...)` colour so the ghost button, which inherits `currentColor`, is visible on the pill. No other header markup changed.
+- `index.html`: the final ES5 pre-paint script sits right after `<meta charset>`, before the favicon, viewport, title, and the stylesheet link that Vite injects. `class="bg-white dark:bg-black"` is gone from `<body>`; `@layer base` supplies `bg-background`. The favicon `href` and `type` stay wrong until unit 10 (task 10.9).
+- `src/index.css`: light `--ring` is `oklch(0.556 0 0)`, dark `--ring` is `oklch(0.708 0 0)` (the two values were swapped from the shadcn defaults); `@keyframes clipPathExpand` and `.dark .animate-clip-expand` are replaced by the `::view-transition-*` and `theme-reveal` rules from design 2.1.
+- Flat keys `THEME.TOGGLE`, `THEME.MODE_LIGHT`, `THEME.MODE_DARK`, `THEME.MODE_SYSTEM` were added to both locale files in the existing flat style (ES values are new; no existing string changed). Unit 8 migrates them to `theme.toggle` and `theme.modes.*`.
+- Declared motion change 4 (flagged for verify, the motion spec lists three): the dark-only load-time clip reveal is replaced by a user-triggered View Transition. The commit body states it.
+
 ## Deferred manual checks
 
 These sub-tasks stay unchecked in `tasks.md`; the orchestrator must run them in a browser.
@@ -140,6 +162,7 @@ These sub-tasks stay unchecked in `tasks.md`; the orchestrator must run them in 
 - 4.7: build the base for comparison (`git worktree add <scratch> c34a50f`, `pnpm install --frozen-lockfile`, `pnpm build`, `pnpm preview --port 4174`) and compare hero timing and stagger side by side with the new build; DevTools Accessibility shows one name for the hero text; reduced motion shows final text at once; no layout shift when letters animate. Known and expected: word gaps are about 4 px narrower at 60 px (real spaces instead of the 0.3em spacer).
 - 5.9: Sheet opens and focus returns to the trigger on close (the React 18 dropped-ref bug is gone); language switch works; theme toggle still works.
 - 6.12: `pnpm preview` smoke identical to unit 5 (images, CVs, theme toggle, language switch, Sheet).
+- 7.13: DevTools Rendering emulation checks in a real browser: first visit under OS dark reads dark with the toggle at "System"; light chosen under OS dark persists after reload; `localStorage.theme="zzz"` falls back to system with no console error; flipping the OS scheme in system mode updates live; at 375 px the sheet toggle updates the header toggle label; screen reader name updates after each activation; Chrome shows the circular reveal from the toggle and reduced motion switches instantly; hard reload at CPU 6x with a dark preference shows no light frame. A scripted CDP run already covered the state, storage, label, live-flip, reduced-motion and sheet-sync logic (see Unit 7 evidence); the visual reveal and the filmstrip are not covered.
 
 ## Deviations, risks and notes
 

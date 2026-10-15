@@ -28,7 +28,7 @@ export default function App() {
   });
 
   return (
-    <div className="w-full min-h-screen animate-clip-expand animate-clip-shrink">
+    <div className="w-full min-h-screen">
       <Header />
       <section>
         <Hero />
