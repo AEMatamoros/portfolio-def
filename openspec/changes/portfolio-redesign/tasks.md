@@ -149,18 +149,18 @@ Dependencies (Needs): 1→3; 4→5→6; 6→{7, 8}; {7, 8}→9; 9→{10→11, 12
 
 ## 8. feat(i18n): type nested locales and sync html lang
 
-- [ ] 8.1 Create `src/types/localized.ts` (`LOCALES`, `Locale`, `Localized<T>`) and `src/lib/localize.ts` (`toLocale`, `pickLocale`). [localization: Language detection with regional codes]
-- [ ] 8.2 Rewrite `src/i18n/locales/en.ts` as nested camelCase `as const` per the design 3.2 migration table (17 keys plus the unit-7 theme keys → `theme.toggle`, `theme.modes.*`, plus `language.toggle`). Fix only obvious EN typos in `hero.description` and `contact.description`. [localization: Copy change scope]
-- [ ] 8.3 Rewrite `src/i18n/locales/es.ts` with `satisfies Messages` (EN deep-widened to `string`); move every existing Spanish string byte-identical to its new key; add only the new keys. [localization: Type-level EN/ES parity]
-- [ ] 8.4 Create `src/i18n/i18next.d.ts` (`CustomTypeOptions` with `defaultNS` and `resources`).
-- [ ] 8.5 Rewrite `src/i18n/init.ts` per design 3.1: `i18next.createInstance()`, `supportedLngs`, `nonExplicitSupportedLngs`, `load: "languageOnly"`, `initAsync: false`, detector order `localStorage`, `navigator` (key `i18nextLng` unchanged), `syncHtmlLang` on init and `languageChanged`. [localization: Document language sync]
-- [ ] 8.6 Create `src/hooks/useLocale.ts` (`toLocale(i18n.resolvedLanguage)`).
-- [ ] 8.7 Extend `src/app/AppProviders.tsx` with `I18nextProvider i18n={i18n}`; rewrite `src/main.tsx` to `StrictMode` > `AppProviders` > `App` (D27); make `App` a named export (D4) in `src/app/App.tsx`.
-- [ ] 8.8 Migrate every `t()` caller to the new keys and replace each `i18n.language === "es"` with `useLocale()`: `HeroSection.tsx`, `Header.tsx` (CV link too), `Footer.tsx`, `ExperienceSection.tsx` (two checks), `ProjectsSection.tsx` (drop the `|| "Ver Más"` fallback), `ContactSection.tsx`, `useContactForm.ts`, `LanguageToggle.tsx` (label from `useLocale()`, name `t("language.toggle")`), `ThemeToggle.tsx`. Add `satisfies Localized` to `SITE.cv` in `config/site.ts`.
-- [ ] 8.9 Parity probes: delete one key from `es.ts` only and run `pnpm check` (must fail); revert. Call `t("does.not.exist")` and run `pnpm check` (must fail); revert. [localization: Missing Spanish key, Unknown key]
-- [ ] 8.10 Verify (commands): `pnpm check`; `pnpm build`; `git diff c34a50f -- src/i18n` shows Spanish additions only and EN typo fixes only.
+- [x] 8.1 Create `src/types/localized.ts` (`LOCALES`, `Locale`, `Localized<T>`) and `src/lib/localize.ts` (`toLocale`, `pickLocale`). [localization: Language detection with regional codes]
+- [x] 8.2 Rewrite `src/i18n/locales/en.ts` as nested camelCase `as const` per the design 3.2 migration table (17 keys plus the unit-7 theme keys → `theme.toggle`, `theme.modes.*`, plus `language.toggle`). Fix only obvious EN typos in `hero.description` and `contact.description`. [localization: Copy change scope]
+- [x] 8.3 Rewrite `src/i18n/locales/es.ts` with `satisfies Messages` (EN deep-widened to `string`); move every existing Spanish string byte-identical to its new key; add only the new keys. [localization: Type-level EN/ES parity]
+- [x] 8.4 Create `src/i18n/i18next.d.ts` (`CustomTypeOptions` with `defaultNS` and `resources`).
+- [x] 8.5 Rewrite `src/i18n/init.ts` per design 3.1: `i18next.createInstance()`, `supportedLngs`, `nonExplicitSupportedLngs`, `load: "languageOnly"`, `initAsync: false`, detector order `localStorage`, `navigator` (key `i18nextLng` unchanged), `syncHtmlLang` on init and `languageChanged`. [localization: Document language sync]
+- [x] 8.6 Create `src/hooks/useLocale.ts` (`toLocale(i18n.resolvedLanguage)`).
+- [x] 8.7 Extend `src/app/AppProviders.tsx` with `I18nextProvider i18n={i18n}`; rewrite `src/main.tsx` to `StrictMode` > `AppProviders` > `App` (D27); make `App` a named export (D4) in `src/app/App.tsx`.
+- [x] 8.8 Migrate every `t()` caller to the new keys and replace each `i18n.language === "es"` with `useLocale()`: `HeroSection.tsx`, `Header.tsx` (CV link too), `Footer.tsx`, `ExperienceSection.tsx` (two checks), `ProjectsSection.tsx` (drop the `|| "Ver Más"` fallback), `ContactSection.tsx`, `useContactForm.ts`, `LanguageToggle.tsx` (label from `useLocale()`, name `t("language.toggle")`), `ThemeToggle.tsx`. Add `satisfies Localized` to `SITE.cv` in `config/site.ts`.
+- [x] 8.9 Parity probes: delete one key from `es.ts` only and run `pnpm check` (must fail); revert. Call `t("does.not.exist")` and run `pnpm check` (must fail); revert. [localization: Missing Spanish key, Unknown key]
+- [x] 8.10 Verify (commands): `pnpm check`; `pnpm build`; `git diff c34a50f -- src/i18n` shows Spanish additions only and EN typo fixes only.
 - [ ] 8.11 Verify (manual): empty storage plus browser language `es-MX` gives a Spanish UI, toggle label matches, `document.documentElement.lang` starts with `es` and after switching starts with `en`; `fr-FR` gives English; switch to Spanish and reload keeps Spanish; no new StrictMode dev warnings. [localization: es-MX browser, Unsupported language, Toggle and reload, Attribute follows language]
-- [ ] 8.12 Commit `feat(i18n): type nested locales and sync html lang`.
+- [x] 8.12 Commit `feat(i18n): type nested locales and sync html lang`.
 
 ## 9. feat(ui): add section shell, typography and motion base
 

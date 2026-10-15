@@ -1,18 +1,22 @@
 import { useTranslation } from "react-i18next";
+import { useLocale } from "@/hooks/useLocale";
 
-export default function LangToogle() {
-  const { i18n } = useTranslation();
+export function LanguageToggle() {
+  const { t, i18n } = useTranslation();
+  const locale = useLocale();
 
-  const toogleLang = () => {
-    i18n.changeLanguage(i18n.language.includes("es") ? "en" : "es");
+  const toggleLanguage = () => {
+    void i18n.changeLanguage(locale === "es" ? "en" : "es");
   };
 
   return (
     <button
-      onClick={toogleLang}
+      type="button"
+      onClick={toggleLanguage}
+      aria-label={t("language.toggle")}
       className="cursor-pointer font-semibold px-8 text-gray-400 transform hover:scale-110"
     >
-      {i18n.language === "es" ? "ES" : "EN"}
+      {locale === "es" ? "ES" : "EN"}
     </button>
   );
 }

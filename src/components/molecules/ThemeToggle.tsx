@@ -6,12 +6,6 @@ import { cn } from "@/lib/utils";
 import { getSystemDark, nextThemeMode } from "@/theme/theme";
 import { useTheme } from "@/theme/useTheme";
 
-const MODE_LABEL_KEY = {
-  light: "THEME.MODE_LIGHT",
-  dark: "THEME.MODE_DARK",
-  system: "THEME.MODE_SYSTEM",
-} as const;
-
 export function ThemeToggle({ className }: { className?: string }) {
   const { t } = useTranslation();
   const { mode, setMode } = useTheme();
@@ -33,7 +27,7 @@ export function ThemeToggle({ className }: { className?: string }) {
         "text-current hover:bg-current/10 hover:text-current",
         className,
       )}
-      aria-label={t("THEME.TOGGLE", { mode: t(MODE_LABEL_KEY[mode]) })}
+      aria-label={t("theme.toggle", { mode: t(`theme.modes.${mode}`) })}
       onClick={handleClick}
     >
       {mode === "light" ? (

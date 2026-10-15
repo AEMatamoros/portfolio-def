@@ -1,4 +1,4 @@
-import LangToogle from "@/components/molecules/LanguageToggle";
+import { LanguageToggle } from "@/components/molecules/LanguageToggle";
 import { ThemeToggle } from "@/components/molecules/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,6 +13,7 @@ import { useTranslation } from "react-i18next";
 import { Menu } from "lucide-react";
 
 import { SITE } from "@/config/site";
+import { useLocale } from "@/hooks/useLocale";
 
 const useScroll = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -31,7 +32,8 @@ const useScroll = () => {
 
 export default function Header() {
   const [showSidebar, setShowSidebar] = useState(false);
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+  const locale = useLocale();
 
   const isScrolled = useScroll();
 
@@ -89,24 +91,24 @@ export default function Header() {
                 className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-muted"
                 onClick={() => setShowSidebar(false)}
               >
-                {t("SECTION.ABOUT")}
+                {t("nav.about")}
               </a>
               <a
                 href="#section-projects"
                 className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-muted"
                 onClick={() => setShowSidebar(false)}
               >
-                {t("SECTION.PROJECTS")}
+                {t("projects.title")}
               </a>
               <a
                 href="#section-contact"
                 className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-muted"
                 onClick={() => setShowSidebar(false)}
               >
-                {t("SECTION.CONTACT")}
+                {t("contact.title")}
               </a>
               <a
-                href={i18n.language === "es" ? SITE.cv.es : SITE.cv.en}
+                href={SITE.cv[locale]}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-muted"
@@ -116,7 +118,7 @@ export default function Header() {
               </a>
             </div>
             <div className="mt-8 flex flex-col gap-4 border-t border-border pt-6">
-              <LangToogle />
+              <LanguageToggle />
               <ThemeToggle />
             </div>
           </SheetContent>
@@ -129,7 +131,7 @@ export default function Header() {
               "text-sm/6 font-semibold  transform hover:scale-110",
             )}
           >
-            {t("SECTION.ABOUT")}
+            {t("nav.about")}
           </a>
           <a
             href="#section-projects"
@@ -137,7 +139,7 @@ export default function Header() {
               "text-sm/6 font-semibold  transform hover:scale-110",
             )}
           >
-            {t("SECTION.PROJECTS")}
+            {t("projects.title")}
           </a>
           <a
             href="#section-contact"
@@ -145,10 +147,10 @@ export default function Header() {
               "text-sm/6 font-semibold  transform hover:scale-110",
             )}
           >
-            {t("SECTION.CONTACT")}
+            {t("contact.title")}
           </a>
           <a
-            href={i18n.language === "es" ? SITE.cv.es : SITE.cv.en}
+            href={SITE.cv[locale]}
             target="_blank"
             rel="noopener noreferrer"
             className={linkClass(
@@ -163,7 +165,7 @@ export default function Header() {
             "hidden md:flex md:flex-1 md:items-center md:justify-end",
           )}
         >
-          <LangToogle />
+          <LanguageToggle />
           <ThemeToggle />
         </div>
       </nav>

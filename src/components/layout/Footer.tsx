@@ -18,19 +18,19 @@ export default function Footer() {
             <li>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid -- rebuilt in unit 9 */}
               <a href="#" className="hover:underline me-4 md:me-6">
-                {t("SECTION.ABOUT")}
+                {t("nav.about")}
               </a>
             </li>
             <li>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid -- rebuilt in unit 9 */}
               <a href="#" className="hover:underline me-4 md:me-6">
-                {t("SECTION.PROJECTS")}
+                {t("projects.title")}
               </a>
             </li>
             <li>
               {/* eslint-disable-next-line jsx-a11y/anchor-is-valid -- rebuilt in unit 9 */}
               <a href="#" className="hover:underline">
-                {t("SECTION.CONTACT")}
+                {t("contact.title")}
               </a>
             </li>
           </ul>

@@ -31,7 +31,7 @@ export default function useContactForm() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then(function (response: any) {
         if (response.status == 200) {
-          Notify.success(t("CONTACT.SUCESS"));
+          Notify.success(t("contact.success"));
           reset({
             name: "",
             company: "",
@@ -45,7 +45,7 @@ export default function useContactForm() {
       })
       .catch(function () {
         // handle error
-        Notify.failure(t("CONTACT.ERROR"));
+        Notify.failure(t("contact.error"));
       })
       .finally(() => {
         setDisable(false);

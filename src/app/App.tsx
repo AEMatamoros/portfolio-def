@@ -16,7 +16,7 @@ function SectionFallback() {
   return <div className="min-h-[24vh] w-full" aria-hidden />;
 }
 
-export default function App() {
+export function App() {
   const timelineRef = useRef<HTMLElement>(null);
   const techsRef = useRef<HTMLElement>(null);
   const projectsRef = useRef<HTMLElement>(null);

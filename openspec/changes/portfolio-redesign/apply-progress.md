@@ -14,7 +14,8 @@ Batch 1 covers units 1 to 6, batch 2 covers units 7 to 9. Units 10 to 19 are pen
 | 4 | refactor(animations): css-driven split text | committed (81d4bf6) |
 | 5 | build(deps): upgrade react 19, i18next 26 and tooling | committed (1b0ebd6) |
 | 6 | refactor: adopt feature-first structure and single alias | committed (63c571d) |
-| 7 | feat(theme): add theme provider and token palette | committed (this commit; see git log) |
+| 7 | feat(theme): add theme provider and token palette | committed (be6b7e7) |
+| 8 | feat(i18n): type nested locales and sync html lang | committed (this commit; see git log) |
 
 ## Unit 1: chore: remove dead code and assets
 
@@ -152,6 +153,27 @@ Implementation notes
 - Flat keys `THEME.TOGGLE`, `THEME.MODE_LIGHT`, `THEME.MODE_DARK`, `THEME.MODE_SYSTEM` were added to both locale files in the existing flat style (ES values are new; no existing string changed). Unit 8 migrates them to `theme.toggle` and `theme.modes.*`.
 - Declared motion change 4 (flagged for verify, the motion spec lists three): the dark-only load-time clip reveal is replaced by a user-triggered View Transition. The commit body states it.
 
+## Unit 8: feat(i18n): type nested locales and sync html lang
+
+Work Unit Evidence
+
+| Evidence | Value |
+| -------- | ----- |
+| Focused test command and result | Parity probes, each reverted byte-identically (SHA-1 compared): (1) deleting `contact.fields.phone` from `es.ts` only makes `pnpm check` exit 2 with `TS2741 Property 'phone' is missing` in `es.ts`; (2) `t("does.not.exist")` in `Footer.tsx` makes `pnpm check` exit 2 with `TS2345` on the `t` call; (3) an extra `nav.extra` key in `es.ts` fails with `TS2353 Object literal may only specify known properties`. `rg -n 'i18n\.language' src`: no matches (exit 1); the only `=== "es"` left are `locale === "es"` comparisons from `useLocale()`. A scripted compare against `c34a50f` (`git show` of the old flat files vs the new nested ones, mapped by the design 3.2 table): 17 of 17 Spanish values byte-identical, 2 English values changed (the two typo fixes) |
+| Gate | `pnpm check`: green; `pnpm build`: green, main 388.54 kB raw / 123.54 kB gzip, Contact 111.76 kB / 38.19 kB |
+| Runtime harness | `pnpm build && pnpm preview --port 4173` driven through headless Chrome over CDP (scratchpad script, not committed): browser language `es-MX` with empty storage gives `html lang="es"`, a Spanish UI ("Mi nombre es ...", Experiencia, Proyectos, Contacto), toggle "Cambiar idioma" showing `ES` and theme label "Tema: Sistema"; after the toggle `html lang="en"` and English copy; `fr-FR` gives English; switching to Spanish and reloading keeps Spanish (`i18nextLng` = `es`); zero console errors or warnings in the production build. The existing dev server on port 5173 (React dev build under `StrictMode`) showed only the known marquee duplicate-key errors (baseline, fixed in unit 14) and no new warnings. The manual browser-setting scenarios remain deferred (8.11) |
+| Rollback boundary | Revert the unit-8 commit: restores the flat `translation` locale files and `init.ts` config object, the `main.tsx` instance creation, the default `App` export and the old `LangToogle`; removes `types/localized.ts`, `lib/localize.ts`, `hooks/useLocale.ts` and `i18n/i18next.d.ts`; every `t()` caller returns to the old keys |
+
+Implementation notes
+
+- Locale files are nested camelCase: `en.ts` is `export const en = {...} as const` with `Messages` (EN deep-widened to `string`), `es.ts` is `export const es = {...} satisfies Messages`, and `i18next.d.ts` augments `CustomTypeOptions` with `defaultNS: "translation"` and `resources: { translation: typeof en }`. All 17 existing keys follow the design 3.2 table; the unit-7 theme keys became `theme.toggle` and `theme.modes.*`; `language.toggle` is new (EN "Switch language", ES "Cambiar idioma").
+- English edits are the two typo fixes only: `hero.description` drops "both", `contact.description` reads "you can ... in future projects". The `CONTACT.SUCESS` key typo is fixed by the new name `contact.success`. Spanish values were moved verbatim (compared by script).
+- `init.ts` exports the `i18n` instance created with `i18next.createInstance()` and follows design 3.1: `supportedLngs`, `nonExplicitSupportedLngs`, `load: "languageOnly"`, `fallbackLng`, `initAsync: false`, detector order `localStorage`, `navigator` with the `i18nextLng` cache key, and `syncHtmlLang` once after init and on `languageChanged`. `AppProviders` now owns `I18nextProvider` and `ThemeProvider`; `main.tsx` is `StrictMode` > `AppProviders` > `App` and no longer builds an i18n instance.
+- `App` became a named export (D4); `HeroSection`, `ExperienceSection`, `ProjectsSection`, `ContactSection`, `TechsSection` keep their default exports because they are loaded with `React.lazy` or rebuilt in later units.
+- `useLocale()` (T1 hook) returns `toLocale(i18n.resolvedLanguage)`. `Header` takes the CV link from `SITE.cv[locale]` (`SITE.cv` now `satisfies Localized`). `ExperienceSection` replaces its two `i18n.language === "es"` checks with `locale === "es"`; the inline "Actualidad"/"Current" literal and the always-`"EN"` `formatDate` call stay until unit 13 (which adds `experience.current` and `Intl` dates).
+- `LanguageToggle` is now a named export with `aria-label={t("language.toggle")}` and a label from `useLocale()`, so `es-MX` shows `ES`. The visible text is the language code, the accessible name is the action; this is the design 3.1 contract.
+- Removed the `|| "Ver Más"` fallback in `ProjectsSection` (the typed key always exists).
+
 ## Deferred manual checks
 
 These sub-tasks stay unchecked in `tasks.md`; the orchestrator must run them in a browser.
@@ -163,6 +185,7 @@ These sub-tasks stay unchecked in `tasks.md`; the orchestrator must run them in 
 - 5.9: Sheet opens and focus returns to the trigger on close (the React 18 dropped-ref bug is gone); language switch works; theme toggle still works.
 - 6.12: `pnpm preview` smoke identical to unit 5 (images, CVs, theme toggle, language switch, Sheet).
 - 7.13: DevTools Rendering emulation checks in a real browser: first visit under OS dark reads dark with the toggle at "System"; light chosen under OS dark persists after reload; `localStorage.theme="zzz"` falls back to system with no console error; flipping the OS scheme in system mode updates live; at 375 px the sheet toggle updates the header toggle label; screen reader name updates after each activation; Chrome shows the circular reveal from the toggle and reduced motion switches instantly; hard reload at CPU 6x with a dark preference shows no light frame. A scripted CDP run already covered the state, storage, label, live-flip, reduced-motion and sheet-sync logic (see Unit 7 evidence); the visual reveal and the filmstrip are not covered.
+- 8.11: with the browser language set to `es-MX` and empty storage the UI is Spanish, the toggle reads ES and `document.documentElement.lang` starts with `es`, then starts with `en` after switching; `fr-FR` gives English; switching to Spanish and reloading keeps Spanish; the dev server shows no new StrictMode warnings. A scripted CDP run emulating `es-MX` and `fr-FR` already passed on the production build (see Unit 8 evidence); a real browser-setting run is still needed.
 
 ## Deviations, risks and notes
 

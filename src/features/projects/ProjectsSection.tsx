@@ -39,7 +39,7 @@ export default function Projects() {
       <div className="container mx-auto max-w-[1280px]">
         <div className="flex flex-col items-center mb-8">
           <h2 className="my-4 text-center text-4xl md:text-5xl font-bold dark:text-gray-100 w-full">
-            {t("SECTION.PROJECTS")}
+            {t("projects.title")}
           </h2>
           <HeaderSeparator />
         </div>
@@ -85,7 +85,7 @@ export default function Projects() {
                       "w-full pointer-events-none",
                     )}
                   >
-                    {t("BUTTON.SEE_MORE") || "Ver Más"}
+                    {t("projects.showMore")}
                   </span>
                 </CardFooter>
               </a>

@@ -35,7 +35,7 @@ export default function Hero() {
       <div className="relative isolate px-6 pt-14 lg:px-8 max-w-[1280px]">
         <div className="mx-auto max-w-4xl p-8 sm:py-48 lg:py-32">
           <p className="font-semibold py-2 text-xl text-gray-700 dark:text-gray-200 w-full">
-            {t("CONTACT.HERO.INIT")}
+            {t("hero.greeting")}
           </p>
           <div className="text-center">
             <SplitText
@@ -49,7 +49,7 @@ export default function Hero() {
             />
             <div className="my-4 md:my-8">
               <SplitText
-                text={t("HERO.DESCRIPTION")}
+                text={t("hero.description")}
                 className="mt-8 text-lg font-medium text-pretty text-gray-500 dark:text-gray-300 sm:text-xl/8"
                 delay={10}
                 animationFrom={{
@@ -67,7 +67,7 @@ export default function Hero() {
                 className="rounded-sm group bg-black dark:bg-gray-100 px-4 py-3 text-md font-semibold shadow-xs hover:bg-black hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 dark:hover:bg-gray-200"
               >
                 <ShinyText
-                  text={t("SECTION.ABOUT")}
+                  text={t("nav.about")}
                   disabled={false}
                   speed={3}
                   className=""
