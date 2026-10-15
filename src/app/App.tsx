@@ -1,11 +1,10 @@
 import { useRef, lazy, Suspense } from "react";
 import Hero from "@/features/hero/HeroSection";
-import Footer from "@/components/layout/Footer";
+import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { SkipLink } from "@/components/layout/SkipLink";
-import GoTop from "@/components/layout/ScrollToTop";
-import ContactOptions from "@/components/layout/SocialRail";
-import EmailOptions from "@/components/layout/EmailRail";
+import { ScrollToTop } from "@/components/layout/ScrollToTop";
+import { SideRails } from "@/components/layout/SideRails";
 import useScrollAnimation from "@/hooks/useScrollAnimation";
 
 const Timeline = lazy(() => import("@/features/experience/ExperienceSection"));
@@ -58,9 +57,8 @@ export function App() {
         </div>
       </main>
       <Footer />
-      <GoTop />
-      <ContactOptions />
-      <EmailOptions />
+      <SideRails />
+      <ScrollToTop />
     </>
   );
 }

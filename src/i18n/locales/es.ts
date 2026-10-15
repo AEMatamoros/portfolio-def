@@ -15,6 +15,7 @@ export const es = {
     linkedin: "Perfil de LinkedIn",
     email: "Contáctame por correo electrónico",
     skipToContent: "Saltar al contenido",
+    scrollToTop: "Volver arriba",
   },
   theme: {
     toggle: "Tema: {{mode}}",
@@ -26,6 +27,9 @@ export const es = {
   },
   language: {
     toggle: "Cambiar idioma",
+  },
+  footer: {
+    rights: "© {{year}} Alexis Matamoros. Todos los derechos reservados.",
   },
   hero: {
     greeting: "Mi nombre es ...",

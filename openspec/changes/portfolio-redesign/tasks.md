@@ -197,14 +197,14 @@ Dependencies (Needs): 1→3; 4→5→6; 6→{7, 8}; {7, 8}→9; 9→{10→11, 12
 
 ## 11. feat(layout): rebuild footer, side rails and scroll-to-top
 
-- [ ] 11.1 Create `src/components/layout/SideRails.tsx` (`hidden lg:flex`): left rail `SocialLinks`; right rail a vertical `mailto:` `<a>` (`.vertical-text`, `SITE.email`) replacing the JS `location.href` button; token-based surfaces (apply `surface-inverse` if the strip stays inverted). `git rm` `layout/SocialRail.tsx` and `layout/EmailRail.tsx`. [page-shell: Accessible names and external links]
-- [ ] 11.2 Rewrite `src/components/layout/Footer.tsx` as a named export: `bg-foreground text-background surface-inverse`; `SITE.name`, `NavLinks`, `SocialLinks`, `t("footer.rights", { year: YEAR })` with `YEAR` at module scope; no `href="#"`, no flowbite link, no hardcoded "2025".
-- [ ] 11.3 Rewrite `src/components/layout/ScrollToTop.tsx` as a named export: shadcn `Button size="icon"` with lucide `ArrowUp`, `aria-label={t("a11y.scrollToTop")}`, `fixed bottom-6 right-6`, visible via `useScrolled(400)` with `inert={!visible}` and an opacity fade; click calls `scrollToTop()` then `document.getElementById("main")?.focus({ preventScroll: true })`. This removes the leaked scroll listener and the clickable `<svg>`. [page-shell: Scroll-to-top control]
-- [ ] 11.4 Edit `src/app/App.tsx`: replace `GoTop`, `SocialRail`, `EmailRail` with `<SideRails />` and `<ScrollToTop />`.
-- [ ] 11.5 Add keys `footer.rights` (EN "© {{year}} Alexis Matamoros. All rights reserved."; ES new: "© {{year}} Alexis Matamoros. Todos los derechos reservados.") and `a11y.scrollToTop` (ES "Volver arriba") to `en.ts` and `es.ts`.
-- [ ] 11.6 Verify (commands): `pnpm check` (jsx-a11y clean); `pnpm build`; `rg -n "rebuilt in unit 11" src` is empty.
+- [x] 11.1 Create `src/components/layout/SideRails.tsx` (`hidden lg:flex`): left rail `SocialLinks`; right rail a vertical `mailto:` `<a>` (`.vertical-text`, `SITE.email`) replacing the JS `location.href` button; token-based surfaces (apply `surface-inverse` if the strip stays inverted). `git rm` `layout/SocialRail.tsx` and `layout/EmailRail.tsx`. [page-shell: Accessible names and external links]
+- [x] 11.2 Rewrite `src/components/layout/Footer.tsx` as a named export: `bg-foreground text-background surface-inverse`; `SITE.name`, `NavLinks`, `SocialLinks`, `t("footer.rights", { year: YEAR })` with `YEAR` at module scope; no `href="#"`, no flowbite link, no hardcoded "2025".
+- [x] 11.3 Rewrite `src/components/layout/ScrollToTop.tsx` as a named export: shadcn `Button size="icon"` with lucide `ArrowUp`, `aria-label={t("a11y.scrollToTop")}`, `fixed bottom-6 right-6`, visible via `useScrolled(400)` with `inert={!visible}` and an opacity fade; click calls `scrollToTop()` then `document.getElementById("main")?.focus({ preventScroll: true })`. This removes the leaked scroll listener and the clickable `<svg>`. [page-shell: Scroll-to-top control]
+- [x] 11.4 Edit `src/app/App.tsx`: replace `GoTop`, `SocialRail`, `EmailRail` with `<SideRails />` and `<ScrollToTop />`.
+- [x] 11.5 Add keys `footer.rights` (EN "© {{year}} Alexis Matamoros. All rights reserved."; ES new: "© {{year}} Alexis Matamoros. Todos los derechos reservados.") and `a11y.scrollToTop` (ES "Volver arriba") to `en.ts` and `es.ts`.
+- [x] 11.6 Verify (commands): `pnpm check` (jsx-a11y clean); `pnpm build`; `rg -n "rebuilt in unit 11" src` is empty.
 - [ ] 11.7 Verify (manual): console `document.querySelectorAll('a[target="_blank"]:not([rel~="noopener"])').length` and `document.querySelectorAll('a[href="#"]').length` both 0; Tab at scroll 0 skips scroll-to-top, after scrolling 400+ px it is reachable and Enter scrolls to top with focus on `main`; it does not overlap the right rail at 1440 px (adjust the offset if it does); rails hidden below 1024 px; footer focus ring >= 3:1 in dark theme; Spanish footer text. [page-shell: Hidden then shown, Audit]
-- [ ] 11.8 Commit `feat(layout): rebuild footer, side rails and scroll-to-top`.
+- [x] 11.8 Commit `feat(layout): rebuild footer, side rails and scroll-to-top`.
 
 ## 12. feat(hero): add h1, ctas and token background
 

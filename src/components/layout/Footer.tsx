@@ -1,42 +1,30 @@
 import { useTranslation } from "react-i18next";
+import { Container } from "@/components/layout/Container";
+import { NavLinks } from "@/components/molecules/NavLinks";
+import { SocialLinks } from "@/components/molecules/SocialLinks";
+import { SITE } from "@/config/site";
 
-export default function Footer() {
+const YEAR = new Date().getFullYear();
+
+export function Footer() {
   const { t } = useTranslation();
+
   return (
-    <footer className="bg-black dark:bg-gray-100">
-      <div className="w-full max-w-screen-xl mx-auto p-14">
-        <div className="sm:flex sm:items-center sm:justify-between">
-          <a
-            href="https://flowbite.com/"
-            className="flex items-center mb-4 sm:mb-0 space-x-3 rtl:space-x-reverse"
-          >
-            <span className="self-center text-2xl font-semibold whitespace-nowrap text-gray-100 dark:text-black">
-              Alexis Matamoros
-            </span>
-          </a>
-          <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 ">
-            <li>
-              <a href="#experience" className="hover:underline me-4 md:me-6">
-                {t("nav.about")}
-              </a>
-            </li>
-            <li>
-              <a href="#projects" className="hover:underline me-4 md:me-6">
-                {t("projects.title")}
-              </a>
-            </li>
-            <li>
-              <a href="#contact" className="hover:underline">
-                {t("contact.title")}
-              </a>
-            </li>
-          </ul>
+    <footer className="surface-inverse bg-foreground text-background">
+      <Container className="py-12">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-2xl font-semibold">{SITE.name}</p>
+          <nav aria-label={t("nav.footerLabel")}>
+            <NavLinks />
+          </nav>
         </div>
-        <hr className="my-6 border-gray-200 sm:mx-auto  lg:my-8" />
-        <span className="block text-sm text-gray-500 sm:text-center ">
-          © 2025 . All Rights Reserved.
-        </span>
-      </div>
+        <div className="mt-8 flex flex-col gap-4 border-t border-background/20 pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-background/70">
+            {t("footer.rights", { year: YEAR })}
+          </p>
+          <SocialLinks linkClassName="hover:text-background/70" />
+        </div>
+      </Container>
     </footer>
   );
 }
