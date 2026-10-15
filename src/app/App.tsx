@@ -1,60 +1,61 @@
-import { useRef, lazy, Suspense } from "react";
-import { HeroSection } from "@/features/hero/HeroSection";
+import { lazy, Suspense, type ReactNode } from "react";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
-import { SkipLink } from "@/components/layout/SkipLink";
 import { ScrollToTop } from "@/components/layout/ScrollToTop";
 import { SideRails } from "@/components/layout/SideRails";
-import useScrollAnimation from "@/hooks/useScrollAnimation";
+import { SkipLink } from "@/components/layout/SkipLink";
+import { HeroSection } from "@/features/hero/HeroSection";
+import { useDeferredSections } from "@/app/useDeferredSections";
 
-const Timeline = lazy(() => import("@/features/experience/ExperienceSection"));
-const Techs = lazy(() => import("@/features/techs/TechsSection"));
-const Projects = lazy(() => import("@/features/projects/ProjectsSection"));
-const Contact = lazy(() => import("@/features/contact/ContactSection"));
+const ExperienceSection = lazy(
+  () => import("@/features/experience/ExperienceSection"),
+);
+const TechsSection = lazy(() => import("@/features/techs/TechsSection"));
+const ProjectsSection = lazy(
+  () => import("@/features/projects/ProjectsSection"),
+);
+const ContactSection = lazy(() => import("@/features/contact/ContactSection"));
 
+/** Reserves room so the page height and scroll position stay plausible while a chunk loads. */
 function SectionFallback() {
-  return <div className="min-h-[24vh] w-full" aria-hidden />;
+  return <div className="min-h-[50vh]" aria-hidden />;
+}
+
+function DeferredSection({
+  ready,
+  children,
+}: {
+  ready: boolean;
+  children: ReactNode;
+}) {
+  return ready ? (
+    <Suspense fallback={<SectionFallback />}>{children}</Suspense>
+  ) : (
+    <SectionFallback />
+  );
 }
 
 export function App() {
-  const timelineRef = useRef<HTMLDivElement>(null);
-  const techsRef = useRef<HTMLDivElement>(null);
-  const projectsRef = useRef<HTMLDivElement>(null);
-
-  useScrollAnimation({
-    timelineRef,
-    techsRef,
-    projectsRef,
-  });
+  const ready = useDeferredSections();
 
   return (
     <>
       <SkipLink targetId="main" />
       <Header />
       <main id="main" tabIndex={-1} className="outline-none">
-        <div>
-          <HeroSection />
-        </div>
-        <div ref={timelineRef}>
-          <Suspense fallback={<SectionFallback />}>
-            <Timeline />
-          </Suspense>
-        </div>
-        <div ref={techsRef}>
-          <Suspense fallback={<SectionFallback />}>
-            <Techs />
-          </Suspense>
-        </div>
-        <div ref={projectsRef}>
-          <Suspense fallback={<SectionFallback />}>
-            <Projects />
-          </Suspense>
-        </div>
-        <div>
-          <Suspense fallback={<SectionFallback />}>
-            <Contact />
-          </Suspense>
-        </div>
+        <HeroSection />
+        <DeferredSection ready={ready}>
+          <ExperienceSection />
+        </DeferredSection>
+        <DeferredSection ready={ready}>
+          <TechsSection />
+        </DeferredSection>
+        <DeferredSection ready={ready}>
+          <ProjectsSection />
+        </DeferredSection>
+        <DeferredSection ready={ready}>
+          <ContactSection />
+        </DeferredSection>
       </main>
       <Footer />
       <SideRails />

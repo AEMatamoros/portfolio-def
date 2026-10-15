@@ -1,4 +1,4 @@
-import { useEffect, useState, type RefCallback } from "react";
+import { useCallback, useState, type RefCallback } from "react";
 
 export interface UseInViewOptions {
   threshold?: number;
@@ -10,37 +10,39 @@ export interface UseInViewOptions {
 /**
  * Reports whether an element intersects the viewport.
  *
- * The ref callback only stores the element in state. The observer is created in
- * an effect and disconnected in its cleanup, and `setInView` runs exclusively
- * inside the observer callback, so the hook behaves the same on React 18 and 19.
+ * The observer is created inside the ref callback and disconnected by the cleanup
+ * it returns (the React 19 ref contract), so it needs no effect. `setInView` runs
+ * only inside the observer callback.
  */
 export function useInView({
   threshold = 0.1,
   rootMargin = "0px",
   once = true,
 }: UseInViewOptions = {}): [RefCallback<Element>, boolean] {
-  const [element, setElement] = useState<Element | null>(null);
   const [inView, setInView] = useState(false);
 
-  useEffect(() => {
-    if (!element) return;
+  const ref = useCallback(
+    (element: Element | null) => {
+      if (!element) return;
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const intersecting = entries.some((entry) => entry.isIntersecting);
-        if (intersecting) {
-          setInView(true);
-          if (once) observer.disconnect();
-        } else if (!once) {
-          setInView(false);
-        }
-      },
-      { threshold, rootMargin },
-    );
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const intersecting = entries.some((entry) => entry.isIntersecting);
+          if (intersecting) {
+            setInView(true);
+            if (once) observer.disconnect();
+          } else if (!once) {
+            setInView(false);
+          }
+        },
+        { threshold, rootMargin },
+      );
 
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, [element, threshold, rootMargin, once]);
+      observer.observe(element);
+      return () => observer.disconnect();
+    },
+    [threshold, rootMargin, once],
+  );
 
-  return [setElement, inView];
+  return [ref, inView];
 }

@@ -19,6 +19,7 @@ export function HeroSection() {
   return (
     <SectionShell
       id="hero"
+      reveal={false}
       className="relative flex min-h-screen items-center justify-center overflow-hidden bg-background"
     >
       <HeroBackground lightSrc={lightPattern} darkSrc={darkPattern} />
