@@ -1,24 +1,24 @@
-import AgendaIMG from "@Assets/img/portfolio/agenda.jpg";
-import PhoenixStoreIMG from "@Assets/img/portfolio/phoenixstore.jpg";
-import QrIMG from "@Assets/img/portfolio/qr.jpg";
-import LecoIMG from "@Assets/img/portfolio/leco.jpg";
-import WeatherImg from "@Assets/img/portfolio/weather.jpg";
-import ExpenceFrontIMG from "@Assets/img/portfolio/expencefront.jpg";
-import ExpenceBackIMG from "@Assets/img/portfolio/expenceback.jpg";
-import CalendarIMG from "@Assets/img/portfolio/calendar.jpg";
-import CalendarBIMG from "@Assets/img/portfolio/calendarb.jpg";
-import PortalImg from "@Assets/img/portfolio/portal.jpg";
-import FUTVIMG from "@Assets/img/portfolio/futv.jpg";
-import Barber from "@Assets/img/portfolio/barber.jpg";
-import PortfolioV2 from "@Assets/img/portfolio/portfoliov2.jpg";
-import Atlantida from "@Assets/img/portfolio/atlantida.png";
-import Clinpays from "@Assets/img/portfolio/clinpays.png";
-import Imprema from "@Assets/img/portfolio/imprema.png";
-import Leer from "@Assets/img/portfolio/leer.png";
-import Vino from "@Assets/img/portfolio/vinoteca.png";
-import Impact from "@Assets/img/portfolio/impact.png";
+import AgendaIMG from "@/assets/img/portfolio/agenda.webp";
+import PhoenixStoreIMG from "@/assets/img/portfolio/phoenixstore.webp";
+import QrIMG from "@/assets/img/portfolio/qr.webp";
+import LecoIMG from "@/assets/img/portfolio/leco.webp";
+import WeatherImg from "@/assets/img/portfolio/weather.webp";
+import ExpenceFrontIMG from "@/assets/img/portfolio/expencefront.webp";
+import ExpenceBackIMG from "@/assets/img/portfolio/expenceback.webp";
+import CalendarIMG from "@/assets/img/portfolio/calendar.webp";
+import CalendarBIMG from "@/assets/img/portfolio/calendarb.webp";
+import PortalImg from "@/assets/img/portfolio/portal.webp";
+import FUTVIMG from "@/assets/img/portfolio/futv.webp";
+import Barber from "@/assets/img/portfolio/barber.webp";
+import PortfolioV2 from "@/assets/img/portfolio/portfoliov2.webp";
+import Atlantida from "@/assets/img/portfolio/atlantida.webp";
+import Clinpays from "@/assets/img/portfolio/clinpays.webp";
+import Imprema from "@/assets/img/portfolio/imprema.webp";
+import Leer from "@/assets/img/portfolio/leer.webp";
+import Vino from "@/assets/img/portfolio/vinoteca.webp";
+import Impact from "@/assets/img/portfolio/impact.webp";
 
-import NoImg from "@Assets/img/portfolio/noimg.jpg";
+import NoImg from "@/assets/img/portfolio/noimg.webp";
 export const PROJECTS = [
   {
     hoverColor: "text-gray-500",

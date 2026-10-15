@@ -78,17 +78,17 @@ Dependencies (Needs): 1→3; 4→5→6; 6→{7, 8}; {7, 8}→9; 9→{10→11, 12
 
 ## 3. perf: convert images to webp
 
-- [ ] 3.1 Run `pnpm dlx sharp-cli@5 resize --help` and confirm the verified form `resize <w> <h> --fit cover --position attention --withoutEnlargement -i <in> -o <out> -f webp --quality 80`. Use `--position top` for screenshots if the help lists it (it keeps the site header); otherwise use `attention`.
-- [ ] 3.2 Convert `src/assets/img/main-bg.png` and `main-bg-dark-2.png` to `src/assets/img/hero-pattern-light.webp` and `hero-pattern-dark.webp`, 1024 px wide, q80. [performance-budget: Image payload]
-- [ ] 3.3 Convert all 20 files in `src/assets/img/portfolio/` (`.jpg` and `.png`, including `noimg.jpg`) to 800x450 cover WebP q80 next to the originals (same basename, `.webp`).
-- [ ] 3.4 `git rm` the originals: `main-bg.png`, `main-bg-dark-2.png`, and every `portfolio/*.jpg|png`. [performance-budget: Image payload]
-- [ ] 3.5 `mkdir -p public/cv`; `git mv` the English PDF to `public/cv/Alexis_Matamoros_CV_EN.pdf` and the Spanish one (use the glob `src/assets/files/*Espa*ol.pdf` to avoid the `ñ` normalization trap) to `public/cv/Alexis_Matamoros_CV_ES.pdf`; remove the empty `src/assets/files/`. [performance-budget: Static CV URLs]
-- [ ] 3.6 Create `src/constants/site.ts` exporting `SITE = { cv: { en, es } } as const` with `${import.meta.env.BASE_URL}cv/Alexis_Matamoros_CV_{EN,ES}.pdf`.
-- [ ] 3.7 Edit `src/components/common/Header.tsx`: replace the two PDF imports with `SITE.cv.en`/`SITE.cv.es` in both CV links (keep the `=== "es"` test until unit 8).
-- [ ] 3.8 Edit `src/components/Hero.tsx` imports to `hero-pattern-light.webp` / `hero-pattern-dark.webp`; edit `src/constants/projects.ts` so all 20 image imports end in `.webp`.
-- [ ] 3.9 Verify (commands): `pnpm check`; `pnpm build`; `find dist/assets \( -name "*.webp" -o -name "*.png" -o -name "*.jpg" \) -print0 | xargs -0 du -ck | tail -1` is below 600 and lists no png/jpg; `ls dist/cv` shows both ASCII PDFs; `find dist/assets -name "*.pdf"` is empty; `find src -name "*.png" -o -name "*.jpg"` is empty. [performance-budget: Image payload, Static CV URLs]
+- [x] 3.1 Run `pnpm dlx sharp-cli@5 resize --help` and confirm the verified form `resize <w> <h> --fit cover --position attention --withoutEnlargement -i <in> -o <out> -f webp --quality 80`. Use `--position top` for screenshots if the help lists it (it keeps the site header); otherwise use `attention`.
+- [x] 3.2 Convert `src/assets/img/main-bg.png` and `main-bg-dark-2.png` to `src/assets/img/hero-pattern-light.webp` and `hero-pattern-dark.webp`, 1024 px wide, q80. [performance-budget: Image payload]
+- [x] 3.3 Convert all 20 files in `src/assets/img/portfolio/` (`.jpg` and `.png`, including `noimg.jpg`) to 800x450 cover WebP q80 next to the originals (same basename, `.webp`).
+- [x] 3.4 `git rm` the originals: `main-bg.png`, `main-bg-dark-2.png`, and every `portfolio/*.jpg|png`. [performance-budget: Image payload]
+- [x] 3.5 `mkdir -p public/cv`; `git mv` the English PDF to `public/cv/Alexis_Matamoros_CV_EN.pdf` and the Spanish one (use the glob `src/assets/files/*Espa*ol.pdf` to avoid the `ñ` normalization trap) to `public/cv/Alexis_Matamoros_CV_ES.pdf`; remove the empty `src/assets/files/`. [performance-budget: Static CV URLs]
+- [x] 3.6 Create `src/constants/site.ts` exporting `SITE = { cv: { en, es } } as const` with `${import.meta.env.BASE_URL}cv/Alexis_Matamoros_CV_{EN,ES}.pdf`.
+- [x] 3.7 Edit `src/components/common/Header.tsx`: replace the two PDF imports with `SITE.cv.en`/`SITE.cv.es` in both CV links (keep the `=== "es"` test until unit 8).
+- [x] 3.8 Edit `src/components/Hero.tsx` imports to `hero-pattern-light.webp` / `hero-pattern-dark.webp`; edit `src/constants/projects.ts` so all 20 image imports end in `.webp`.
+- [x] 3.9 Verify (commands): `pnpm check`; `pnpm build`; `find dist/assets \( -name "*.webp" -o -name "*.png" -o -name "*.jpg" \) -print0 | xargs -0 du -ck | tail -1` is below 600 and lists no png/jpg; `ls dist/cv` shows both ASCII PDFs; `find dist/assets -name "*.pdf"` is empty; `find src -name "*.png" -o -name "*.jpg"` is empty. [performance-budget: Image payload, Static CV URLs]
 - [ ] 3.10 Verify (manual): with `pnpm preview`, `curl -sI http://localhost:4173/cv/Alexis_Matamoros_CV_EN.pdf` and `..._ES.pdf` return 200; hero pattern is sharp at 1440 px in both themes (if blurry, redo 3.2 at 1600 px); project thumbnails keep the top of each screenshot; header CV links download the right language.
-- [ ] 3.11 Commit `perf: convert images to webp`.
+- [x] 3.11 Commit `perf: convert images to webp`.
 
 ## 4. refactor(animations): css-driven split text
 

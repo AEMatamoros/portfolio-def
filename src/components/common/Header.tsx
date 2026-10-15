@@ -12,8 +12,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Menu } from "lucide-react";
 
-import EnCv from "@Assets/files/Alexis_Matamoros_CV_English.pdf";
-import EsCv from "@Assets/files/Alexis_Matamoros_CV_Español.pdf";
+import { SITE } from "@/constants/site";
 
 const useScroll = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -107,7 +106,7 @@ export default function Header() {
                 {t("SECTION.CONTACT")}
               </a>
               <a
-                href={i18n.language === "es" ? EsCv : EnCv}
+                href={i18n.language === "es" ? SITE.cv.es : SITE.cv.en}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-muted"
@@ -149,7 +148,7 @@ export default function Header() {
             {t("SECTION.CONTACT")}
           </a>
           <a
-            href={i18n.language === "es" ? EsCv : EnCv}
+            href={i18n.language === "es" ? SITE.cv.es : SITE.cv.en}
             target="_blank"
             rel="noopener noreferrer"
             className={linkClass(

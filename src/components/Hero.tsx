@@ -2,8 +2,8 @@ import SplitText from "@Components/animations/SplitText";
 import ShinyText from "@Components/animations/ShinyText";
 import { useDocumentDark } from "@Hooks/useDocumentDark";
 import { useTranslation } from "react-i18next";
-import mainBg from "@Assets/img/main-bg.png";
-import mainBgDark from "@Assets/img/main-bg-dark-2.png";
+import mainBg from "@/assets/img/hero-pattern-light.webp";
+import mainBgDark from "@/assets/img/hero-pattern-dark.webp";
 
 export default function Hero() {
   const { t } = useTranslation();
