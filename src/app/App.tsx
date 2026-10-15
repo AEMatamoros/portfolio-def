@@ -1,16 +1,16 @@
 import { useRef, lazy, Suspense } from "react";
-import Hero from "@Components/Hero";
-import Footer from "@Components/common/Footer";
-import Header from "@Components/common/Header";
-import GoTop from "@Components/ui/GoToTop";
-import ContactOptions from "@Components/common/ContactOptions";
-import EmailOptions from "@Components/common/EmailOptions";
-import useScrollAnimation from "@Hooks/useScrollAnimation";
+import Hero from "@/features/hero/HeroSection";
+import Footer from "@/components/layout/Footer";
+import Header from "@/components/layout/Header";
+import GoTop from "@/components/layout/ScrollToTop";
+import ContactOptions from "@/components/layout/SocialRail";
+import EmailOptions from "@/components/layout/EmailRail";
+import useScrollAnimation from "@/hooks/useScrollAnimation";
 
-const Timeline = lazy(() => import("@Components/Timeline"));
-const Techs = lazy(() => import("@Components/Techs"));
-const Projects = lazy(() => import("@Components/Projects"));
-const Contact = lazy(() => import("@Components/Contact"));
+const Timeline = lazy(() => import("@/features/experience/ExperienceSection"));
+const Techs = lazy(() => import("@/features/techs/TechsSection"));
+const Projects = lazy(() => import("@/features/projects/ProjectsSection"));
+const Contact = lazy(() => import("@/features/contact/ContactSection"));
 
 function SectionFallback() {
   return <div className="min-h-[24vh] w-full" aria-hidden />;

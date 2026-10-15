@@ -1,4 +1,4 @@
-import App from "@/App.tsx";
+import App from "@/app/App";
 import i18n from "i18next";
 import detector from "i18next-browser-languagedetector";
 import init from "@/i18n/init";

@@ -8,12 +8,12 @@ Batch 1 covers units 1 to 6. Units 7 to 19 are pending. Manual browser scenarios
 
 | Unit | Commit subject | Status |
 | ---- | -------------- | ------ |
-| 1 | chore: remove dead code and assets | committed |
-| 2 | perf: remove splash screen | committed |
-| 3 | perf: convert images to webp | committed |
-| 4 | refactor(animations): css-driven split text | committed |
-| 5 | build(deps): upgrade react 19, i18next 26 and tooling | committed (see git log) |
-| 6 | refactor: adopt feature-first structure and single alias | pending |
+| 1 | chore: remove dead code and assets | committed (61262d1) |
+| 2 | perf: remove splash screen | committed (baf95c5) |
+| 3 | perf: convert images to webp | committed (028ab9c) |
+| 4 | refactor(animations): css-driven split text | committed (81d4bf6) |
+| 5 | build(deps): upgrade react 19, i18next 26 and tooling | committed (1b0ebd6) |
+| 6 | refactor: adopt feature-first structure and single alias | committed (this commit; see git log) |
 
 ## Unit 1: chore: remove dead code and assets
 
@@ -104,6 +104,32 @@ Lint and code adjustments
 
 Bundle note (risk): react-dom 19.3.1 is about 23 KB gzip larger than 18.3.1 (esbuild minify of `react-dom/client`: 142.4 KB raw / 45.6 KB gz vs 222.9 KB raw / 68.9 KB gz), so the main chunk is 123.14 KB gzip after this unit against the final budget of < 110 KB. Unit 10 (lazy Sheet) and later units must recover roughly 13 KB gzip or the performance-budget scenario needs a budget decision at verify. Contact is 38.24 KB gzip and is expected to drop below 31 KB when axios and notiflix go in unit 16.
 
+## Unit 6: refactor: adopt feature-first structure and single alias
+
+Work Unit Evidence
+
+| Evidence | Value |
+| -------- | ----- |
+| Focused test command and result | `rg -n "@Components\|@Hooks\|@Constants\|@Utils\|@Assets\|from \"\.\.?/" src`: no matches (exit 1); `rg -n 'from "[^"]+\.(tsx?\|jsx?)"' src`: no matches; `ls src/components/ui`: `badge button card input label sheet textarea` only; boundary probes (below) each fail `pnpm lint` and were reverted byte-identically (SHA-1 compared) |
+| Gate | `pnpm check`: green; `pnpm build`: green (2191 modules), main 386.43 kB raw / 123.86 kB gzip, Contact 111.76 kB / 38.25 kB |
+| Runtime harness | `pnpm preview --port 4173` via curl: `/`, favicon, main JS and CSS return 200; `/cv/Alexis_Matamoros_CV_EN.pdf` 200 (93416 B) and `..._ES.pdf` 200 (94831 B). Headless Chrome `--dump-dom`: hero pattern and project thumbnails served as `/assets/*.webp`, 179 split letters, Experience, Projects and Contact headings mounted. The full browser smoke identical to unit 5 is a deferred manual check (6.12) |
+| Rollback boundary | Revert the unit-6 commit: it is move-only plus import rewrites and config, so `git revert` restores every old path, the nine aliases in `vite.config.ts` and the tsconfig files, `build.target: "esnext"` and the unit-5 `eslint.config.js` |
+
+Boundary probes (task 6.10), each run with `pnpm lint` and reverted:
+
+1. `import "@/features/hero/HeroSection";` prepended to `src/hooks/useDocumentDark.ts`: error `no-restricted-imports` ("config, i18n, theme and hooks must not import components, features or app").
+2. `import "@/features/projects/data/projects";` prepended to `src/features/experience/ExperienceSection.tsx`: error `no-restricted-imports` ("src/features/experience must not import the app shell or sibling features; promote shared code instead").
+3. `import "../hooks/useInView";` prepended to `src/lib/utils.ts`: error `no-restricted-imports` ("Use the @/ alias instead of relative imports").
+
+Implementation notes
+
+- Moves follow design section 1.5 exactly with `git mv` (renames preserved in history); `useContactForm.tsx` and `useScrollAnimation.tsx` became `.ts`; `src/assets`, `src/constants`, `src/utils` and `src/components/common` no longer exist. Default exports and component identifiers (`LangToogle`, `GoTop`, ...) are unchanged because the unit is move-only; later units rename them when they rebuild each file.
+- Imports rewritten with one mapping script (old specifier to new `@/...` path); `main.tsx` now imports `@/app/App` without the `.tsx` suffix.
+- `vite.config.ts` keeps one alias `"@": fileURLToPath(new URL("./src", import.meta.url))`, drops the `path` import and the `build` block (`target: "esnext"` removed, D20). `tsconfig.app.json` keeps `baseUrl` with only `@/*` and drops `allowImportingTsExtensions`; `tsconfig.json` keeps `baseUrl` and `paths` only (shadcn CLI); `tsconfig.node.json` drops `baseUrl` and `paths`; `components.json` is unchanged.
+- `eslint.config.js` gained `FEATURES`, `NO_APP`, `NO_FEATURES_OR_APP`, `NO_UI_TIERS`, `LEAF_ONLY`, `featureOnly` and the base, app, components, infra, leaf and per-feature overrides from design 1.3. Every moved file already satisfied the import matrix, so no lint finding appeared.
+- Removing `build.target: "esnext"` changed the main chunk from 123.14 to 123.86 kB gzip (default browser baseline transpiles more syntax); Contact is unchanged at 38.25 kB gzip.
+- Docs that still mention the old aliases or `src/constants` (`CLAUDE.md`, `openspec/config.yaml`, `.cursor/rules/portfolio.mdc`) are intentionally left for unit 19.
+
 ## Deferred manual checks
 
 These sub-tasks stay unchecked in `tasks.md`; the orchestrator must run them in a browser.
@@ -113,3 +139,18 @@ These sub-tasks stay unchecked in `tasks.md`; the orchestrator must run them in 
 - 3.10: hero pattern is sharp at 1440 px in both themes (if blurry, redo 3.2 at 1600 px); project thumbnails keep the top of each screenshot; header CV links download the right language. The two `curl` 200 checks were done with GET through `pnpm preview` and are recorded above.
 - 4.7: build the base for comparison (`git worktree add <scratch> c34a50f`, `pnpm install --frozen-lockfile`, `pnpm build`, `pnpm preview --port 4174`) and compare hero timing and stagger side by side with the new build; DevTools Accessibility shows one name for the hero text; reduced motion shows final text at once; no layout shift when letters animate. Known and expected: word gaps are about 4 px narrower at 60 px (real spaces instead of the 0.3em spacer).
 - 5.9: Sheet opens and focus returns to the trigger on close (the React 18 dropped-ref bug is gone); language switch works; theme toggle still works.
+- 6.12: `pnpm preview` smoke identical to unit 5 (images, CVs, theme toggle, language switch, Sheet).
+
+## Deviations, risks and notes
+
+- Image position: `--position top` was used for the 20 project thumbnails (task 3.1 and design section 8 say to use it when `resize --help` lists it, and it does) instead of `attention` from the launch brief. The hero patterns are 1024x1024 sources, so no crop was applied.
+- SplitText accessibility: the root exposes the full text through an `sr-only` span and hides the letter tree with `aria-hidden="true"` (design 5.2 and task 4.2) instead of an `aria-label` on the wrapper, because ARIA 1.2 forbids `aria-label` on `p` and generic elements. The accessible name is still a single string.
+- `pnpm build:analyze` was never run (it opens a browser). Bundle checks use plain `pnpm build` output, `grep` over `dist`, and a temporary non-opening visualizer config that was deleted afterwards.
+- `useDocumentDark.ts` keeps its synchronous `sync()` call because react-hooks 7.1.1 does not flag it (design 9.2 predicted a `set-state-in-effect` finding); the hook is deleted in unit 12.
+- The shadcn CLI 4.21.5 wrote `import { cn } from "cn"` into `input.tsx` and `textarea.tsx`; the import was restored to `@/lib/utils`.
+- Footer `href="#"` anchors carry three `eslint-disable-next-line jsx-a11y/anchor-is-valid -- rebuilt in unit 9` comments. Unit 9.12 replaces the placeholders and must drop them; the final grep for `rebuilt in unit` must return nothing.
+- Unit 9 must keep the SplitText reduced-motion selector at least as specific as `.split-text[data-inview] .split-char` when merging it into the single policy block, otherwise the animation still runs.
+- Risk: the main chunk is 123.86 kB gzip after unit 6 (React 19 alone adds about 23 kB gzip to react-dom). The performance-budget target of < 110 kB gzip at unit 17 needs the lazy Sheet and later units to recover about 14 kB, or a budget decision at verify. Contact is 38.25 kB gzip and is expected to drop under 31 kB when axios and notiflix leave in unit 16.
+- Commit bodies keep every line at or below 100 characters because commitlint `body-max-line-length` rejects longer lines (unit 3 was committed on the second attempt for that reason).
+- `tasks.md` and this file are committed with each unit so the tree stays clean. `openspec/changes/portfolio-redesign/state.yaml` is orchestrator-owned: it was already modified before this batch started and was never staged or edited.
+- No follow-up `fix(...)` commits were needed in this batch.

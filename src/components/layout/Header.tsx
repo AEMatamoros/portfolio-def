@@ -1,5 +1,5 @@
-import LangToogle from "@Components/ui/LangToogle";
-import ThemeToggle from "@Components/ui/ThemeToogle";
+import LangToogle from "@/components/molecules/LanguageToggle";
+import ThemeToggle from "@/components/molecules/ThemeToggle";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -12,7 +12,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Menu } from "lucide-react";
 
-import { SITE } from "@/constants/site";
+import { SITE } from "@/config/site";
 
 const useScroll = () => {
   const [isScrolled, setIsScrolled] = useState(false);

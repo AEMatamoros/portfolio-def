@@ -1,24 +1,24 @@
-import AgendaIMG from "@/assets/img/portfolio/agenda.webp";
-import PhoenixStoreIMG from "@/assets/img/portfolio/phoenixstore.webp";
-import QrIMG from "@/assets/img/portfolio/qr.webp";
-import LecoIMG from "@/assets/img/portfolio/leco.webp";
-import WeatherImg from "@/assets/img/portfolio/weather.webp";
-import ExpenceFrontIMG from "@/assets/img/portfolio/expencefront.webp";
-import ExpenceBackIMG from "@/assets/img/portfolio/expenceback.webp";
-import CalendarIMG from "@/assets/img/portfolio/calendar.webp";
-import CalendarBIMG from "@/assets/img/portfolio/calendarb.webp";
-import PortalImg from "@/assets/img/portfolio/portal.webp";
-import FUTVIMG from "@/assets/img/portfolio/futv.webp";
-import Barber from "@/assets/img/portfolio/barber.webp";
-import PortfolioV2 from "@/assets/img/portfolio/portfoliov2.webp";
-import Atlantida from "@/assets/img/portfolio/atlantida.webp";
-import Clinpays from "@/assets/img/portfolio/clinpays.webp";
-import Imprema from "@/assets/img/portfolio/imprema.webp";
-import Leer from "@/assets/img/portfolio/leer.webp";
-import Vino from "@/assets/img/portfolio/vinoteca.webp";
-import Impact from "@/assets/img/portfolio/impact.webp";
+import AgendaIMG from "@/features/projects/assets/agenda.webp";
+import PhoenixStoreIMG from "@/features/projects/assets/phoenixstore.webp";
+import QrIMG from "@/features/projects/assets/qr.webp";
+import LecoIMG from "@/features/projects/assets/leco.webp";
+import WeatherImg from "@/features/projects/assets/weather.webp";
+import ExpenceFrontIMG from "@/features/projects/assets/expencefront.webp";
+import ExpenceBackIMG from "@/features/projects/assets/expenceback.webp";
+import CalendarIMG from "@/features/projects/assets/calendar.webp";
+import CalendarBIMG from "@/features/projects/assets/calendarb.webp";
+import PortalImg from "@/features/projects/assets/portal.webp";
+import FUTVIMG from "@/features/projects/assets/futv.webp";
+import Barber from "@/features/projects/assets/barber.webp";
+import PortfolioV2 from "@/features/projects/assets/portfoliov2.webp";
+import Atlantida from "@/features/projects/assets/atlantida.webp";
+import Clinpays from "@/features/projects/assets/clinpays.webp";
+import Imprema from "@/features/projects/assets/imprema.webp";
+import Leer from "@/features/projects/assets/leer.webp";
+import Vino from "@/features/projects/assets/vinoteca.webp";
+import Impact from "@/features/projects/assets/impact.webp";
 
-import NoImg from "@/assets/img/portfolio/noimg.webp";
+import NoImg from "@/features/projects/assets/noimg.webp";
 export const PROJECTS = [
   {
     hoverColor: "text-gray-500",

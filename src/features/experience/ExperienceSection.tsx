@@ -1,7 +1,7 @@
-import formatDate from "@Utils/DateFormatter";
-import HeaderSeparator from "@Components/ui/HeaderSeparator";
+import formatDate from "@/lib/dates";
+import HeaderSeparator from "@/components/atoms/HeaderSeparator";
 import { useTranslation } from "react-i18next";
-import { EXPERIENCE } from "@Constants/experience";
+import { EXPERIENCE } from "@/features/experience/data/experience";
 
 export default function Timeline() {
   const { t, i18n } = useTranslation();

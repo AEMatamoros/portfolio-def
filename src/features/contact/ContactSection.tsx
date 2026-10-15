@@ -1,10 +1,10 @@
-import ShinyText from "@Components/animations/ShinyText";
-import useContactForm from "@Hooks/useContactForm";
+import ShinyText from "@/components/animations/ShinyText";
+import useContactForm from "@/features/contact/hooks/useContactForm";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import HeaderSeparator from "@Components/ui/HeaderSeparator";
+import HeaderSeparator from "@/components/atoms/HeaderSeparator";
 
 import { useTranslation } from "react-i18next";
 

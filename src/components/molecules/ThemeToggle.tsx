@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { THEME_OPTIONS } from "@Constants/theme";
+import { THEME_OPTIONS } from "@/theme/theme-options";
 
 export default function ThemeToggle() {
   const [theme, setTheme] = useState(() => {

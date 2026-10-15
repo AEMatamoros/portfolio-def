@@ -9,7 +9,6 @@
 
     /* Bundler mode */
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "moduleDetection": "force",
     "noEmit": true,
@@ -23,16 +22,7 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": "./",
     "paths": {
-      "@Components/*": ["src/components/*"],
-      "@Store/*": ["src/store/*"],
-      "@Router/*": ["src/router/*"],
-      "@Hooks/*": ["src/hooks/*"],
-      "@Interfaces/*": ["src/interfaces/*"],
-      "@Constants/*": ["src/constants/*"],
-      "@Utils/*": ["src/utils/*"],
-      "@Assets/*": ["src/assets/*"],
-      "@Mock/*": ["src/mock/*"],
-      "@/*": ["src/*"]
+      "@/*": ["./src/*"]
     }
   },
   "include": ["src"]

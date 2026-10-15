@@ -1,4 +1,4 @@
-import { scrollToTop } from "@Utils/scroll";
+import { scrollToTop } from "@/lib/scroll";
 import { useState, useEffect } from "react";
 
 export default function GoTop() {
