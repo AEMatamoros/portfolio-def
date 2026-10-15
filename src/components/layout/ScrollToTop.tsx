@@ -26,7 +26,7 @@ export function ScrollToTop() {
       inert={!visible}
       onClick={handleClick}
       className={cn(
-        "fixed right-6 bottom-6 z-40 rounded-full shadow-md motion-safe:transition-opacity motion-safe:duration-300 lg:right-16",
+        "fixed right-6 bottom-6 z-40 rounded-full shadow-md motion-safe:transition-opacity motion-safe:duration-300 xl:right-16",
         visible ? "opacity-100" : "pointer-events-none opacity-0",
       )}
     >

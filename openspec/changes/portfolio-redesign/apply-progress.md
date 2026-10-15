@@ -481,3 +481,10 @@ These sub-tasks stay unchecked in `tasks.md`; the orchestrator must run them in 
 - Hardcoded `bg-white dark:bg-black` / `text-gray-*` pairs remain in the section files, Header, Footer and rails on purpose: tasks 7.x only name `index.html`, `App.tsx` and `ThemeToggle.tsx`, and units 10 to 16 rebuild each of those files with tokens.
 - Locale typing: `LanguageToggle`'s accessible name is the action ("Switch language" / "Cambiar idioma") while the visible text is the active code, per design 3.1.
 - The scripted Chrome DevTools Protocol runs (Node 24 global `WebSocket` plus headless Chrome) lived in the session scratchpad and are not committed; they back the "Runtime harness" rows only and never replace the deferred manual checks.
+
+## Post-apply fixes (orchestrator manual matrix)
+
+| Fix | Evidence | Commit |
+| --- | -------- | ------ |
+| Side rails and scroll-to-top offset shown from `xl` (1280 px) instead of `lg` (1024 px) | At exactly 1024 px (measured `innerWidth` in the built-in browser) the left rail (0-48 px) overlapped the Contact section's left column, because the `max-w-6xl` container has no side margin below ~1230 px. Design line "SideRails" updated. Gate: `pnpm check` green, `pnpm build` green. | see git log (`fix(layout): show side rails only from xl`) |
+| Removed the unused `cn@0.4` dependency added by the shadcn CLI | `pnpm remove cn`; `pnpm check` and `pnpm build` green | d20f26a |

@@ -8,10 +8,10 @@ const MAILTO = `mailto:${SITE.email}?subject=${encodeURIComponent("Contact from 
 export function SideRails() {
   return (
     <>
-      <div className="fixed top-1/2 left-0 z-40 hidden w-12 -translate-y-1/2 justify-center lg:flex">
+      <div className="fixed top-1/2 left-0 z-40 hidden w-12 -translate-y-1/2 justify-center xl:flex">
         <SocialLinks className="flex-col gap-3" />
       </div>
-      <div className="surface-inverse fixed right-0 bottom-0 z-40 hidden w-10 flex-col items-center gap-y-6 bg-foreground py-4 text-background lg:flex">
+      <div className="surface-inverse fixed right-0 bottom-0 z-40 hidden w-10 flex-col items-center gap-y-6 bg-foreground py-4 text-background xl:flex">
         <span aria-hidden="true" className="h-10 w-px bg-background" />
         <a href={MAILTO} className="vertical-text text-xs hover:underline">
           {SITE.email}
