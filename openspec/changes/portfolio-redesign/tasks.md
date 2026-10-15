@@ -290,9 +290,9 @@ Dependencies (Needs): 1→3; 4→5→6; 6→{7, 8}; {7, 8}→9; 9→{10→11, 12
 
 ## 18. ci: add quality workflow
 
-- [ ] 18.1 Create `.github/workflows/ci.yml` per design 9.3: triggers `pull_request` and `push` to `main`, `permissions: contents: read`, concurrency group, `timeout-minutes: 10`, `HUSKY: "0"`, steps checkout, `pnpm/action-setup@v4`, `setup-node` with `node-version-file: .nvmrc` and `cache: pnpm`, `pnpm install --frozen-lockfile`, `pnpm check`, `pnpm build`. Pin each action to its current major at apply time. [codebase-conventions: Continuous integration]
-- [ ] 18.2 Confirm `package.json` has `packageManager` and `engines` and `.nvmrc` is `22` (done in unit 5); only fix drift.
-- [ ] 18.3 Verify (commands): `pnpm dlx js-yaml .github/workflows/ci.yml > /dev/null`; `pnpm format:check`; `pnpm check`; `pnpm build`; `pnpm install --frozen-lockfile`.
+- [x] 18.1 Create `.github/workflows/ci.yml` per design 9.3: triggers `pull_request` and `push` to `main`, `permissions: contents: read`, concurrency group, `timeout-minutes: 10`, `HUSKY: "0"`, steps checkout, `pnpm/action-setup@v4`, `setup-node` with `node-version-file: .nvmrc` and `cache: pnpm`, `pnpm install --frozen-lockfile`, `pnpm check`, `pnpm build`. Pin each action to its current major at apply time (checked on the GitHub releases API on 2026-10-14: `actions/checkout@v7`, `pnpm/action-setup@v6`, `actions/setup-node@v7`). [codebase-conventions: Continuous integration]
+- [x] 18.2 Confirm `package.json` has `packageManager` and `engines` and `.nvmrc` is `22` (done in unit 5); only fix drift.
+- [x] 18.3 Verify (commands): `pnpm dlx js-yaml .github/workflows/ci.yml > /dev/null`; `pnpm format:check`; `pnpm check`; `pnpm build`; `pnpm install --frozen-lockfile`.
 - [ ] 18.4 Verify (manual, after the PR exists): CI is green on the PR; on a throwaway branch a deliberate type error turns the check step red (do not merge). [codebase-conventions: Failing check]
 - [ ] 18.5 Commit `ci: add quality workflow`.
 

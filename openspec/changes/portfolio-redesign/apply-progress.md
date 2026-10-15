@@ -2,7 +2,7 @@
 
 Change `portfolio-redesign` | store `openspec` | mode Standard (strict TDD off, no test runner) | delivery `single-pr` with recorded `size:exception` (user-approved).
 
-Batch 1 covers units 1 to 6, batch 2 covers units 7 to 9, batch 3 covers units 10 to 12, batch 4 covers units 13 to 16, batch 5 covers units 17 to 19 (units 18 and 19 are pending while unit 17 is the latest). Manual browser scenarios are never marked done by the apply executor; they are listed under "Deferred manual checks".
+Batch 1 covers units 1 to 6, batch 2 covers units 7 to 9, batch 3 covers units 10 to 12, batch 4 covers units 13 to 16, batch 5 covers units 17 to 19 (unit 19 is pending while unit 18 is the latest). Manual browser scenarios are never marked done by the apply executor; they are listed under "Deferred manual checks".
 
 ## Unit status
 
@@ -24,7 +24,8 @@ Batch 1 covers units 1 to 6, batch 2 covers units 7 to 9, batch 3 covers units 1
 | 14 | feat(techs): type icon data and make marquee accessible | committed (bf11a25) |
 | 15 | feat(projects): type data and add responsive grid | committed (7404793) |
 | 16 | feat(contact): harden form and add sonner feedback | committed (902f406) |
-| 17 | perf(motion): per-section reveal and chunk prefetch | committed (this commit; see git log) |
+| 17 | perf(motion): per-section reveal and chunk prefetch | committed (b4feeee) |
+| 18 | ci: add quality workflow | committed (this commit; see git log) |
 
 ## Unit 1: chore: remove dead code and assets
 
@@ -388,6 +389,24 @@ Implementation notes
 - Bundle reading: main went from 112.40 to 110.69 kB gzip (-1.71 kB net: the language detector leaves, the reveal, idle and deferral code is added). Nothing else eager could move to a lazy chunk without changing behavior (what remains is React DOM, i18next, tailwind-merge, the hero, the header and the layout chrome), and `manualChunks`, a minifier swap or aliasing `use-sync-external-store` were rejected as budget games. The < 110 kB target is therefore missed by 0.69 kB: React 19's react-dom is about 23 kB gzip larger than React 18's and app code recovered about 21 kB of it. Unit 19 updates the `performance-budget` spec to the measured target with this rationale.
 - Not done by the executor: `pnpm build:analyze` (opens a browser; the numbers above are from plain `pnpm build`) and the real-browser scenarios of 17.9.
 
+## Unit 18: ci: add quality workflow
+
+Work Unit Evidence
+
+| Evidence | Value |
+| -------- | ----- |
+| Focused test command and result | `pnpm dlx js-yaml .github/workflows/ci.yml > /dev/null`: exit 0 (the parsed document has `on.pull_request`, `on.push.branches: [main]`, `permissions.contents: read`, the concurrency group, `timeout-minutes: 10`, `HUSKY: "0"` and the six steps in order); `pnpm exec prettier --check .github`: all files use Prettier code style; `pnpm format:check`: green |
+| Gate | `pnpm install --frozen-lockfile`: Done; `pnpm check`: green (tsc, eslint, prettier); `pnpm build`: green, main 110.69 kB gzip, Contact 25.36 kB gzip (unchanged) |
+| Runtime harness | A fresh `git clone` of the branch into the session scratchpad (no `node_modules`, no `.env.local`, no `dist`), then `HUSKY=0 pnpm install --frozen-lockfile`, `pnpm check` and `pnpm build`: all green, so the exact CI steps work from a clean checkout. The workflow itself can only run on GitHub (18.4 stays a manual check; the scratchpad clone was deleted afterwards) |
+| Rollback boundary | Delete `.github/workflows/ci.yml` (the commit adds only that file plus the tasks and progress notes) |
+
+Implementation notes
+
+- The file follows design 9.3 plus comments: `pull_request` and `push` to `main`, read-only token, per-ref concurrency with `cancel-in-progress`, 10 minute timeout, `HUSKY: "0"` (the `prepare` script runs `husky`), steps checkout, `pnpm/action-setup` (reads `packageManager`, `pnpm@10.33.0`), `setup-node` with `node-version-file: .nvmrc` (`22`) and `cache: pnpm`, `pnpm install --frozen-lockfile`, `pnpm check`, `pnpm build`.
+- Action majors: the launch brief suggested `@v4` for all three, but the design and task 18.1 say to pin the current major at apply time. The GitHub releases API on 2026-10-14 reports `actions/checkout` v7.0.1, `actions/setup-node` v7.1.0 and `pnpm/action-setup` v6.1.0, so the workflow pins `actions/checkout@v7`, `pnpm/action-setup@v6` and `actions/setup-node@v7` (the v4 line is the old Node 20 runtime generation). The unauthenticated `gh` CLI could not be used, so the versions were read with `curl` from `api.github.com`.
+- `package.json` already has `packageManager` (`pnpm@10.33.0`) and `engines` (`node >=20.19`) and `.nvmrc` is `22`, so 18.2 needed no change.
+- The workflow uses `pull_request` (not `pull_request_target`) and no secrets; the build does not need `VITE_CONTACT_API_URL` (without it the Contact section renders the mailto fallback).
+
 ## Deferred manual checks
 
 These sub-tasks stay unchecked in `tasks.md`; the orchestrator must run them in a browser.
@@ -411,6 +430,7 @@ These sub-tasks stay unchecked in `tasks.md`; the orchestrator must run them in 
 - 16.14: in a real browser with a local stub (`CODE=500 node -e ...` from the task) and `.env.local` set to `VITE_CONTACT_API_URL=http://localhost:8787/sendmail`, in the Network panel: an empty Spanish submit shows Spanish errors and sends nothing; company and phone empty validates; name `<img src=x onerror=alert(1)>` sends `&lt;img` and no raw `<img`; the honeypot filled via DevTools sends nothing; 200 shows a themed success toast and clears the form; 500 shows an error toast with the "Escríbeme por correo" action and keeps the values; a blocked URL or 15 s latency disables the button then shows the timeout toast and re-enables it; a language switch re-translates visible errors; a theme switch re-themes the toast. The CDP run against a stub on port 8787 already covered every one of these with real key and click events (see Unit 16 evidence), with a 10 s stall instead of the 15 s DevTools latency profile; the real DevTools throttling profile, real mouse and a screen reader reading the toast are not covered.
 - 16.15: remove `.env.local`, `pnpm build && pnpm preview`: the section shows the localized mailto fallback with no request, no Toaster and no console error; two columns at 1440 px and stacked at 768 and 375 px. The CDP run already measured all of it on an unset-env build (see Unit 16 evidence); opening the real mail client from the CTA is not covered (the run observed the navigation request to the `mailto:` URL).
 - 17.9: in a real browser, scroll to Projects, back to the top, to Projects again: it reveals once and stays visible; with DevTools "Fast 3G" and CPU 6x a nav jump to Contact before its chunk loads ends visible and in place, and `/#contact` loads and scrolls (also check Safari, which has no scroll anchoring, for a late shift when the sections above Contact finish loading); the hero never flashes in the Performance filmstrip; with reduced motion the `ScrollTrigger-*.js` and GSAP core chunks are never requested and content is visible; blocking the GSAP chunk URLs leaves content visible; on a cold 1440 px load the hero paints first and the section chunks arrive at idle without scrolling; the sheet chunk still loads only on first menu use. The CDP run covered every one of these with emulated throttling, request logs and per-frame sampling (see Unit 17 evidence); the visual 0.6 s fade, a real filmstrip and Safari are not covered.
+- 18.4: after the PR exists, CI is green on it; on a throwaway branch a deliberate type error turns the check step red (do not merge). The workflow was never executed on GitHub by the executor; only its commands were run locally from a clean clone.
 
 ## Deviations, risks and notes
 
