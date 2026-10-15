@@ -56,5 +56,5 @@ export default function useScrollAnimation({
         ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       });
     };
-  }, []);
+  }, [timelineRef, techsRef, projectsRef]);
 }

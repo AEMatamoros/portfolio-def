@@ -103,16 +103,16 @@ Dependencies (Needs): 1→3; 4→5→6; 6→{7, 8}; {7, 8}→9; 9→{10→11, 12
 
 ## 5. build(deps): upgrade react 19, i18next 26 and tooling
 
-- [ ] 5.1 Confirm `node -v` (>= 20.19, local is 24.14.1) and `pnpm -v` (10.33.0). Create `.nvmrc` containing `22`. Add `"packageManager": "pnpm@10.33.0"` and `"engines": { "node": ">=20.19" }` to `package.json`. [codebase-conventions: pnpm and Node pinning]
-- [ ] 5.2 Run `pnpm add react@^19.3.1 react-dom@^19.3.1 i18next@^26.4.5 react-i18next@^17.0.16`; `pnpm add -D @vitejs/plugin-react-swc@^4.3.3 eslint-plugin-react-hooks@^7.1.1 eslint-plugin-jsx-a11y@^6.10.2`; `pnpm remove eslint-plugin-import`; `pnpm add gsap@^3.15.0`; then `pnpm update` (in-range only; eslint, vite, typescript, `@types/node`, commitlint, lint-staged majors must not move). [codebase-conventions: Runtime and tooling versions]
-- [ ] 5.3 Run `pnpm dlx shadcn@latest add input textarea --overwrite`; keep only `src/components/ui/input.tsx` and `textarea.tsx` changes (ref-as-prop), revert anything else with `git status` review.
-- [ ] 5.4 Rewrite `eslint.config.js` per design 9.2 without boundaries: `defineConfig`/`globalIgnores(["dist","coverage","openspec",".claude",".cursor"])`, `eslint-config-prettier/flat` last, react `version: "detect"`, jsx-a11y recommended for `src/**`, `reactHooks.configs.recommended.rules`, `globals.browser` only, `no-console` warn (allow warn/error), unused vars error with `^_` ignores. Keep the relative-import ban through a `NO_RELATIVE` plus `restrict()` helper so unit 6 only adds patterns. [codebase-conventions: Lint and type rules]
-- [ ] 5.5 Run `pnpm lint` and fix every new finding in this commit. Known: `src/hooks/useDocumentDark.ts` loses the synchronous `sync()` call in its effect. Minimal fixes only; for files rebuilt later use the sentinel disable comment from the conventions.
-- [ ] 5.6 Remove the two `console.log` calls in `src/components/common/ContactOptions.tsx` (the `"OK"` and `position` logs). [codebase-conventions: Lint and type rules]
-- [ ] 5.7 Adjust `src/main.tsx` or `src/i18n/init.ts` only if i18next 26 or react-i18next 17 require it (types or init options).
-- [ ] 5.8 Verify (commands): `pnpm install --frozen-lockfile`; `pnpm check`; `pnpm build`; `pnpm ls react react-dom i18next react-i18next` shows 19.x, 19.x, 26.x, 17.x; `rg -n "eslint-plugin-import|react-spring" package.json pnpm-lock.yaml` is empty; `pnpm build:analyze` numbers recorded; no `package-lock.json` or `yarn.lock`.
+- [x] 5.1 Confirm `node -v` (>= 20.19, local is 24.14.1) and `pnpm -v` (10.33.0). Create `.nvmrc` containing `22`. Add `"packageManager": "pnpm@10.33.0"` and `"engines": { "node": ">=20.19" }` to `package.json`. [codebase-conventions: pnpm and Node pinning]
+- [x] 5.2 Run `pnpm add react@^19.3.1 react-dom@^19.3.1 i18next@^26.4.5 react-i18next@^17.0.16`; `pnpm add -D @vitejs/plugin-react-swc@^4.3.3 eslint-plugin-react-hooks@^7.1.1 eslint-plugin-jsx-a11y@^6.10.2`; `pnpm remove eslint-plugin-import`; `pnpm add gsap@^3.15.0`; then `pnpm update` (in-range only; eslint, vite, typescript, `@types/node`, commitlint, lint-staged majors must not move). [codebase-conventions: Runtime and tooling versions]
+- [x] 5.3 Run `pnpm dlx shadcn@latest add input textarea --overwrite`; keep only `src/components/ui/input.tsx` and `textarea.tsx` changes (ref-as-prop), revert anything else with `git status` review.
+- [x] 5.4 Rewrite `eslint.config.js` per design 9.2 without boundaries: `defineConfig`/`globalIgnores(["dist","coverage","openspec",".claude",".cursor"])`, `eslint-config-prettier/flat` last, react `version: "detect"`, jsx-a11y recommended for `src/**`, `reactHooks.configs.recommended.rules`, `globals.browser` only, `no-console` warn (allow warn/error), unused vars error with `^_` ignores. Keep the relative-import ban through a `NO_RELATIVE` plus `restrict()` helper so unit 6 only adds patterns. [codebase-conventions: Lint and type rules]
+- [x] 5.5 Run `pnpm lint` and fix every new finding in this commit. Known: `src/hooks/useDocumentDark.ts` loses the synchronous `sync()` call in its effect. Minimal fixes only; for files rebuilt later use the sentinel disable comment from the conventions.
+- [x] 5.6 Remove the two `console.log` calls in `src/components/common/ContactOptions.tsx` (the `"OK"` and `position` logs). [codebase-conventions: Lint and type rules]
+- [x] 5.7 Adjust `src/main.tsx` or `src/i18n/init.ts` only if i18next 26 or react-i18next 17 require it (types or init options).
+- [x] 5.8 Verify (commands): `pnpm install --frozen-lockfile`; `pnpm check`; `pnpm build`; `pnpm ls react react-dom i18next react-i18next` shows 19.x, 19.x, 26.x, 17.x; `rg -n "eslint-plugin-import|react-spring" package.json pnpm-lock.yaml` is empty; `pnpm build:analyze` numbers recorded; no `package-lock.json` or `yarn.lock`.
 - [ ] 5.9 Verify (manual): Sheet opens and focus returns to the trigger on close (the React 18 dropped-ref bug is gone); language switch works; theme toggle still works.
-- [ ] 5.10 Commit `build(deps): upgrade react 19, i18next 26 and tooling`.
+- [x] 5.10 Commit `build(deps): upgrade react 19, i18next 26 and tooling`.
 
 ## 6. refactor: adopt feature-first structure and single alias
 
@@ -319,6 +319,6 @@ Dependencies (Needs): 1→3; 4→5→6; 6→{7, 8}; {7, 8}→9; 9→{10→11, 12
 | --------------------- | --------- | ------------ | ----------------------- | ---------------------------------- |
 | Baseline (unit 1.1)   | 110.79 KB (330.88 KB raw) | 31.04 KB (89.60 KB raw) | 5096 KB (du -ck; 18 png/jpg files) | Measured at 186670c with `pnpm build` (no analyze: it opens a browser) |
 | After unit 4          | 94.22 KB (289.95 KB raw) | 31.04 KB (89.60 KB raw) | 280 KB (16 webp; 6 thumbnails inlined) | react-spring absent (plain `pnpm build`; no analyze) |
-| After unit 5          |           |              |                         | React 19, i18next 26               |
+| After unit 5          | 123.14 KB (383.82 KB raw) | 38.24 KB (111.73 KB raw) | 280 KB | React 19.3.1, i18next 26.4.5. react-dom 19 adds ~23 KB gz over 18 (esbuild minify: 45.6 to 68.9 KB gz); main is above the final < 110 KB budget, see risks |
 | After unit 16         |           |              |                         | Targets: Contact ~17 KB, < 31 KB   |
 | After unit 17 (final) |           |              | < 600 KB                | Main < 110 KB                      |

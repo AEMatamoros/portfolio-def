@@ -11,8 +11,8 @@ Batch 1 covers units 1 to 6. Units 7 to 19 are pending. Manual browser scenarios
 | 1 | chore: remove dead code and assets | committed |
 | 2 | perf: remove splash screen | committed |
 | 3 | perf: convert images to webp | committed |
-| 4 | refactor(animations): css-driven split text | committed (see git log) |
-| 5 | build(deps): upgrade react 19, i18next 26 and tooling | pending |
+| 4 | refactor(animations): css-driven split text | committed |
+| 5 | build(deps): upgrade react 19, i18next 26 and tooling | committed (see git log) |
 | 6 | refactor: adopt feature-first structure and single alias | pending |
 
 ## Unit 1: chore: remove dead code and assets
@@ -77,6 +77,33 @@ Implementation notes
 - Reduced-motion rule: the unit-4 media block uses `.split-text .split-char, .split-text[data-inview] .split-char`. A bare `.split-char { animation: none }` would lose to `.split-text[data-inview] .split-char` on specificity, so unit 9 must keep a selector of at least that specificity when it merges this rule into the single policy block.
 - Observed visual difference: word gaps are real spaces (about 0.25em) instead of the old 0.3em spacer span, so the name is about 4 px narrower at 60 px and no longer shifted left by the trailing spacer. This follows design 5.2 ("separated by real spaces so lines wrap normally") and is listed for the manual side-by-side.
 
+## Unit 5: build(deps): upgrade react 19, i18next 26 and tooling
+
+Work Unit Evidence
+
+| Evidence | Value |
+| -------- | ----- |
+| Focused test command and result | `pnpm ls react react-dom i18next react-i18next`: react 19.3.1, react-dom 19.3.1, i18next 26.4.5, react-i18next 17.0.16; `pnpm install --frozen-lockfile`: Done (lockfile consistent); `rg -n "eslint-plugin-import\|react-spring" package.json pnpm-lock.yaml`: no matches; `ls package-lock.json yarn.lock`: both absent |
+| Gate | `pnpm check`: green (tsc, eslint with 0 errors and 0 warnings, prettier); `pnpm build`: green, main 383.82 kB raw / 123.14 kB gzip, Contact 111.73 kB / 38.24 kB |
+| Runtime harness | `pnpm preview --port 4173` + headless Chrome `--dump-dom` on React 19 and i18next 26: the hero, Experience, Projects and Contact sections all render, 179 split letters, 2 `data-inview`, no console error besides macOS display-link noise. Sheet focus return, language switch and theme toggle are deferred manual checks (5.9) |
+| Rollback boundary | Revert the unit-5 commit: restores `package.json`, `pnpm-lock.yaml`, `eslint.config.js`, `ui/input.tsx`, `ui/textarea.tsx`, the two console calls, the Footer disable comments and the `useScrollAnimation` dependency array; removes `.nvmrc`. Units 6 onward depend on it |
+
+Dependency changes
+
+- Added or moved: `react` and `react-dom` ^19.3.1, `i18next` ^26.4.5, `react-i18next` ^17.0.16, `@vitejs/plugin-react-swc` ^4.3.3, `eslint-plugin-react-hooks` ^7.1.1, `eslint-plugin-jsx-a11y` ^6.10.2, `gsap` ^3.15.0. Removed: `eslint-plugin-import`. `pnpm update` moved only in-range versions (for example vite 6.4.4, eslint 9.39.5, typescript-eslint 8.71.2, shadcn 4.21.5, tailwindcss 4.3.3, prettier 3.9.10); eslint 9, vite 6, typescript 5.7, `@types/node` 22, commitlint 20, lint-staged 16 and `globals` 15 did not change major. No peer conflicts; every exact target version resolved.
+- Added `"packageManager": "pnpm@10.33.0"`, `"engines": { "node": ">=20.19" }` and `.nvmrc` with `22`.
+- pnpm reported `Ignored build scripts: @swc/core` (the harmless "approve-builds" notice); the SWC native binding still loads and the build works.
+
+Lint and code adjustments
+
+- `eslint.config.js` rewritten per design 9.2 without boundaries: `defineConfig`/`globalIgnores`, `eslint-config-prettier/flat` last, react `version: "detect"`, jsx-a11y recommended on `src/**`, `reactHooks.configs.recommended.rules`, `globals.browser` only, `no-console` warn, unused vars as errors with `^_` ignores, and `NO_RELATIVE` plus a `restrict()` helper so unit 6 only adds patterns.
+- Findings fixed: three `jsx-a11y/anchor-is-valid` errors on the `href="#"` placeholders in `Footer.tsx` take `{/* eslint-disable-next-line jsx-a11y/anchor-is-valid -- rebuilt in unit 9 */}` (unit 9.12 replaces the placeholders and must drop these); the two `console.log` calls in `ContactOptions.tsx` are removed; `useScrollAnimation` now lists its three section refs in the effect dependency array (new `react-hooks/exhaustive-deps` warning under v7; refs are stable, so behavior is unchanged).
+- `src/hooks/useDocumentDark.ts` was left untouched: react-hooks 7.1.1 does not flag its synchronous `sync()` call (the design predicted `set-state-in-effect`), and removing it would drop a safeguard for class changes between render and effect. The file is deleted in unit 12.
+- `src/components/ui/input.tsx` and `textarea.tsx` were regenerated with `pnpm dlx shadcn@latest add input textarea --overwrite --yes` (ref-as-prop, no `forwardRef`). The CLI (4.21.5) wrote `import { cn } from "cn"`, which does not resolve, so the import was restored to `@/lib/utils` and both files were formatted with Prettier. No other file was touched by the CLI.
+- `src/main.tsx` and `src/i18n/init.ts` needed no change for i18next 26 or react-i18next 17 (types and runtime verified).
+
+Bundle note (risk): react-dom 19.3.1 is about 23 KB gzip larger than 18.3.1 (esbuild minify of `react-dom/client`: 142.4 KB raw / 45.6 KB gz vs 222.9 KB raw / 68.9 KB gz), so the main chunk is 123.14 KB gzip after this unit against the final budget of < 110 KB. Unit 10 (lazy Sheet) and later units must recover roughly 13 KB gzip or the performance-budget scenario needs a budget decision at verify. Contact is 38.24 KB gzip and is expected to drop below 31 KB when axios and notiflix go in unit 16.
+
 ## Deferred manual checks
 
 These sub-tasks stay unchecked in `tasks.md`; the orchestrator must run them in a browser.
@@ -85,3 +112,4 @@ These sub-tasks stay unchecked in `tasks.md`; the orchestrator must run them in 
 - 2.6: DevTools Performance at CPU 6x, cache disabled, hard reload: no overlay or fixed delay before the hero, hero never visible, hidden, visible; with `localStorage.theme="dark"` no light frame.
 - 3.10: hero pattern is sharp at 1440 px in both themes (if blurry, redo 3.2 at 1600 px); project thumbnails keep the top of each screenshot; header CV links download the right language. The two `curl` 200 checks were done with GET through `pnpm preview` and are recorded above.
 - 4.7: build the base for comparison (`git worktree add <scratch> c34a50f`, `pnpm install --frozen-lockfile`, `pnpm build`, `pnpm preview --port 4174`) and compare hero timing and stagger side by side with the new build; DevTools Accessibility shows one name for the hero text; reduced motion shows final text at once; no layout shift when letters animate. Known and expected: word gaps are about 4 px narrower at 60 px (real spaces instead of the 0.3em spacer).
+- 5.9: Sheet opens and focus returns to the trigger on close (the React 18 dropped-ref bug is gone); language switch works; theme toggle still works.

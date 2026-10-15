@@ -1,65 +1,58 @@
 import js from "@eslint/js";
-import eslintPluginImport from "eslint-plugin-import";
-import prettier from "eslint-config-prettier";
-import globals from "globals";
+import prettier from "eslint-config-prettier/flat";
+import jsxA11y from "eslint-plugin-jsx-a11y";
 import react from "eslint-plugin-react";
 import reactHooks from "eslint-plugin-react-hooks";
 import reactRefresh from "eslint-plugin-react-refresh";
+import { defineConfig, globalIgnores } from "eslint/config";
+import globals from "globals";
 import tseslint from "typescript-eslint";
 
-export default tseslint.config(
-  { ignores: ["dist/**", "coverage", "node_modules"] },
-  {
-    settings: {
-      react: {
-        version: "18.3",
-      },
-    },
-  },
+const NO_RELATIVE = {
+  group: ["./*", "../*"],
+  message: "Use the @/ alias instead of relative imports.",
+};
+
+// Flat-config rule options are replaced, not merged, so every override has to
+// restate the relative-import ban. Tier and feature patterns are added here.
+const restrict = (...patterns) => [
+  "error",
+  { patterns: [NO_RELATIVE, ...patterns] },
+];
+
+export default defineConfig([
+  globalIgnores(["dist", "coverage", "openspec", ".claude", ".cursor"]),
+  { settings: { react: { version: "detect" } } },
   js.configs.recommended,
+  tseslint.configs.recommended,
   react.configs.flat.recommended,
   react.configs.flat["jsx-runtime"],
-  ...tseslint.configs.recommended,
+  { files: ["src/**/*.{ts,tsx}"], ...jsxA11y.flatConfigs.recommended },
   {
     files: ["src/**/*.{ts,tsx}"],
-    plugins: {
-      "react-hooks": reactHooks,
-      "react-refresh": reactRefresh,
-      import: eslintPluginImport,
-    },
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-        ...globals.jest,
-        React: "readonly",
-      },
-    },
+    plugins: { "react-hooks": reactHooks, "react-refresh": reactRefresh },
+    languageOptions: { globals: globals.browser },
     rules: {
-      ...prettier.rules,
-      "react/prop-types": "off",
+      ...reactHooks.configs.recommended.rules,
       "react-refresh/only-export-components": [
         "warn",
         { allowConstantExport: true },
       ],
-      "@typescript-eslint/no-empty-object-type": "off",
+      "react/prop-types": "off",
+      "no-console": ["warn", { allow: ["warn", "error"] }],
       "@typescript-eslint/no-explicit-any": "error",
+      "@typescript-eslint/no-empty-object-type": "off",
       "@typescript-eslint/no-unused-vars": [
-        "warn",
-        { argsIgnorePattern: "^_" },
-      ],
-      "no-restricted-imports": [
         "error",
-        {
-          patterns: ["./*", "../*"],
-        },
+        { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
       ],
+      "no-restricted-imports": restrict(),
     },
   },
   {
-    files: ["src/components/ui/**/*.{ts,tsx}"],
-    rules: {
-      "react-refresh/only-export-components": "off",
-    },
+    files: ["src/components/ui/**/*.tsx"],
+    rules: { "react-refresh/only-export-components": "off" },
   },
-);
+  { files: ["*.{js,ts}"], languageOptions: { globals: globals.node } },
+  prettier,
+]);

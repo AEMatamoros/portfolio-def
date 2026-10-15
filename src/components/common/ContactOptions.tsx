@@ -49,9 +49,7 @@ function EmailIcon() {
     <button
       className="w-4 md:w-6 cursor-pointer group"
       onClick={() => {
-        console.log("OK");
         const position = document.getElementById("section-contact");
-        console.log(position);
         if (position) {
           position.scrollIntoView();
         }

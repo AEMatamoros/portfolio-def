@@ -16,16 +16,19 @@ export default function Footer() {
           </a>
           <ul className="flex flex-wrap items-center mb-6 text-sm font-medium text-gray-500 sm:mb-0 ">
             <li>
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid -- rebuilt in unit 9 */}
               <a href="#" className="hover:underline me-4 md:me-6">
                 {t("SECTION.ABOUT")}
               </a>
             </li>
             <li>
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid -- rebuilt in unit 9 */}
               <a href="#" className="hover:underline me-4 md:me-6">
                 {t("SECTION.PROJECTS")}
               </a>
             </li>
             <li>
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid -- rebuilt in unit 9 */}
               <a href="#" className="hover:underline">
                 {t("SECTION.CONTACT")}
               </a>
