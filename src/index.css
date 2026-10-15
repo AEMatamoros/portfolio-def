@@ -109,31 +109,51 @@
   }
 }
 
-/* Utilities */
-.infinite-carousel {
-  display: flex;
-  white-space: nowrap;
-  overflow: hidden;
-  position: relative;
-}
-
-.carousel-track {
-  display: flex;
-  animation: infinite-scroll 60s linear infinite;
-}
-
-.carousel-track > * {
-  flex: 0 0 auto;
-  width: 150px;
-  margin-right: 10px;
-}
-
-@keyframes infinite-scroll {
-  0% {
-    transform: translateX(0);
+/*
+ * Tech marquee: two identical lists, each with a trailing gap equal to the inner
+ * gap, so sliding the track by -50% lands exactly on the second list's start.
+ * It pauses while hovered, while a control inside it has keyboard focus, and
+ * while the pause button is pressed. Keyboard focus uses :has(:focus-visible)
+ * rather than :focus-within so a pointer click on the button cannot latch the
+ * pause after the visitor presses it again to resume.
+ */
+@layer components {
+  .marquee-viewport {
+    overflow: hidden;
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
   }
-  100% {
-    transform: translateX(-100%);
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee var(--marquee-duration, 60s) linear infinite;
+  }
+
+  .marquee-track > ul {
+    display: flex;
+    gap: var(--marquee-gap, 2.5rem);
+    padding-inline-end: var(--marquee-gap, 2.5rem);
+  }
+
+  .marquee:hover .marquee-track,
+  .marquee[data-paused] .marquee-track {
+    animation-play-state: paused;
+  }
+
+  .marquee:has(:focus-visible) .marquee-track {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
   }
 }
 
@@ -161,8 +181,8 @@
 
 /*
  * Single reduced-motion policy. Unlayered, so it beats the utility layer.
- * Marquee selectors are appended with the marquee (unit 14). JavaScript paths
- * (theme transition, scroll reveal, scrollTo) check the same media query.
+ * JavaScript paths (theme transition, scroll reveal, scrollTo) check the same
+ * media query.
  * The split-char selectors must stay at least as specific as
  * `.split-text[data-inview] .split-char`, or the letter animation still runs.
  */
@@ -183,6 +203,29 @@
     animation: none;
     opacity: var(--split-to-opacity, 1);
     transform: var(--split-to-transform, none);
+  }
+
+  /* Marquee: one wrapped static set, no duplicate and no pause button. */
+  .marquee-viewport {
+    mask-image: none;
+    padding-inline: 1.25rem;
+  }
+
+  .marquee-track {
+    animation: none;
+    width: auto;
+  }
+
+  .marquee-track > ul:first-child {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem 1rem;
+    padding-inline-end: 0;
+  }
+
+  .marquee-track > ul[aria-hidden="true"],
+  .marquee-pause {
+    display: none;
   }
 
   ::view-transition-group(*),

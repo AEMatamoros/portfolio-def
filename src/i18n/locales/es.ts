@@ -16,6 +16,7 @@ export const es = {
     email: "Contáctame por correo electrónico",
     skipToContent: "Saltar al contenido",
     scrollToTop: "Volver arriba",
+    pauseAnimation: "Pausar animación",
   },
   theme: {
     toggle: "Tema: {{mode}}",
