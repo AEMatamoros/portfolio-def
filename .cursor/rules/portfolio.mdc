@@ -8,6 +8,6 @@ alwaysApply: false
 
 - Use **pnpm** only for installs and scripts (`pnpm install`, `pnpm check`).
 - Prefer **shadcn/ui** primitives from `@/components/ui/*` with Tailwind and `cn()` from `@/lib/utils` instead of ad-hoc styled divs for buttons, cards, forms, and overlays.
-- Keep existing **animation** modules (`SplitText`, `BlurText`, GSAP hooks) unless replacing with an equivalent; do not delete animation behavior silently.
+- Keep existing **animation** modules (`SplitText`, `ShinyText`, GSAP hooks) unless replacing with an equivalent; do not delete animation behavior silently.
 - Follow **Conventional Commits** enforced by commitlint (e.g. `feat:`, `fix:`, `chore:`).
 - Use path aliases: `@/` → `src/`, `@Components`, `@Hooks`, `@Constants`, etc., as in `vite.config.ts` / `tsconfig`.

@@ -49,7 +49,7 @@ export default function Header() {
         isScrolled
           ? "shadow-md md:shadow-none md:rounded-full w-full p-4 md:w-6/12 md:mx-auto md:mt-2 md:p-2 md:bg-black dark:md:bg-gray-100 "
           : "w-full p-4 shadow-md "
-      } sticky-nav fixed inset-x-0 top-0 z-50 mx-auto  bg-gray-100 dark:bg-black dark:shadow-white/50`}
+      } fixed inset-x-0 top-0 z-50 mx-auto  bg-gray-100 dark:bg-black dark:shadow-white/50`}
     >
       <nav
         className="flex items-center justify-between  md:px-8 w-11/12 mx-auto max-w-[1280px]"
@@ -164,7 +164,7 @@ export default function Header() {
           <ThemeToggle />
         </div>
       </nav>
-      <span className=" md:absolute md:bottom-0 md:inline-block md:w-full md:right-full md:sticky-header md:bg-black dark:md:bg-white h-[2px] md:h-0 w-full" />
+      <span className=" md:absolute md:bottom-0 md:inline-block md:w-full md:right-full md:bg-black dark:md:bg-white h-[2px] md:h-0 w-full" />
     </header>
   );
 }

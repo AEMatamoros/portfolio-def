@@ -384,7 +384,7 @@ const TECHS = [
 const Techs: React.FC = () => {
   return (
     <section className="bg-white dark:bg-black py-2 px-0">
-      <div className="items-left m-auto flex flex-col justify-center infinite-carousel">
+      <div className="m-auto flex flex-col justify-center infinite-carousel">
         <div className=" flex  items-center justify-center gap-0 p-0 max-md:mt-10 max-md:max-w-[1280px] carousel-track ">
           {[...TECHS, ...TECHS].map((tech) => (
             <div

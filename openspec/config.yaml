@@ -62,7 +62,7 @@ rules:
     - Include sequence diagrams for complex flows.
     - Document architecture decisions with rationale.
     - Use shadcn/ui primitives from src/components/ui with cn() from @/lib/utils; do not replace them with ad-hoc styled elements.
-    - Keep existing animation modules (SplitText, BlurText, ShinyText, GSAP hooks); never remove animation behavior silently.
+    - Keep existing animation modules (SplitText, ShinyText, GSAP hooks); never remove animation behavior silently.
     - Use path aliases only; relative ./ and ../ imports violate the ESLint no-restricted-imports rule.
   tasks:
     - Group by phase, use hierarchical numbering.

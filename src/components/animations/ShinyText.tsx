@@ -1,5 +1,3 @@
-import "@Components/animations/ShinyText";
-
 interface ShinyTextProps {
   text: string;
   disabled?: boolean;

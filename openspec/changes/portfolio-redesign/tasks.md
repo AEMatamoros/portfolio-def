@@ -56,15 +56,15 @@ Dependencies (Needs): 1→3; 4→5→6; 6→{7, 8}; {7, 8}→9; 9→{10→11, 12
 
 ## 1. chore: remove dead code and assets
 
-- [ ] 1.1 Record the baseline before any edit: `pnpm check`, `pnpm build:analyze` (main and Contact gzip), `find dist/assets \( -name "*.webp" -o -name "*.png" -o -name "*.jpg" \) -print0 | xargs -0 du -ck | tail -1`. Write them in the Measurements log. [performance-budget: Chunk budgets]
-- [ ] 1.2 Confirm with `rg` that nothing imports them, then `git rm`: `src/App.css`, `src/assets/react.svg`, `public/vite.svg`, `src/assets/img/main-bg-dark.png`, `src/assets/img/profile.webp`, `src/components/ui/pagination.tsx`, `src/components/ui/separator.tsx`, `src/components/animations/BlurText.tsx`. [performance-budget: No unreferenced assets; codebase-conventions: Dead code removal]
-- [ ] 1.3 Edit `src/index.css`: remove `.sticky-header` with `@keyframes border-animation`, `.sidebarEffect`, and the commented `animation: spin` block. Keep `.hero-button`, `.animate-clip-expand`, `.infinite-carousel` (removed in units 9, 7, 14).
-- [ ] 1.4 Edit `src/components/animations/ShinyText.tsx`: delete the self-import on line 1.
-- [ ] 1.5 Remove undefined class tokens only (no other edits): `text-darksecondary` and `text-detail` in `src/components/Timeline.tsx`; `goTop`, `transformation`, `text-detail` in `src/components/ui/GoToTop.tsx`; `sticky-nav` and `md:sticky-header` in `src/components/common/Header.tsx`; `items-left` in `src/components/Techs.tsx`; the stray `p-` in `src/components/Hero.tsx`. Leave `text-dark` (dies with `SplashScreen` in unit 2) and `animate-clip-shrink` (unit 7).
-- [ ] 1.6 Reword the BlurText rule in `.cursor/rules/portfolio.mdc` and in `openspec/config.yaml` (`rules.design`) to name only `SplitText`, `ShinyText` and GSAP hooks. [codebase-conventions: Dead code removal]
-- [ ] 1.7 Verify (commands): `pnpm check`; `pnpm build`; `rg -n "BlurText|ui/pagination|ui/separator|text-detail|text-darksecondary|sticky-nav|goTop|sidebarEffect|sticky-header|transformation|items-left" src .cursor openspec/config.yaml` is empty; `ls` of every path in 1.2 reports "No such file".
+- [x] 1.1 Record the baseline before any edit: `pnpm check`, `pnpm build:analyze` (main and Contact gzip), `find dist/assets \( -name "*.webp" -o -name "*.png" -o -name "*.jpg" \) -print0 | xargs -0 du -ck | tail -1`. Write them in the Measurements log. [performance-budget: Chunk budgets]
+- [x] 1.2 Confirm with `rg` that nothing imports them, then `git rm`: `src/App.css`, `src/assets/react.svg`, `public/vite.svg`, `src/assets/img/main-bg-dark.png`, `src/assets/img/profile.webp`, `src/components/ui/pagination.tsx`, `src/components/ui/separator.tsx`, `src/components/animations/BlurText.tsx`. [performance-budget: No unreferenced assets; codebase-conventions: Dead code removal]
+- [x] 1.3 Edit `src/index.css`: remove `.sticky-header` with `@keyframes border-animation`, `.sidebarEffect`, and the commented `animation: spin` block. Keep `.hero-button`, `.animate-clip-expand`, `.infinite-carousel` (removed in units 9, 7, 14).
+- [x] 1.4 Edit `src/components/animations/ShinyText.tsx`: delete the self-import on line 1.
+- [x] 1.5 Remove undefined class tokens only (no other edits): `text-darksecondary` and `text-detail` in `src/components/Timeline.tsx`; `goTop`, `transformation`, `text-detail` in `src/components/ui/GoToTop.tsx`; `sticky-nav` and `md:sticky-header` in `src/components/common/Header.tsx`; `items-left` in `src/components/Techs.tsx`; the stray `p-` in `src/components/Hero.tsx`. Leave `text-dark` (dies with `SplashScreen` in unit 2) and `animate-clip-shrink` (unit 7).
+- [x] 1.6 Reword the BlurText rule in `.cursor/rules/portfolio.mdc` and in `openspec/config.yaml` (`rules.design`) to name only `SplitText`, `ShinyText` and GSAP hooks. [codebase-conventions: Dead code removal]
+- [x] 1.7 Verify (commands): `pnpm check`; `pnpm build`; `rg -n "BlurText|ui/pagination|ui/separator|text-detail|text-darksecondary|sticky-nav|goTop|sidebarEffect|sticky-header|transformation|items-left" src .cursor openspec/config.yaml` is empty; `ls` of every path in 1.2 reports "No such file".
 - [ ] 1.8 Verify (manual): `pnpm preview` page is visually unchanged in EN/ES, light/dark (header, hero, timeline, carousel, projects pagination, contact).
-- [ ] 1.9 Commit `chore: remove dead code and assets`.
+- [x] 1.9 Commit `chore: remove dead code and assets`.
 
 ## 2. perf: remove splash screen
 
@@ -317,7 +317,7 @@ Dependencies (Needs): 1→3; 4→5→6; 6→{7, 8}; {7, 8}→9; 9→{10→11, 12
 
 | Point                 | Main gzip | Contact gzip | Image sum (dist/assets) | Notes                              |
 | --------------------- | --------- | ------------ | ----------------------- | ---------------------------------- |
-| Baseline (unit 1.1)   | 110 KB est. | 31 KB est. | ~5 MB est.              | Replace with measured values       |
+| Baseline (unit 1.1)   | 110.79 KB (330.88 KB raw) | 31.04 KB (89.60 KB raw) | 5096 KB (du -ck; 18 png/jpg files) | Measured at 186670c with `pnpm build` (no analyze: it opens a browser) |
 | After unit 4          |           |              |                         | react-spring absent                |
 | After unit 5          |           |              |                         | React 19, i18next 26               |
 | After unit 16         |           |              |                         | Targets: Contact ~17 KB, < 31 KB   |

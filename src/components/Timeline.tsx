@@ -11,7 +11,7 @@ export default function Timeline() {
       id="section-timeline"
     >
       <div className="container mx-auto flex items-center flex-wrap pt-4 pb-12 max-w-[1280px]">
-        <h2 className="my-4 text-center text-5xl dark:text-gray-100 font-semibold text-darksecondary w-full">
+        <h2 className="my-4 text-center text-5xl dark:text-gray-100 font-semibold w-full">
           {t("SECTION.EXPERIENCE")}
         </h2>
         <HeaderSeparator />
@@ -22,7 +22,7 @@ export default function Timeline() {
               <time className="mb-1 text-center text-sm font-normal leading-none text-gray-400  md:text-left">
                 {formatDate(place.time, place.timeEnd || "", "EN")}
                 {place.current && (
-                  <span className="px-4 text-detail ">
+                  <span className="px-4">
                     {i18n.language === "es" ? "Actualidad" : "Current"}
                   </span>
                 )}

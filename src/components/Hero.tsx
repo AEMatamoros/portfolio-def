@@ -51,7 +51,7 @@ export default function Hero() {
             <div className="my-4 md:my-8">
               <SplitText
                 text={t("HERO.DESCRIPTION")}
-                className="mt-8 text-lg font-medium text-pretty text-gray-500 dark:text-gray-300 sm:text-xl/8 p-"
+                className="mt-8 text-lg font-medium text-pretty text-gray-500 dark:text-gray-300 sm:text-xl/8"
                 delay={10}
                 animationFrom={{
                   opacity: 0,
