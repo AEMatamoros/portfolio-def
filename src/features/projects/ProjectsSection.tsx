@@ -1,4 +1,6 @@
 import HeaderSeparator from "@/components/atoms/HeaderSeparator";
+import { SectionShell } from "@/components/layout/SectionShell";
+import { titleIdOf } from "@/config/site";
 import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -32,13 +34,16 @@ export default function Projects() {
   };
   const { t } = useTranslation();
   return (
-    <section
+    <SectionShell
+      id="projects"
       className="bg-white dark:bg-black py-12 px-4 md:px-12"
-      id="section-projects"
     >
       <div className="container mx-auto max-w-[1280px]">
         <div className="flex flex-col items-center mb-8">
-          <h2 className="my-4 text-center text-4xl md:text-5xl font-bold dark:text-gray-100 w-full">
+          <h2
+            id={titleIdOf("projects")}
+            className="my-4 text-center text-4xl md:text-5xl font-bold dark:text-gray-100 w-full"
+          >
             {t("projects.title")}
           </h2>
           <HeaderSeparator />
@@ -134,6 +139,6 @@ export default function Projects() {
           )}
         </div>
       </div>
-    </section>
+    </SectionShell>
   );
 }

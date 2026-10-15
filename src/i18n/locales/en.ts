@@ -2,6 +2,12 @@ export const en = {
   nav: {
     about: "About Me",
   },
+  a11y: {
+    opensInNewTab: "(opens in a new tab)",
+    github: "GitHub profile",
+    linkedin: "LinkedIn profile",
+    email: "Contact me by email",
+  },
   theme: {
     toggle: "Theme: {{mode}}",
     modes: {
@@ -20,6 +26,9 @@ export const en = {
   },
   experience: {
     title: "Experience",
+  },
+  techs: {
+    title: "Technologies",
   },
   projects: {
     title: "Projects",

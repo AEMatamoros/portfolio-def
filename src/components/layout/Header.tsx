@@ -57,7 +57,7 @@ export default function Header() {
         aria-label="Global"
       >
         <div className="flex md:flex-1">
-          <a href="#section-hero" className="-m-1.5 p-1.5">
+          <a href="#hero" className="-m-1.5 p-1.5">
             <p
               className={`${
                 isScrolled && "md:text-white dark:md:text-black"
@@ -87,21 +87,21 @@ export default function Header() {
             </SheetHeader>
             <div className="mt-6 flex flex-col gap-2">
               <a
-                href="#section-timeline"
+                href="#experience"
                 className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-muted"
                 onClick={() => setShowSidebar(false)}
               >
                 {t("nav.about")}
               </a>
               <a
-                href="#section-projects"
+                href="#projects"
                 className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-muted"
                 onClick={() => setShowSidebar(false)}
               >
                 {t("projects.title")}
               </a>
               <a
-                href="#section-contact"
+                href="#contact"
                 className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-muted"
                 onClick={() => setShowSidebar(false)}
               >
@@ -126,7 +126,7 @@ export default function Header() {
 
         <div className="hidden md:flex md:items-center md:gap-x-12 lg">
           <a
-            href="#section-timeline"
+            href="#experience"
             className={linkClass(
               "text-sm/6 font-semibold  transform hover:scale-110",
             )}
@@ -134,7 +134,7 @@ export default function Header() {
             {t("nav.about")}
           </a>
           <a
-            href="#section-projects"
+            href="#projects"
             className={linkClass(
               "text-sm/6 font-semibold  transform hover:scale-110",
             )}
@@ -142,7 +142,7 @@ export default function Header() {
             {t("projects.title")}
           </a>
           <a
-            href="#section-contact"
+            href="#contact"
             className={linkClass(
               "text-sm/6 font-semibold  transform hover:scale-110",
             )}

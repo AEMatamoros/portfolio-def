@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import HeaderSeparator from "@/components/atoms/HeaderSeparator";
+import { SectionShell } from "@/components/layout/SectionShell";
+import { titleIdOf } from "@/config/site";
 
 import { useTranslation } from "react-i18next";
 
@@ -13,14 +15,17 @@ export default function Contact() {
   const { register, handleSubmit, onSubmit, disable } = useContactForm();
 
   return (
-    <section
+    <SectionShell
+      id="contact"
       className={`bg-gray-100 dark:bg-black py-6 px-12 ${
         disable && "opacity-50 animate-pulse"
       }`}
-      id="section-contact"
     >
       <div className="mx-auto max-w-2xl text-center">
-        <h2 className="text-4xl pt-14 font-semibold tracking-tight text-balance text-black dark:text-gray-100 sm:text-5xl">
+        <h2
+          id={titleIdOf("contact")}
+          className="text-4xl pt-14 font-semibold tracking-tight text-balance text-black dark:text-gray-100 sm:text-5xl"
+        >
           {t("contact.title")}
         </h2>
         <HeaderSeparator />
@@ -57,7 +62,7 @@ export default function Contact() {
             <Textarea id="message" {...register("message")} rows={4} />
           </div>
         </div>
-        <div className="hero-button mt-10 flex items-center justify-center gap-x-6">
+        <div className="animate-fade-in-slow mt-10 flex items-center justify-center gap-x-6">
           <Button type="submit" disabled={disable} size="lg" className="px-6">
             <ShinyText
               text={t("contact.submit")}
@@ -68,6 +73,6 @@ export default function Contact() {
           </Button>
         </div>
       </form>
-    </section>
+    </SectionShell>
   );
 }

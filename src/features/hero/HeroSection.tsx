@@ -1,4 +1,6 @@
 import { SplitText } from "@/components/animations/SplitText";
+import { SectionShell } from "@/components/layout/SectionShell";
+import { titleIdOf } from "@/config/site";
 import ShinyText from "@/components/animations/ShinyText";
 import { useDocumentDark } from "@/hooks/useDocumentDark";
 import { useTranslation } from "react-i18next";
@@ -11,9 +13,9 @@ export default function Hero() {
   const heroSrc = isDark ? mainBgDark : mainBg;
 
   return (
-    <section
+    <SectionShell
+      id="hero"
       className="min-h-screen bg-white dark:bg-black flex justify-center items-center relative overflow-hidden"
-      id="section-hero"
     >
       <div
         className="pointer-events-none absolute inset-0 z-0 transition-opacity duration-500"
@@ -39,6 +41,7 @@ export default function Hero() {
           </p>
           <div className="text-center">
             <SplitText
+              id={titleIdOf("hero")}
               text="Alexis Matamoros"
               className="text-5xl font-semibold tracking-tight text-balance text-black dark:text-gray-100 sm:text-6xl"
               delay={150}
@@ -61,9 +64,9 @@ export default function Hero() {
                 rootMargin="-50px"
               />
             </div>
-            <div className=" hero-button mt-10 flex items-center justify-center gap-x-6">
+            <div className="animate-fade-in-slow mt-10 flex items-center justify-center gap-x-6">
               <a
-                href="#section-timeline"
+                href="#experience"
                 className="rounded-sm group bg-black dark:bg-gray-100 px-4 py-3 text-md font-semibold shadow-xs hover:bg-black hover:text-black focus-visible:outline-2 focus-visible:outline-offset-2 dark:hover:bg-gray-200"
               >
                 <ShinyText
@@ -91,6 +94,6 @@ export default function Hero() {
           background: "linear-gradient(to bottom, transparent, black 90%)",
         }}
       />
-    </section>
+    </SectionShell>
   );
 }

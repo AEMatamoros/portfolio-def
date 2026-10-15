@@ -5,8 +5,10 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-html {
-  scroll-behavior: smooth;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 .vertical-text {
@@ -85,26 +87,18 @@ html {
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .split-text .split-char,
-  .split-text[data-inview] .split-char {
-    animation: none;
-    opacity: var(--split-to-opacity, 1);
-    transform: var(--split-to-transform, none);
-  }
-}
-
-.hero-button {
-  animation: show-hero-button 3s ease-in;
-}
-
-@keyframes show-hero-button {
+/* Slow fade-in for the hero and contact call to action (was .hero-button) */
+@keyframes fade-in-slow {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
   }
+}
+
+@utility animate-fade-in-slow {
+  animation: fade-in-slow 3s ease-in;
 }
 
 /* Theme change: circular reveal from the toggle (View Transitions API) */
@@ -177,6 +171,78 @@ html {
 
 .animate-bg-move {
   animation: bg-move-circular 10s linear infinite;
+}
+
+/*
+ * Single reduced-motion policy. Unlayered, so it beats the utility layer.
+ * Marquee selectors are appended with the marquee (unit 14). JavaScript paths
+ * (theme transition, scroll reveal, scrollTo) check the same media query.
+ * The split-char selectors must stay at least as specific as
+ * `.split-text[data-inview] .split-char`, or the letter animation still runs.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .animate-bg-move,
+  .animate-fade-in-slow {
+    animation: none;
+  }
+
+  .shiny-text {
+    animation: none;
+    background: none;
+    color: #b5b5b5;
+  }
+
+  .dark .shiny-text {
+    color: #060606;
+  }
+
+  .split-text .split-char,
+  .split-text[data-inview] .split-char {
+    animation: none;
+    opacity: var(--split-to-opacity, 1);
+    transform: var(--split-to-transform, none);
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* Type scale. Color comes from tokens in markup, so cn() keeps size and color apart. */
+@utility text-display {
+  font-size: clamp(2.5rem, 1.5rem + 4vw, 4rem);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+@utility text-title {
+  font-size: clamp(1.875rem, 1.25rem + 2.5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+@utility text-lead {
+  font-size: clamp(1.0625rem, 1rem + 0.4vw, 1.25rem);
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+@utility text-eyebrow {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* Inverted surfaces (scrolled header pill, footer) focus with the page background color. */
+@utility surface-inverse {
+  --focus-ring: var(--background);
 }
 
 @theme inline {
@@ -300,5 +366,19 @@ html {
   }
   html {
     @apply font-sans;
+    scroll-padding-top: 5rem;
+  }
+  /* Zero specificity and in the base layer, so shadcn primitives keep their own ring. */
+  :where(
+    a,
+    button,
+    input,
+    textarea,
+    select,
+    summary,
+    [tabindex]
+  ):focus-visible {
+    outline: 2px solid var(--focus-ring, var(--ring));
+    outline-offset: 3px;
   }
 }

@@ -17,9 +17,9 @@ function SectionFallback() {
 }
 
 export function App() {
-  const timelineRef = useRef<HTMLElement>(null);
-  const techsRef = useRef<HTMLElement>(null);
-  const projectsRef = useRef<HTMLElement>(null);
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const techsRef = useRef<HTMLDivElement>(null);
+  const projectsRef = useRef<HTMLDivElement>(null);
 
   useScrollAnimation({
     timelineRef,
@@ -30,29 +30,29 @@ export function App() {
   return (
     <div className="w-full min-h-screen">
       <Header />
-      <section>
+      <div>
         <Hero />
-      </section>
-      <section ref={timelineRef}>
+      </div>
+      <div ref={timelineRef}>
         <Suspense fallback={<SectionFallback />}>
           <Timeline />
         </Suspense>
-      </section>
-      <section ref={techsRef}>
+      </div>
+      <div ref={techsRef}>
         <Suspense fallback={<SectionFallback />}>
           <Techs />
         </Suspense>
-      </section>
-      <section ref={projectsRef}>
+      </div>
+      <div ref={projectsRef}>
         <Suspense fallback={<SectionFallback />}>
           <Projects />
         </Suspense>
-      </section>
-      <section>
+      </div>
+      <div>
         <Suspense fallback={<SectionFallback />}>
           <Contact />
         </Suspense>
-      </section>
+      </div>
       <Footer />
       <GoTop />
       <ContactOptions />

@@ -1,5 +1,7 @@
 import formatDate from "@/lib/dates";
 import HeaderSeparator from "@/components/atoms/HeaderSeparator";
+import { SectionShell } from "@/components/layout/SectionShell";
+import { titleIdOf } from "@/config/site";
 import { useTranslation } from "react-i18next";
 import { EXPERIENCE } from "@/features/experience/data/experience";
 import { useLocale } from "@/hooks/useLocale";
@@ -8,12 +10,12 @@ export default function Timeline() {
   const { t } = useTranslation();
   const locale = useLocale();
   return (
-    <section
-      className="bg-white dark:bg-black py-8 px-12"
-      id="section-timeline"
-    >
+    <SectionShell id="experience" className="bg-white dark:bg-black py-8 px-12">
       <div className="container mx-auto flex items-center flex-wrap pt-4 pb-12 max-w-[1280px]">
-        <h2 className="my-4 text-center text-5xl dark:text-gray-100 font-semibold w-full">
+        <h2
+          id={titleIdOf("experience")}
+          className="my-4 text-center text-5xl dark:text-gray-100 font-semibold w-full"
+        >
           {t("experience.title")}
         </h2>
         <HeaderSeparator />
@@ -69,6 +71,6 @@ export default function Timeline() {
           ))}
         </ol>
       </div>
-    </section>
+    </SectionShell>
   );
 }

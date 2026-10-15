@@ -1,4 +1,7 @@
 import React from "react";
+import { SectionShell } from "@/components/layout/SectionShell";
+import { titleIdOf } from "@/config/site";
+import { useTranslation } from "react-i18next";
 const TECHS = [
   {
     hoverColor: "text-yellow-500",
@@ -382,8 +385,13 @@ const TECHS = [
   },
 ];
 const Techs: React.FC = () => {
+  const { t } = useTranslation();
   return (
-    <section className="bg-white dark:bg-black py-2 px-0">
+    <SectionShell id="techs" className="bg-white dark:bg-black py-2 px-0">
+      {/* Temporary accessible name; unit 14 renders a visible SectionHeader. */}
+      <h2 id={titleIdOf("techs")} className="sr-only">
+        {t("techs.title")}
+      </h2>
       <div className="m-auto flex flex-col justify-center infinite-carousel">
         <div className=" flex  items-center justify-center gap-0 p-0 max-md:mt-10 max-md:max-w-[1280px] carousel-track ">
           {[...TECHS, ...TECHS].map((tech) => (
@@ -397,7 +405,7 @@ const Techs: React.FC = () => {
           ))}
         </div>
       </div>
-    </section>
+    </SectionShell>
   );
 };
 
