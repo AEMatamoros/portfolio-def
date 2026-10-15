@@ -1,7 +1,8 @@
 import { useRef, lazy, Suspense } from "react";
 import Hero from "@/features/hero/HeroSection";
 import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/Header";
+import { Header } from "@/components/layout/Header";
+import { SkipLink } from "@/components/layout/SkipLink";
 import GoTop from "@/components/layout/ScrollToTop";
 import ContactOptions from "@/components/layout/SocialRail";
 import EmailOptions from "@/components/layout/EmailRail";
@@ -28,35 +29,38 @@ export function App() {
   });
 
   return (
-    <div className="w-full min-h-screen">
+    <>
+      <SkipLink targetId="main" />
       <Header />
-      <div>
-        <Hero />
-      </div>
-      <div ref={timelineRef}>
-        <Suspense fallback={<SectionFallback />}>
-          <Timeline />
-        </Suspense>
-      </div>
-      <div ref={techsRef}>
-        <Suspense fallback={<SectionFallback />}>
-          <Techs />
-        </Suspense>
-      </div>
-      <div ref={projectsRef}>
-        <Suspense fallback={<SectionFallback />}>
-          <Projects />
-        </Suspense>
-      </div>
-      <div>
-        <Suspense fallback={<SectionFallback />}>
-          <Contact />
-        </Suspense>
-      </div>
+      <main id="main" tabIndex={-1} className="outline-none">
+        <div>
+          <Hero />
+        </div>
+        <div ref={timelineRef}>
+          <Suspense fallback={<SectionFallback />}>
+            <Timeline />
+          </Suspense>
+        </div>
+        <div ref={techsRef}>
+          <Suspense fallback={<SectionFallback />}>
+            <Techs />
+          </Suspense>
+        </div>
+        <div ref={projectsRef}>
+          <Suspense fallback={<SectionFallback />}>
+            <Projects />
+          </Suspense>
+        </div>
+        <div>
+          <Suspense fallback={<SectionFallback />}>
+            <Contact />
+          </Suspense>
+        </div>
+      </main>
       <Footer />
       <GoTop />
       <ContactOptions />
       <EmailOptions />
-    </div>
+    </>
   );
 }

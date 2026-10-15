@@ -24,7 +24,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       variant="ghost"
       size="icon"
       className={cn(
-        "text-current hover:bg-current/10 hover:text-current",
+        "text-current hover:bg-current/10 hover:text-current dark:hover:bg-current/10",
         className,
       )}
       aria-label={t("theme.toggle", { mode: t(`theme.modes.${mode}`) })}

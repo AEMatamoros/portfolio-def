@@ -1,175 +1,88 @@
+import { Menu } from "lucide-react";
+import { lazy, Suspense, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { Logo } from "@/components/atoms/Logo";
 import { LanguageToggle } from "@/components/molecules/LanguageToggle";
+import { NavLinks } from "@/components/molecules/NavLinks";
 import { ThemeToggle } from "@/components/molecules/ThemeToggle";
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { Menu } from "lucide-react";
+import { useScrolled } from "@/hooks/useScrolled";
+import { cn } from "@/lib/utils";
 
-import { SITE } from "@/config/site";
-import { useLocale } from "@/hooks/useLocale";
+const MobileMenu = lazy(() => import("@/components/layout/MobileMenu"));
 
-const useScroll = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+const SCROLL_THRESHOLD = 48;
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  return isScrolled;
-};
-
-export default function Header() {
-  const [showSidebar, setShowSidebar] = useState(false);
+/**
+ * Full-width bar at the top. Once scrolled it keeps that bar below md and turns into a
+ * floating inverted pill from md up; the pill inherits `text-current` colors and the
+ * inverse focus ring instead of repeating the palette.
+ */
+export function Header() {
   const { t } = useTranslation();
-  const locale = useLocale();
+  const scrolled = useScrolled(SCROLL_THRESHOLD);
+  const [menuMounted, setMenuMounted] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
-  const isScrolled = useScroll();
+  // shadcn buttons ring with --ring, which is invisible on the inverted pill.
+  const pillRing =
+    scrolled &&
+    "md:focus-visible:border-background md:focus-visible:ring-background/60";
 
-  const linkClass = (base: string) =>
-    `${base} ${
-      isScrolled
-        ? "text-white dark:text-black"
-        : "text-gray-700 dark:text-gray-100"
-    }`;
+  const openMenu = () => {
+    setMenuMounted(true);
+    setMenuOpen(true);
+  };
 
   return (
-    <header
-      className={`${
-        isScrolled
-          ? "shadow-md md:shadow-none md:rounded-full w-full p-4 md:w-6/12 md:mx-auto md:mt-2 md:p-2 md:bg-black dark:md:bg-gray-100 "
-          : "w-full p-4 shadow-md "
-      } fixed inset-x-0 top-0 z-50 mx-auto  bg-gray-100 dark:bg-black dark:shadow-white/50`}
-    >
-      <nav
-        className="flex items-center justify-between  md:px-8 w-11/12 mx-auto max-w-[1280px]"
-        aria-label="Global"
+    <header className="fixed inset-x-0 top-0 z-50">
+      <div
+        className={cn(
+          "mx-auto w-full max-w-full border-b border-transparent bg-background/80 text-foreground backdrop-blur",
+          "motion-safe:transition-[width,max-width,margin-top,border-radius,background-color,color] motion-safe:duration-300",
+          scrolled &&
+            "border-border md:mt-3 md:w-[calc(100%-2rem)] md:max-w-3xl md:rounded-full md:border-transparent md:bg-foreground md:text-background md:surface-inverse",
+        )}
       >
-        <div className="flex md:flex-1">
-          <a href="#hero" className="-m-1.5 p-1.5">
-            <p
-              className={`${
-                isScrolled && "md:text-white dark:md:text-black"
-              } h-10 font-extrabold text-2xl text-black dark:text-gray-100 transform hover:scale-110`}
-            >
-              A
-            </p>
-          </a>
-        </div>
-
-        <Sheet open={showSidebar} onOpenChange={setShowSidebar}>
-          <div className="flex md:hidden">
-            <SheetTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="-m-2.5 text-gray-700 dark:text-gray-100"
-                aria-label="Open main menu"
-              >
-                <Menu className="size-6" aria-hidden />
-              </Button>
-            </SheetTrigger>
-          </div>
-          <SheetContent side="right" className="w-10/12 sm:max-w-sm">
-            <SheetHeader className="text-left">
-              <SheetTitle className="font-bold">Alexis Matamoros</SheetTitle>
-            </SheetHeader>
-            <div className="mt-6 flex flex-col gap-2">
-              <a
-                href="#experience"
-                className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-muted"
-                onClick={() => setShowSidebar(false)}
-              >
-                {t("nav.about")}
-              </a>
-              <a
-                href="#projects"
-                className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-muted"
-                onClick={() => setShowSidebar(false)}
-              >
-                {t("projects.title")}
-              </a>
-              <a
-                href="#contact"
-                className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-muted"
-                onClick={() => setShowSidebar(false)}
-              >
-                {t("contact.title")}
-              </a>
-              <a
-                href={SITE.cv[locale]}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-700 dark:text-gray-100 hover:bg-muted"
-                onClick={() => setShowSidebar(false)}
-              >
-                CV
-              </a>
-            </div>
-            <div className="mt-8 flex flex-col gap-4 border-t border-border pt-6">
-              <LanguageToggle />
-              <ThemeToggle />
-            </div>
-          </SheetContent>
-        </Sheet>
-
-        <div className="hidden md:flex md:items-center md:gap-x-12 lg">
-          <a
-            href="#experience"
-            className={linkClass(
-              "text-sm/6 font-semibold  transform hover:scale-110",
-            )}
-          >
-            {t("nav.about")}
-          </a>
-          <a
-            href="#projects"
-            className={linkClass(
-              "text-sm/6 font-semibold  transform hover:scale-110",
-            )}
-          >
-            {t("projects.title")}
-          </a>
-          <a
-            href="#contact"
-            className={linkClass(
-              "text-sm/6 font-semibold  transform hover:scale-110",
-            )}
-          >
-            {t("contact.title")}
-          </a>
-          <a
-            href={SITE.cv[locale]}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={linkClass(
-              "text-sm/6 font-semibold  transform hover:scale-110",
-            )}
-          >
-            CV
-          </a>
-        </div>
         <div
-          className={linkClass(
-            "hidden md:flex md:flex-1 md:items-center md:justify-end",
+          className={cn(
+            "mx-auto flex h-16 w-full max-w-6xl items-center justify-between gap-x-4 px-5 md:px-8",
+            scrolled && "md:h-14 md:px-4",
           )}
         >
-          <LanguageToggle />
-          <ThemeToggle />
+          <Logo />
+          <nav aria-label={t("nav.label")} className="hidden md:block">
+            <NavLinks withCv />
+          </nav>
+          <div className="hidden items-center gap-x-1 md:flex">
+            <LanguageToggle className={pillRing || undefined} />
+            <ThemeToggle className={pillRing || undefined} />
+          </div>
+          <Button
+            ref={menuButtonRef}
+            type="button"
+            variant="ghost"
+            size="icon"
+            className="md:hidden"
+            aria-label={t("nav.openMenu")}
+            aria-haspopup="dialog"
+            aria-expanded={menuOpen}
+            onClick={openMenu}
+          >
+            <Menu className="size-6" aria-hidden />
+          </Button>
         </div>
-      </nav>
-      <span className=" md:absolute md:bottom-0 md:inline-block md:w-full md:right-full md:bg-black dark:md:bg-white h-[2px] md:h-0 w-full" />
+      </div>
+      {menuMounted && (
+        <Suspense fallback={null}>
+          <MobileMenu
+            open={menuOpen}
+            onOpenChange={setMenuOpen}
+            returnFocusRef={menuButtonRef}
+          />
+        </Suspense>
+      )}
     </header>
   );
 }

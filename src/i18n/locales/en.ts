@@ -1,12 +1,18 @@
 export const en = {
   nav: {
     about: "About Me",
+    label: "Main navigation",
+    footerLabel: "Footer navigation",
+    cv: "CV",
+    openMenu: "Open main menu",
+    closeMenu: "Close menu",
   },
   a11y: {
     opensInNewTab: "(opens in a new tab)",
     github: "GitHub profile",
     linkedin: "LinkedIn profile",
     email: "Contact me by email",
+    skipToContent: "Skip to content",
   },
   theme: {
     toggle: "Theme: {{mode}}",

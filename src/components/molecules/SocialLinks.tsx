@@ -1,4 +1,5 @@
 import { Mail } from "lucide-react";
+import type { MouseEventHandler } from "react";
 import { useTranslation } from "react-i18next";
 import { BrandIcon } from "@/components/atoms/BrandIcon";
 import { ExternalLink } from "@/components/atoms/ExternalLink";
@@ -9,10 +10,16 @@ interface SocialLinksProps {
   className?: string;
   /** Applied to every link, for example the hover color. */
   linkClassName?: string;
+  /** Lets a host (the mobile menu) close itself before the jump to the contact section. */
+  onEmailClick?: MouseEventHandler<HTMLAnchorElement>;
 }
 
 /** GitHub, LinkedIn and an email shortcut to the contact section. */
-export function SocialLinks({ className, linkClassName }: SocialLinksProps) {
+export function SocialLinks({
+  className,
+  linkClassName,
+  onEmailClick,
+}: SocialLinksProps) {
   const { t } = useTranslation();
   const link = cn(
     "inline-flex size-8 items-center justify-center rounded-md transition-colors hover:text-muted-foreground",
@@ -34,7 +41,7 @@ export function SocialLinks({ className, linkClassName }: SocialLinksProps) {
         </ExternalLink>
       </li>
       <li>
-        <a href="#contact" className={link}>
+        <a href="#contact" className={link} onClick={onEmailClick}>
           <Mail className="size-5" aria-hidden />
           <span className="sr-only">{t("a11y.email")}</span>
         </a>

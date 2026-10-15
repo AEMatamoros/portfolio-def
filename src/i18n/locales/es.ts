@@ -3,12 +3,18 @@ import type { Messages } from "@/i18n/locales/en";
 export const es = {
   nav: {
     about: "Sobre mí",
+    label: "Navegación principal",
+    footerLabel: "Navegación del pie de página",
+    cv: "CV",
+    openMenu: "Abrir menú principal",
+    closeMenu: "Cerrar menú",
   },
   a11y: {
     opensInNewTab: "(se abre en una pestaña nueva)",
     github: "Perfil de GitHub",
     linkedin: "Perfil de LinkedIn",
     email: "Contáctame por correo electrónico",
+    skipToContent: "Saltar al contenido",
   },
   theme: {
     toggle: "Tema: {{mode}}",

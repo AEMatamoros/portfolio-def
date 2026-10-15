@@ -1,7 +1,9 @@
 import { useTranslation } from "react-i18next";
+import { Button } from "@/components/ui/button";
 import { useLocale } from "@/hooks/useLocale";
+import { cn } from "@/lib/utils";
 
-export function LanguageToggle() {
+export function LanguageToggle({ className }: { className?: string }) {
   const { t, i18n } = useTranslation();
   const locale = useLocale();
 
@@ -10,13 +12,17 @@ export function LanguageToggle() {
   };
 
   return (
-    <button
+    <Button
       type="button"
-      onClick={toggleLanguage}
+      variant="ghost"
+      className={cn(
+        "px-3 font-semibold text-current hover:bg-current/10 hover:text-current dark:hover:bg-current/10",
+        className,
+      )}
       aria-label={t("language.toggle")}
-      className="cursor-pointer font-semibold px-8 text-gray-400 transform hover:scale-110"
+      onClick={toggleLanguage}
     >
       {locale === "es" ? "ES" : "EN"}
-    </button>
+    </Button>
   );
 }
