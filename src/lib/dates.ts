@@ -38,10 +38,17 @@ function parts(value: YearMonth): { year: number; month: number } {
   return { year: Number(year), month: Number(month) };
 }
 
-/** Localized month and year, for example `Apr 2025` or `abr 2025`. */
+/**
+ * Localized month and year with a capitalized month, for example `Apr 2025` or
+ * `Abr 2025`. `Intl` lower-cases Spanish month names, so the first letter is
+ * raised explicitly.
+ */
 export function formatYearMonth(value: YearMonth, locale: Locale): string {
   const { year, month } = parts(value);
-  return formatterFor(locale).format(new Date(Date.UTC(year, month - 1, 1)));
+  const text = formatterFor(locale).format(
+    new Date(Date.UTC(year, month - 1, 1)),
+  );
+  return text.charAt(0).toLocaleUpperCase(locale) + text.slice(1);
 }
 
 /** The visitor's current month. Call it at module scope, never during render. */
